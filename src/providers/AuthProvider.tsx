@@ -1,15 +1,15 @@
-'use client';
+'use client'
 
-import { useEffect } from 'react';
-import { createClient } from '@/utils/supabase/client';
-import { useUserStore } from '@/store/userStore';
+import { useEffect } from 'react'
+import { createClient } from '@/lib/supabase/client'
+import { useUserStore } from '@/store/userStore'
 
 export function AuthStateManager({ children }: { children: React.ReactNode }) {
-  const supabase = createClient();
-  const { setLoading, setUser } = useUserStore();
+  const supabase = createClient()
+  const { setLoading, setUser } = useUserStore()
 
   useEffect(() => {
-    setLoading(true);
+    setLoading(true)
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
         supabase
@@ -18,18 +18,18 @@ export function AuthStateManager({ children }: { children: React.ReactNode }) {
           .eq('id', session.user.id)
           .single()
           .then(({ data }) => {
-            setUser(data);
-            setLoading(false);
-          });
+            setUser(data)
+            setLoading(false)
+          })
       }
-    });
-    setLoading(false);
+    })
+    setLoading(false)
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_OUT') {
-        setUser(null);
+        setUser(null)
       }
 
       setTimeout(async () => {
@@ -38,19 +38,19 @@ export function AuthStateManager({ children }: { children: React.ReactNode }) {
             .from('members')
             .select('*')
             .eq('id', session.user.id)
-            .single();
+            .single()
 
-          setUser(data);
+          setUser(data)
         }
-      }, 0);
-    });
+      }, 0)
+    })
 
-    return () => subscription.unsubscribe();
-  }, [setUser, setLoading, supabase]);
+    return () => subscription.unsubscribe()
+  }, [setUser, setLoading, supabase])
 
-  return children;
+  return children
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  return <AuthStateManager>{children}</AuthStateManager>;
+  return <AuthStateManager>{children}</AuthStateManager>
 }

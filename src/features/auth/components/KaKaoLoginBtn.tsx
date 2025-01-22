@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/shared/components/ui/button'
-import { createClient } from '@/utils/supabase/client'
+import { createClient } from '@/lib/supabase/client'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 

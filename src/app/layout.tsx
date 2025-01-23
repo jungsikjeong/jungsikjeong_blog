@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { AuthProvider, AuthStateManager } from '@/providers/AuthProvider'
+import { AuthProvider } from '@/providers/AuthProvider'
 import './globals.css'
 import { spoqa } from './nextFont'
 import config from '@/config'
@@ -32,12 +32,12 @@ export default async function RootLayout({
       <body className={spoqa.className}>
         <main>
           <ReactQueryProviders>
-            <AuthStateManager>
+            <AuthProvider>
               <GtagProvider>
                 <Header />
                 {children}
               </GtagProvider>
-            </AuthStateManager>
+            </AuthProvider>
           </ReactQueryProviders>
         </main>
       </body>

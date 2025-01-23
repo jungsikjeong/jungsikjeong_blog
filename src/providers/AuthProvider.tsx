@@ -3,11 +3,11 @@
 import { useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useUserStore } from '@/store/userStore'
-import { QueryClient } from '@tanstack/react-query'
+import {  useQueryClient } from '@tanstack/react-query'
 
-export function AuthStateManager({ children }: React.PropsWithChildren) {
+export function AuthProvider({ children }: React.PropsWithChildren) {
   const supabase = createClient()
-  const queryClient = new QueryClient()
+  const queryClient = useQueryClient()
 
   useEffect(() => {
     // 초기 인증 상태 동기화
@@ -36,9 +36,5 @@ export function AuthStateManager({ children }: React.PropsWithChildren) {
     return () => subscription.unsubscribe()
   }, [queryClient, supabase])
 
-  return children
-}
-
-export function AuthProvider({ children }: React.PropsWithChildren) {
-  return <AuthStateManager>{children}</AuthStateManager>
+  return (children)
 }

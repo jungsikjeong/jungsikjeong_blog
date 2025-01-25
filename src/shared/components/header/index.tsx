@@ -1,8 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import LoginBtn from '../auth/LoginButton'
 import AuthStatus from '../auth/AuthStatus'
+import { ModeToggle } from '../theme/theme-mode-toggle'
 
 export function Header() {
   return (
@@ -10,7 +10,11 @@ export function Header() {
       <Link href='/' className='text-lg font-bold sm:text-xl'>
         로고
       </Link>
-      <AuthStatus />
+
+      <div className='flex items-center gap-2'>
+        <ModeToggle />
+        <AuthStatus />
+      </div>
     </header>
   )
 }

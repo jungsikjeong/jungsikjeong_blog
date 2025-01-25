@@ -1,14 +1,12 @@
-import type { Metadata } from 'next'
-import { AuthProvider } from '@/providers/AuthProvider'
-import './globals.css'
-import { spoqa } from './nextFont'
-import config from '@/config'
 import { getSEOTags } from '@/lib/seo'
+import { AuthProvider } from '@/providers/AuthProvider'
+import { GtagProvider } from '@/providers/GtagProvider'
+import ReactQueryProviders from '@/providers/useReactQueryProvider'
 import Scripts from '@/shared/components/analytics/GoogleAnalytics'
 import { Header } from '@/shared/components/header'
-import useGtagEffect from '@/hook/useGtagEffect'
-import ReactQueryProviders from '@/providers/useReactQueryProvider'
-import { GtagProvider } from '@/providers/GtagProvider'
+import { ThemeProvider } from '@/shared/components/theme/theme-provider'
+import './globals.css'
+import { spoqa } from './nextFont'
 
 export const viewport = {
   width: 'device-width',
@@ -23,22 +21,29 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  useGtagEffect
-
   return (
-    <html lang='ko'>
+    <html lang='ko' suppressHydrationWarning>
       <Scripts />
 
       <body className={spoqa.className}>
         <main>
-          <ReactQueryProviders>
-            <AuthProvider>
-              <GtagProvider>
-                <Header />
-                {children}
-              </GtagProvider>
-            </AuthProvider>
-          </ReactQueryProviders>
+          <ThemeProvider
+            attribute='class'
+            defaultTheme='system'
+            enableSystem
+            disableTransitionOnChange
+            storageKey='theme-preference' // 테마 설정을 저장할 키 추가
+            enableColorScheme={false} // color-scheme 스타일 비활성화
+          >
+            <ReactQueryProviders>
+              <AuthProvider>
+                <GtagProvider>
+                  <Header />
+                  {children}
+                </GtagProvider>
+              </AuthProvider>
+            </ReactQueryProviders>
+          </ThemeProvider>
         </main>
       </body>
     </html>

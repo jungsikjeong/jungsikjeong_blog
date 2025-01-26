@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 export function BlogSidebar() {
   return (
     <div className='fixed left-0 top-0 hidden h-screen w-64 border-r bg-background px-4 py-6 lg:block'>
-      <ScrollArea className='h-full'>
+      <ScrollArea className='relative h-full'>
         <div className='space-y-6'>
           {/* Profile Section */}
           <div className='text-center'>
@@ -58,7 +58,7 @@ export function BlogSidebar() {
           </div>
 
           {/* Copyright */}
-          <div className='pt-6 text-center text-sm text-muted-foreground'>
+          <div className='absolute bottom-0 text-center text-sm text-muted-foreground'>
             @2025 Created By 정중식
           </div>
         </div>

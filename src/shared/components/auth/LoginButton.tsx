@@ -4,6 +4,7 @@ import React from 'react'
 import { Button } from '../ui/button'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
+import { User } from 'lucide-react'
 
 interface ILoginButtonProps {
   size?: 'sm' | 'lg' | 'default' | 'icon' | null | undefined
@@ -30,7 +31,8 @@ export default function LoginButton({
       variant={variant}
       className={cn('text-sm sm:px-4 sm:text-base', className)}
     >
-      <Link href='/auth/login'>로그인</Link>
+      <User className='mr-2 h-4 w-4' />
+      <Link href='/auth/login'>Login</Link>
     </Button>
   )
 }

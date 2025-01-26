@@ -17,5 +17,7 @@ export default function AuthStatus() {
     return <div>로딩중...</div>
   }
 
-  return <div>{me ? <UserMenu user={me} /> : <LoginButton />}</div>
+  return (
+    <div>{me ? <UserMenu user={me} /> : <LoginButton variant={'ghost'} />}</div>
+  )
 }

@@ -1,11 +1,7 @@
-'use client'
-
-import { Menu, User } from 'lucide-react'
-import { Button } from '../ui/button'
-import { MusicPlayer } from '../musicPlayer'
-import LoginButton from '../auth/LoginButton'
+import { Menu } from 'lucide-react'
 import AuthStatus from '../auth/AuthStatus'
-MusicPlayer
+import { MusicPlayer } from '../musicPlayer'
+import { Button } from '../ui/button'
 
 export function Header() {
   return (

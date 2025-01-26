@@ -21,31 +21,6 @@ export default function Page() {
       <BlogSidebar />
 
       <div className='lg:pl-64'>
-        {' '}
-        {/* Add padding to offset sidebar */}
-        {/* Header */}
-        <header className='container mx-auto py-8'>
-          <div className='mb-8 flex items-center justify-between'>
-            <div className='flex-1' /> {/* Spacer */}
-            <nav className='flex gap-4'>
-              <Button variant='ghost' size='sm'>
-                <User className='mr-2 h-4 w-4' />
-                Login
-              </Button>
-              <Button variant='ghost' size='sm'>
-                <Menu className='mr-2 h-4 w-4' />
-                Categories
-              </Button>
-              <MusicPlayer />
-            </nav>
-          </div>
-          <h1
-            className='text-center text-4xl font-bold md:text-6xl'
-            style={{ fontFamily: 'comic sans ms, cursive' }}
-          >
-            Five Years of Firefox
-          </h1>
-        </header>
         {/* Main Content */}
         <main className='container mx-auto space-y-12 px-4 pb-16'>
           {/* Video Section */}

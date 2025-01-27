@@ -2,6 +2,7 @@
 
 import LoginButton from '../auth/LoginButton'
 import Search from '../search'
+import { ModeToggle } from '../theme/theme-mode-toggle'
 
 export default function UnauthenticatedHeader() {
   return (
@@ -30,11 +31,10 @@ export default function UnauthenticatedHeader() {
           />
         </div>
 
-        <div className='flex flex-1 justify-end'>
-          <LoginButton
-            variant={'outline'}
-            className='bg-neutral-800 text-white hover:bg-neutral-800 hover:text-white'
-          />
+        <div className='flex h-full flex-1 items-center justify-end gap-2'>
+          <ModeToggle />
+
+          <LoginButton variant={'outline'} />
         </div>
       </div>
     </nav>

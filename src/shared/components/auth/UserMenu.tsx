@@ -8,17 +8,21 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu'
 import { Tables } from '@/types/supabase'
-import { UserIcon } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import LogoutButton from './LogoutButton'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 
 export default function UserMenu({ user }: { user: Tables<'members'> }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='outline' size='sm' className='hover:bg-transparent'>
-          <UserIcon className='h-4 w-4 sm:hidden' />
+        <Button variant='ghost' size='icon' className='hover:bg-transparent'>
+          <Avatar className='h-8 w-8'>
+            <AvatarImage src={user.avatar_url || ''} />
+            <AvatarFallback>{user.nickname[0]}</AvatarFallback>
+          </Avatar>
 
-          <span className='hidden sm:flex'>{user.nickname}</span>
+          <ChevronDown className='h-4 w-4 text-white' />
         </Button>
       </DropdownMenuTrigger>
 

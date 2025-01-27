@@ -6,7 +6,6 @@ import UnauthenticatedHeader from './UnauthenticatedHeader'
 
 export function Header() {
   const { user } = useAuth()
-  console.log(user)
 
   return (
     <header className='h-[65px] bg-neutral-800 px-4 py-2'>

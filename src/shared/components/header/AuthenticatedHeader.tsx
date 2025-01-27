@@ -26,7 +26,7 @@ export default function AuthenticatedHeader({
         className='h-8 w-60 text-sm'
       />
 
-      <div>
+      <div className='ml-auto'>
         <UserMenu user={user} />
       </div>
     </nav>

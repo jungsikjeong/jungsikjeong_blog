@@ -7,6 +7,7 @@ import { Header } from '@/shared/components/header'
 import { ThemeProvider } from '@/shared/components/theme/theme-provider'
 import './globals.css'
 import { spoqa } from './nextFont'
+import { getCurrentUser } from '@/utils/supabase/auth'
 
 export const viewport = {
   width: 'device-width',
@@ -21,6 +22,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const currentUser = await getCurrentUser()
+
   return (
     <html lang='ko' suppressHydrationWarning>
       <Scripts />
@@ -36,9 +39,7 @@ export default async function RootLayout({
             enableColorScheme={false} // color-scheme 스타일 비활성화
           >
             <ReactQueryProviders>
-              <AuthProvider>
-                <GtagProvider>{children}</GtagProvider>
-              </AuthProvider>
+              <AuthProvider initialUser={currentUser}>{children}</AuthProvider>
             </ReactQueryProviders>
           </ThemeProvider>
         </main>

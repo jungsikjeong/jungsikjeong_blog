@@ -1,11 +1,16 @@
 'use client'
 
+import { Tables } from '@/types/supabase'
 import Link from 'next/link'
-import AuthStatus from '../auth/AuthStatus'
+import UserMenu from '../auth/UserMenu'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Input } from '../ui/input'
 
-export default function AuthenticatedHeader() {
+export default function AuthenticatedHeader({
+  user,
+}: {
+  user: Tables<'members'>
+}) {
   return (
     <nav className='flex items-center gap-2'>
       <Link href='/'>
@@ -22,7 +27,7 @@ export default function AuthenticatedHeader() {
       />
 
       <div>
-        <AuthStatus />
+        <UserMenu user={user} />
       </div>
     </nav>
   )

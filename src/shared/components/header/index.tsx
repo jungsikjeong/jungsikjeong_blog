@@ -1,13 +1,16 @@
-import Link from 'next/link'
-import AuthStatus from '../auth/AuthStatus'
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import { Input } from '../ui/input'
+'use client'
+
+import { useAuth } from '@/providers/AuthProvider'
+import AuthenticatedHeader from './AuthenticatedHeader'
 import UnauthenticatedHeader from './UnauthenticatedHeader'
 
 export function Header() {
+  const { user } = useAuth()
+  console.log(user)
+
   return (
     <header className='h-[65px] bg-neutral-800 px-4 py-2'>
-      <UnauthenticatedHeader />
+      {!user ? <UnauthenticatedHeader /> : <AuthenticatedHeader user={user} />}
     </header>
   )
 }

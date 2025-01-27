@@ -2,7 +2,7 @@
 
 import useGtagEffect from '@/hook/useGtagEffect'
 
-export function GtagProvider({ children }: React.PropsWithChildren) {
+export const GtagProvider = ({ children }: { children: React.ReactNode }) => {
   useGtagEffect()
-  return children
+  return <>{children}</>
 }

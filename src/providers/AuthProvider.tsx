@@ -1,40 +1,59 @@
 'use client'
 
-import { useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { useUserStore } from '@/store/userStore'
-import {  useQueryClient } from '@tanstack/react-query'
+import { Tables } from '@/types/supabase'
+import { useQueryClient } from '@tanstack/react-query'
+import React, {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 
-export function AuthProvider({ children }: React.PropsWithChildren) {
+const AuthContext = React.createContext<{
+  user: Tables<'members'> | null
+  setUser: Dispatch<SetStateAction<Tables<'members'> | null>>
+}>({
+  user: null,
+  setUser: () => {},
+})
+
+interface IAuthProviderProps {
+  initialUser: Tables<'members'> | null
+  children: React.ReactNode
+}
+
+export function AuthProvider({ initialUser, children }: IAuthProviderProps) {
   const supabase = createClient()
   const queryClient = useQueryClient()
 
+  const [user, setUser] = useState<Tables<'members'> | null>(initialUser)
+
   useEffect(() => {
-    // 초기 인증 상태 동기화
-    const initializeAuth = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession()
-      if (session?.user) {
-        queryClient.invalidateQueries({ queryKey: ['auth'] })
-      }
-    }
-
-    initializeAuth()
-
     // 인증 상태 변경 구독
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN') {
-        queryClient.invalidateQueries({ queryKey: ['auth'] })
-      } else if (event === 'SIGNED_OUT') {
-        queryClient.setQueryData(['auth'], null)
+      if (event === 'SIGNED_OUT') {
+        setUser(null)
       }
     })
 
     return () => subscription.unsubscribe()
   }, [queryClient, supabase])
 
-  return (children)
+  return (
+    <AuthContext.Provider value={{ user, setUser }}>
+      {children}
+    </AuthContext.Provider>
+  )
+}
+
+export const useAuth = () => {
+  const context = useContext(AuthContext)
+  if (!context) {
+    throw new Error('useAuth must be used within a AuthProvider')
+  }
+  return context
 }

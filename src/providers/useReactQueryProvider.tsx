@@ -10,9 +10,7 @@ import {
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { useState } from 'react'
 
-export default function ReactQueryProviders({
-  children,
-}: React.PropsWithChildren) {
+const ReactQueryProviders = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -35,3 +33,5 @@ export default function ReactQueryProviders({
     </QueryClientProvider>
   )
 }
+
+export default ReactQueryProviders

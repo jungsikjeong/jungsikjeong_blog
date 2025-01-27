@@ -4,20 +4,12 @@ import { Button } from '@/shared/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu'
 import { Tables } from '@/types/supabase'
-import LogoutButton from './LogoutButton'
 import { UserIcon } from 'lucide-react'
+import LogoutButton from './LogoutButton'
 
 export default function UserMenu({ user }: { user: Tables<'members'> }) {
   return (

@@ -37,10 +37,7 @@ export default async function RootLayout({
           >
             <ReactQueryProviders>
               <AuthProvider>
-                <GtagProvider>
-                  <Header />
-                  {children}
-                </GtagProvider>
+                <GtagProvider>{children}</GtagProvider>
               </AuthProvider>
             </ReactQueryProviders>
           </ThemeProvider>

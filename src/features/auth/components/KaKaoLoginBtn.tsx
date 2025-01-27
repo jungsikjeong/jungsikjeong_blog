@@ -27,10 +27,10 @@ export function KakaoLoginBtn() {
 
   return (
     <Image
-      width={250}
+      width={200}
       height={50}
       priority
-      src='/images/kakao_login_medium_wide.png'
+      src='/images/kakao_login_medium_narrow.png'
       alt='카카오 로그인 버튼'
       className='cursor-pointer'
       onClick={handleKakaoSignIn}

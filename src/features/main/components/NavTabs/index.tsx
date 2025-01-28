@@ -1,8 +1,8 @@
 'use client'
 
-import { useNavTab } from '@/features/main/hooks/useNavTab'
 import { Button } from '@/shared/components/ui/button'
 import { Tab } from '../../types/tab'
+import { useNavTab } from '../../hooks/useNavTab'
 
 const TABS: Tab[] = ['Overview', 'Repositories', 'Projects']
 

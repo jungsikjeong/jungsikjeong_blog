@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { Button } from '@/shared/components/ui/button'
 import Link from 'next/link'
-import KakaoLoginBtn from '@/features/auth/index'
+import { KaKaoLoginBtn } from '@/features/auth'
 
 export default function LoginPage() {
   return (
@@ -9,7 +9,7 @@ export default function LoginPage() {
       <div className='flex w-full justify-center'>
         <div className='relative h-64 w-64'>
           <div className='absolute left-1/3 top-11 z-10 -translate-x-1/2 transition-all duration-300 hover:scale-105'>
-            <KakaoLoginBtn />
+            <KaKaoLoginBtn />
           </div>
 
           <div className='group relative h-64 w-64'>

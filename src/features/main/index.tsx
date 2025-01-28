@@ -1,3 +1,1 @@
-import { default as NavTabs } from '@/features/main/components/NavTabs'
-
-export default NavTabs
+export { default as NavTabs } from './components/NavTabs'

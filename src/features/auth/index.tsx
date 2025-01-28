@@ -1,3 +1,1 @@
-import { default as KaKaoLoginBtn } from '@/features/auth/components/KaKaoLoginBtn'
-
-export default KaKaoLoginBtn
+export { default as KaKaoLoginBtn } from './components/KaKaoLoginBtn'

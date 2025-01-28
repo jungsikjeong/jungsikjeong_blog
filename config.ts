@@ -1,9 +1,8 @@
 const CONFIG = {
   // 필수 : 웹앱 이름을 적어주세요.
-  appName: 'SupabasePlayground',
+  appName: 'jungsik.jeong_blog',
   // 필수 : 앱 설명 (SEO 태그에 사용됨. 덮어쓸 수 있음)
-  appDescription:
-    '슈파베이스 플레이그라운드를 통해 개발 시간을 단축시켜보세요!',
+  appDescription: '정중식의 블로그입니다.',
   // 필수입력 (https:// 빼고 도메인만 입력. 끝에 /도 빼야 함. ex) yoursite.com
   domainName: process.env.NEXT_PUBLIC_DOMAIN_NAME || 'http://localhost:3000',
   supportEmail: 'wndtlr1024@gmail.com',
@@ -34,6 +33,6 @@ const CONFIG = {
   },
 
   isProd: process.env.VERCEL_ENV === 'production', // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
-};
+}
 
-export default CONFIG;
+export default CONFIG

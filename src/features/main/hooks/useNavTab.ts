@@ -6,7 +6,9 @@ export const useNavTab = (defaultTab: Tab = 'Overview') => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const [activeTab, setActiveTab] = useState<Tab>(defaultTab)
+  const [activeTab, setActiveTab] = useState<Tab>(
+    (searchParams.get('tab') as Tab) ?? defaultTab,
+  )
 
   useEffect(() => {
     const currentTab = searchParams.get('tab') as Tab | null

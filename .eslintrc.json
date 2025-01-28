@@ -10,7 +10,12 @@
     "no-restricted-imports": [
       "error",
       {
-        "patterns": ["@/features/*/*"]
+        "patterns": [
+          {
+            "group": ["@/features/*/**"],
+            "message": "Please use the components folder instead of the features folder"
+          }
+        ]
       }
     ],
     "import/no-cycle": "error"

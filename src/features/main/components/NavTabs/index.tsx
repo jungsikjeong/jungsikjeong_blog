@@ -1,27 +1,54 @@
 'use client'
 
-import { Button } from '@/shared/components/ui/button'
-import { Tab } from '../../types/tab'
-import { useNavTab } from '../../hooks/useNavTab'
-
-const TABS: Tab[] = ['Overview', 'Repositories', 'Projects']
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function NavTabs() {
-  const { activeTab, switchTab } = useNavTab('Overview')
+  const pathname = usePathname()
+  const activeTab = pathname.split('/')[1]
 
   return (
-    <nav className='flex border-b border-border'>
-      {TABS.map((tab) => (
-        <Button
-          key={tab}
-          className={`px-4 py-2 ${
-            activeTab === tab ? 'border-b-2 border-orange-500' : ''
-          }`}
-          onClick={() => switchTab(tab)}
-        >
-          {tab}
-        </Button>
-      ))}
-    </nav>
+    <div className='mt-4 border-b px-2'>
+      <nav className='mx-auto grid max-w-[1280px] grid-cols-[300px_1fr]'>
+        <div />
+        <ul className='flex h-11 list-none items-center gap-4'>
+          <li>
+            <Link
+              href='/'
+              className={`github-hover inline-block px-2 ${
+                activeTab === '' &&
+                'relative after:absolute after:bottom-[-11px] after:left-0 after:z-10 after:h-[1px] after:w-full after:bg-orange-500'
+              }`}
+            >
+              Overview
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              href='/repositories'
+              className={`github-hover inline-block px-2 ${
+                activeTab === 'repositories' &&
+                'relative after:absolute after:bottom-[-11px] after:left-0 after:z-10 after:h-[1px] after:w-full after:bg-orange-500'
+              }`}
+            >
+              Repositories
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              href='/projects'
+              className={`github-hover inline-block px-2 ${
+                activeTab === 'projects' &&
+                'relative after:absolute after:bottom-[-11px] after:left-0 after:z-10 after:h-[1px] after:w-full after:bg-orange-500'
+              }`}
+            >
+              Projects
+            </Link>
+          </li>
+        </ul>
+      </nav>
+    </div>
   )
 }

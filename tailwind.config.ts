@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import plugin from 'tailwindcss/plugin'
 
 const config = {
   darkMode: ['class'],
@@ -55,6 +56,14 @@ const config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+
+        hover: {
+          bg: 'hsl(var(--hover-bg))',
+          border: 'hsl(var(--hover-border))',
+          shadow: 'hsla(var(--hover-shadow))',
+          button: 'hsl(var(--button-hover))',
+          link: 'hsl(var(--link-hover))',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -74,10 +83,40 @@ const config = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'card-hover': 'card-hover 0.2s ease-out forwards',
+      },
+
+      transitionProperty: {
+        github:
+          'background-color, border-color, color, fill, stroke, box-shadow, transform',
+      },
+
+      boxShadow: {
+        'github-hover': '0 1px 3px hsla(var(--hover-shadow))',
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    // GitHub 스타일 유틸리티 클래스 추가
+    plugin(({ addUtilities }) => {
+      addUtilities({
+        '.github-transition': {
+          '@apply transition-github duration-200 ease-in-out': {},
+        },
+        '.github-hover': {
+          '@apply hover:bg-hover-bg hover:border-hover-border hover:shadow-github-hover hover:rounded-md':
+            {},
+        },
+        '.github-button-hover': {
+          '@apply hover:bg-hover-button transition-colors duration-200': {},
+        },
+        '.github-link-hover': {
+          '@apply hover:text-hover-link transition-colors duration-200': {},
+        },
+      })
+    }),
+  ],
 } satisfies Config
 
 export default config

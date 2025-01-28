@@ -30,6 +30,11 @@
     --chart-3: 212 40% 45%;
     --chart-4: 212 30% 45%;
     --chart-5: 212 20% 45%;
+    --hover-bg: 210 14% 97%;
+    --hover-border: 210 18% 82%;
+    --hover-shadow: 210 18% 87% 0.4;
+    --button-hover: 212 92% 43%;
+    --link-hover: 212 92% 43%;
   }
 
   .dark {
@@ -58,6 +63,11 @@
     --chart-3: 212 40% 45%;
     --chart-4: 212 30% 45%;
     --chart-5: 212 20% 45%;
+    --hover-bg: 215 14% 17%;
+    --hover-border: 215 14% 28%;
+    --hover-shadow: 215 14% 24% 0.4;
+    --button-hover: 212 92% 48%;
+    --link-hover: 212 92% 48%;
   }
 }
 @layer base {
@@ -66,5 +76,53 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  /* 카드 호버 효과 */
+  .github-card {
+    @apply transition-all duration-200 ease-in-out;
+  }
+
+  .github-card:hover {
+    @apply border-[hsl(var(--hover-border))] bg-[hsl(var(--hover-bg))];
+    box-shadow: 0 1px 3px hsla(var(--hover-shadow));
+  }
+
+  /* 버튼 호버 효과 */
+  .github-button {
+    @apply transition-colors duration-200;
+  }
+
+  .github-button:hover {
+    @apply bg-[hsl(var(--button-hover))];
+  }
+
+  /* 링크 호버 효과 */
+  .github-link {
+    @apply transition-colors duration-200;
+  }
+
+  .github-link:hover {
+    @apply text-[hsl(var(--link-hover))] underline;
+  }
+
+  /* 리스트 아이템 호버 효과 */
+  .github-list-item {
+    @apply transition-colors duration-100;
+  }
+
+  .github-list-item:hover {
+    @apply bg-[hsl(var(--hover-bg))];
+  }
+
+  /* 네비게이션 아이템 호버 효과 */
+  .github-nav-item {
+    @apply transition-colors duration-200;
+  }
+
+  .github-nav-item:hover {
+    @apply border-b-2 border-[hsl(var(--hover-border))] bg-[hsl(var(--hover-bg))];
   }
 }

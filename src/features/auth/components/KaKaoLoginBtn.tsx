@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/client'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 
-export function KakaoLoginBtn() {
+function KakaoLoginBtn() {
   const supabase = createClient()
   const searchParams = useSearchParams()
   const redirectTo = searchParams.get('redirect_to')
@@ -37,3 +37,5 @@ export function KakaoLoginBtn() {
     />
   )
 }
+
+export default KakaoLoginBtn

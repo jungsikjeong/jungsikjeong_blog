@@ -19,7 +19,7 @@ interface ILoginButtonProps {
 }
 
 export default function LoginButton({
-  size = 'sm',
+  size = 'default',
   variant = 'default',
   className,
 }: ILoginButtonProps) {
@@ -29,7 +29,7 @@ export default function LoginButton({
       variant={variant}
       className={cn('text-sm sm:px-4 sm:text-base', className)}
     >
-      <Link href='/auth/login'>Sign in</Link>
+      <Link href='/auth/login0'>Sign in</Link>
     </Button>
   )
 }

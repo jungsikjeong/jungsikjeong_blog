@@ -52,4 +52,5 @@ export async function getDehydratedQueries<Q extends QueryProps[]>(queries: Q) {
 
 export const Hydrate = HydrationBoundary
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {}

@@ -1,16 +1,7 @@
 import Image from 'next/image'
-
 import { Button } from '@/shared/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/shared/components/ui/card'
-import { KakaoLoginBtn } from '@/features/auth/components/KaKaoLoginBtn'
 import Link from 'next/link'
+import KakaoLoginBtn from '@/features/auth/index'
 
 export default function LoginPage() {
   return (

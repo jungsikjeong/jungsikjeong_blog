@@ -12,8 +12,8 @@
       {
         "patterns": [
           {
-            "group": ["@/features/*/**"],
-            "message": "Please use the components folder instead of the features folder"
+            "group": ["@/features/*/*"],
+            "message": "기능 폴더 대신 구성 요소 폴더를 사용하십시오."
           }
         ]
       }

@@ -12,12 +12,12 @@ export function Header() {
   return (
     <header className='h-[65px] bg-header px-4 py-2'>
       {/* 모바일 헤더 */}
-      <div className='block sm:hidden'>
+      <div className='block md:hidden'>
         {!user ? <MobileUnauthHeader /> : <MobileAuthHeader user={user} />}
       </div>
 
       {/* 데스크탑 헤더 */}
-      <div className='hidden sm:block'>
+      <div className='hidden md:block'>
         {!user ? (
           <UnauthenticatedHeader />
         ) : (

@@ -1,17 +1,17 @@
 import { cn } from '@/lib/utils'
 import React, { useState } from 'react'
 
-interface IHamburgerMenuProps {
+interface IHamburgerMenuBtnProps {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
   className?: string
 }
 
-const HamburgerMenu = ({
+const HamburgerMenuBtn = ({
   isOpen,
   setIsOpen,
   className,
-}: IHamburgerMenuProps) => {
+}: IHamburgerMenuBtnProps) => {
   return (
     <button
       className={cn(
@@ -41,4 +41,4 @@ const HamburgerMenu = ({
   )
 }
 
-export default HamburgerMenu
+export default HamburgerMenuBtn

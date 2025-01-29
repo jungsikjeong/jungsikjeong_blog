@@ -12,7 +12,7 @@ import {
 import { Button } from '../ui/button'
 import { cn } from '@/lib/utils'
 
-export function ModeToggle({ className }: { className?: string }) {
+export function ThemeToggle({ className }: { className?: string }) {
   const { setTheme } = useTheme()
 
   return (

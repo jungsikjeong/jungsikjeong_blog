@@ -1,15 +1,18 @@
 'use client'
 
-import LoginButton from '../auth/LoginButton'
-import Search from '../search'
-import { ModeToggle } from '../theme/theme-mode-toggle'
+import LoginButton from '../../auth/LoginButton'
+import SearchInput from '../../search'
+import { ModeToggle } from '../../theme/theme-mode-toggle'
 
-export default function UnauthenticatedHeader() {
+export default function UnautHeader() {
   return (
     <nav className='flex h-full items-center'>
       <div className='flex h-full w-full items-center'>
         <div className='flex-1'>
-          <Search />
+          <SearchInput
+            placeholder='Search or jump to...'
+            className='hidden h-8 w-60 text-sm md:block'
+          />
         </div>
 
         <div className='group relative h-12 w-12 overflow-hidden rounded-full'>

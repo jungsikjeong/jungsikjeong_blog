@@ -1,13 +1,12 @@
 import { getSEOTags } from '@/lib/seo'
 import { AuthProvider } from '@/providers/AuthProvider'
-import { GtagProvider } from '@/providers/GtagProvider'
 import ReactQueryProviders from '@/providers/useReactQueryProvider'
 import Scripts from '@/shared/components/analytics/GoogleAnalytics'
-import { Header } from '@/shared/components/header'
 import { ThemeProvider } from '@/shared/components/theme/theme-provider'
+import { getCurrentUser } from '@/utils/supabase/auth'
+import React from 'react'
 import './globals.css'
 import { spoqa } from './nextFont'
-import { getCurrentUser } from '@/utils/supabase/auth'
 
 export const viewport = {
   width: 'device-width',

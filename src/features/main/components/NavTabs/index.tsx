@@ -8,7 +8,7 @@ export default function NavTabs() {
   const activeTab = pathname.split('/')[1]
 
   return (
-    <div className='mt-4 border-b px-2'>
+    <div className='mt-4 hidden border-b px-2 md:block'>
       <nav className='mx-auto grid max-w-[1280px] grid-cols-[300px_1fr]'>
         <div />
         <ul className='flex h-11 list-none items-center gap-4'>

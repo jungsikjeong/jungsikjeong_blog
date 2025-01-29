@@ -56,13 +56,19 @@ const config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
-
         hover: {
           bg: 'hsl(var(--hover-bg))',
           border: 'hsl(var(--hover-border))',
           shadow: 'hsla(var(--hover-shadow))',
           button: 'hsl(var(--button-hover))',
           link: 'hsl(var(--link-hover))',
+        },
+        chart: {
+          '1': 'hsl(var(--chart-1))',
+          '2': 'hsl(var(--chart-2))',
+          '3': 'hsl(var(--chart-3))',
+          '4': 'hsl(var(--chart-4))',
+          '5': 'hsl(var(--chart-5))',
         },
       },
       borderRadius: {
@@ -72,12 +78,20 @@ const config = {
       },
       keyframes: {
         'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' },
+          from: {
+            height: '0',
+          },
+          to: {
+            height: 'var(--radix-accordion-content-height)',
+          },
         },
         'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' },
+          from: {
+            height: 'var(--radix-accordion-content-height)',
+          },
+          to: {
+            height: '0',
+          },
         },
       },
       animation: {
@@ -85,12 +99,10 @@ const config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'card-hover': 'card-hover 0.2s ease-out forwards',
       },
-
       transitionProperty: {
         github:
           'background-color, border-color, color, fill, stroke, box-shadow, transform',
       },
-
       boxShadow: {
         'github-hover': '0 1px 3px hsla(var(--hover-shadow))',
       },

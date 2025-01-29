@@ -1,13 +1,20 @@
 'use client'
 
+import { cn } from '@/lib/utils'
 import { Input } from '../ui/input'
 
-export default function Search() {
+interface SearchInputProps {
+  className?: string
+  placeholder: string
+}
+
+export default function SearchInput({
+  className,
+  placeholder,
+}: SearchInputProps) {
   return (
-    <Input
-      type='text'
-      placeholder='Search or jump to...'
-      className='h-8 w-60 text-sm'
-    />
+    <>
+      <Input type='text' placeholder={placeholder} className={cn(className)} />
+    </>
   )
 }

@@ -1,12 +1,11 @@
 'use client'
 
-import { Button } from '@/shared/components/ui/button'
-import { createClient } from '@/lib/supabase/client'
+import useCreateClient from '@/lib/supabase/client'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 
 function KakaoLoginBtn() {
-  const supabase = createClient()
+  const supabase = useCreateClient()
   const searchParams = useSearchParams()
   const redirectTo = searchParams.get('redirect_to')
 

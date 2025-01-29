@@ -1,6 +1,6 @@
 'use client'
 
-import { createClient } from '@/lib/supabase/client'
+import useCreateClient from '@/lib/supabase/client'
 import { Tables } from '@/types/supabase'
 import { useQueryClient } from '@tanstack/react-query'
 import React, {
@@ -25,7 +25,7 @@ interface IAuthProviderProps {
 }
 
 export function AuthProvider({ initialUser, children }: IAuthProviderProps) {
-  const supabase = createClient()
+  const supabase = useCreateClient()
   const queryClient = useQueryClient()
 
   const [user, setUser] = useState<Tables<'members'> | null>(initialUser)

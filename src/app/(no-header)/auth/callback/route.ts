@@ -69,7 +69,7 @@ export async function GET(request: Request) {
         {
           id: data.user.id,
           email: data.user.email as string,
-          nickname: data.user.user_metadata.preferred_username,
+          username: data.user.user_metadata.preferred_username,
           avatar_url: data.user.user_metadata.avatar_url,
         },
       ])

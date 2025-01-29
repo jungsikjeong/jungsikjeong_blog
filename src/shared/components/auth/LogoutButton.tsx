@@ -4,7 +4,7 @@ import React from 'react'
 import { Button } from '../ui/button'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
+import useCreateClient from '@/lib/supabase/client'
 
 interface ILogoutButtonProps {
   size?: 'default' | 'sm' | 'lg' | 'icon' | null | undefined
@@ -26,7 +26,7 @@ export default function LogoutButton({
   className,
 }: ILogoutButtonProps) {
   const router = useRouter()
-  const supabase = createClient()
+  const supabase = useCreateClient()
 
   return (
     <Button

@@ -19,7 +19,7 @@ export default function UserMenu({ user }: { user: Tables<'members'> }) {
         <Button variant='ghost' size='icon' className='hover:bg-transparent'>
           <Avatar className='h-8 w-8'>
             <AvatarImage src={user.avatar_url || ''} />
-            <AvatarFallback>{user.nickname[0]}</AvatarFallback>
+            <AvatarFallback>{user.username[0]}</AvatarFallback>
           </Avatar>
 
           <ChevronDown className='h-4 w-4 text-white' />

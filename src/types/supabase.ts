@@ -15,21 +15,54 @@ export type Database = {
           created_at: string
           email: string
           id: string
-          nickname: string
+          is_admin: boolean | null
+          nickname: string | null
+          username: string
         }
         Insert: {
           avatar_url?: string | null
           created_at?: string
           email: string
           id?: string
-          nickname: string
+          is_admin?: boolean | null
+          nickname?: string | null
+          username: string
         }
         Update: {
           avatar_url?: string | null
           created_at?: string
           email?: string
           id?: string
-          nickname?: string
+          is_admin?: boolean | null
+          nickname?: string | null
+          username?: string
+        }
+        Relationships: []
+      }
+      profile: {
+        Row: {
+          bio: string | null
+          blog: string | null
+          created_at: string
+          email: string
+          location: string | null
+          social_accounts: string[] | null
+        }
+        Insert: {
+          bio?: string | null
+          blog?: string | null
+          created_at?: string
+          email: string
+          location?: string | null
+          social_accounts?: string[] | null
+        }
+        Update: {
+          bio?: string | null
+          blog?: string | null
+          created_at?: string
+          email?: string
+          location?: string | null
+          social_accounts?: string[] | null
         }
         Relationships: []
       }

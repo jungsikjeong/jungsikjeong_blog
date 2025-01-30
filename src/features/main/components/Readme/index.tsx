@@ -19,25 +19,13 @@ import { ImageNode } from '@/shared/editor/nodes/ImageNode/ImageNode'
 import { TableNode, TableCellNode, TableRowNode } from '@lexical/table'
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode'
 import EditorTheme from '@/shared/editor/themes'
+import { nodes } from '@/shared/editor/nodes'
 
 const initialConfig = {
   namespace: 'MyReadmeEditor',
   onError: (error: Error) => console.error(error),
   editable: true,
-  nodes: [
-    HeadingNode,
-    QuoteNode,
-    CodeNode,
-    CodeHighlightNode,
-    TableNode,
-    TableCellNode,
-    TableRowNode,
-    ListNode,
-    ListItemNode,
-    LinkNode,
-    ImageNode,
-    HorizontalRuleNode,
-  ],
+  nodes: nodes,
   theme: EditorTheme,
 }
 

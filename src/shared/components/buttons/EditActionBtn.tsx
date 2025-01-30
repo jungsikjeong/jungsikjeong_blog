@@ -8,10 +8,12 @@ export default function EditActionBtn({
   className,
   variant,
   onClick,
+  title,
 }: {
   className: string
   variant?: 'ghost' | 'default'
   onClick?: () => void
+  title?: string
 }) {
   return (
     <Button
@@ -19,6 +21,7 @@ export default function EditActionBtn({
       size={'icon'}
       variant={variant}
       onClick={onClick}
+      title={title}
     >
       <PencilLine className='h-4 w-4' />
     </Button>

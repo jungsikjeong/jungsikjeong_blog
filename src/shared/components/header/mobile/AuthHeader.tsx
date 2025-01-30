@@ -3,7 +3,7 @@
 import { Tables } from '@/types/supabase'
 import UserMenu from '../../auth/UserMenu'
 import { ThemeToggle } from '../../theme/theme-mode-toggle'
-import MobileMenu from '../../../menu/MobileMenu'
+import MobileMenu from '../../menu/MobileMenu'
 
 export default function AuthHeader({ user }: { user: Tables<'members'> }) {
   return (

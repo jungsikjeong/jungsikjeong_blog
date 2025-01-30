@@ -4,8 +4,8 @@ import { Tables } from '@/types/supabase'
 import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
-import SearchInput from '../components/search'
-import HamburgerMenuBtn from '../components/ui/hamburger-menu-btn'
+import SearchInput from '../search'
+import HamburgerMenuBtn from '../ui/hamburger-menu-btn'
 
 // TODO: 추후 db 테이블에 넣고 사용할지 고민..
 const MENU_ITEMS = [

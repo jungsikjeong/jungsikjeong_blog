@@ -4,7 +4,7 @@ import { useState } from 'react'
 import LoginButton from '../../auth/LoginButton'
 import SearchInput from '../../search'
 import { ThemeToggle } from '../../theme/theme-mode-toggle'
-import MobileMenu from '../../../menu/MobileMenu'
+import MobileMenu from '../../menu/MobileMenu'
 import Logo from '../../logo'
 
 export default function UnautHeader() {

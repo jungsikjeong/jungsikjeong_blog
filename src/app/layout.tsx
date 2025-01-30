@@ -2,7 +2,6 @@ import { getSEOTags } from '@/lib/seo'
 import { AuthProvider } from '@/providers/AuthProvider'
 import ReactQueryProviders from '@/providers/useReactQueryProvider'
 import Scripts from '@/shared/components/analytics/GoogleAnalytics'
-import { Header } from '@/shared/components/header'
 import { NavigationProgress } from '@/shared/components/navigationProgress'
 import { ThemeProvider } from '@/shared/components/theme/theme-provider'
 import { getCurrentUser } from '@/utils/supabase/auth'
@@ -42,8 +41,8 @@ export default async function RootLayout({
             <ReactQueryProviders>
               <AuthProvider initialUser={currentUser}>
                 <NavigationProgress />
-                <Header />
-                <section className='py-4'>{children}</section>
+
+                {children}
               </AuthProvider>
             </ReactQueryProviders>
           </ThemeProvider>

@@ -15,20 +15,17 @@ class ProfileService extends Service {
 
     if (error) throw error
 
-    const profileData = {
+    return {
       avatar_url: data.avatar_url,
       username: data.username,
       nickname: data.nickname,
       bio: data.profile.bio,
       blog: data.profile.blog,
       created_at: data.profile.created_at,
-      description: data.profile.description,
       email: data.profile.email,
       location: data.profile.location,
       social_accounts: data.profile.social_accounts,
     }
-
-    return profileData
   }
 }
 

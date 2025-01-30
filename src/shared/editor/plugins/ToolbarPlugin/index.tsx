@@ -30,9 +30,12 @@ export function ToolbarPlugin() {
   const [isItalic, setIsItalic] = useState(false)
   const [isOrderedList, setIsOrderedList] = useState(false)
   const [isUnorderedList, setIsUnorderedList] = useState(false)
+  const [modifierKey, setModifierKey] = useState('Ctrl')
 
-  const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0
-  const modifierKey = isMac ? '⌘' : 'Ctrl'
+  useEffect(() => {
+    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0
+    setModifierKey(isMac ? '⌘' : 'Ctrl')
+  }, [])
 
   useEffect(() => {
     return editor.registerUpdateListener(({ editorState }) => {

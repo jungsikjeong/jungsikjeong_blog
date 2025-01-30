@@ -36,7 +36,7 @@ export default function Readme() {
           <RichTextPlugin
             contentEditable={
               <div className='relative'>
-                <ContentEditable className='editor-input h-[300px] overflow-y-auto px-4 py-3 text-gray-900 focus:border-none focus:outline-none focus:ring-0 dark:text-gray-100' />
+                <ContentEditable className='editor-input h-[280px] overflow-y-auto px-4 py-3 text-gray-900 focus:border-none focus:outline-none focus:ring-0 dark:text-gray-100' />
                 <PlaceholderPlugin />
               </div>
             }

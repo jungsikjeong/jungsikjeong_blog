@@ -2,12 +2,13 @@ import { getSEOTags } from '@/lib/seo'
 import { AuthProvider } from '@/providers/AuthProvider'
 import ReactQueryProviders from '@/providers/useReactQueryProvider'
 import Scripts from '@/shared/components/analytics/GoogleAnalytics'
+import { Header } from '@/shared/components/header'
+import { NavigationProgress } from '@/shared/components/navigationProgress'
 import { ThemeProvider } from '@/shared/components/theme/theme-provider'
 import { getCurrentUser } from '@/utils/supabase/auth'
 import React from 'react'
 import './globals.css'
 import { spoqa } from './nextFont'
-import { NavigationProgress } from '@/shared/components/navigationProgress'
 
 export const viewport = {
   width: 'device-width',
@@ -29,7 +30,7 @@ export default async function RootLayout({
       <Scripts />
 
       <body className={spoqa.className}>
-        <main>
+        <main className=''>
           <ThemeProvider
             attribute='class'
             defaultTheme='system'
@@ -41,7 +42,8 @@ export default async function RootLayout({
             <ReactQueryProviders>
               <AuthProvider initialUser={currentUser}>
                 <NavigationProgress />
-                {children}
+                <Header />
+                <section className='py-4'>{children}</section>
               </AuthProvider>
             </ReactQueryProviders>
           </ThemeProvider>

@@ -4,7 +4,7 @@ import { Button } from '../ui/button'
 import { Label } from '../ui/label'
 import ProfileEditBtn from '../buttons/ProfileEditBtn'
 // import { useAuth } from '@/providers/AuthProvider'
-import { PictureEditBtn, StatusBtn } from '../buttons'
+import { EditActionBtn, StatusBtn } from '../buttons'
 
 export default function MyProfile() {
   // const { user } = useAuth()
@@ -25,14 +25,14 @@ export default function MyProfile() {
           <input type='file' id='file' className='hidden' />
 
           {/* 이미지 편집 버튼 -모바일용 */}
-          <PictureEditBtn className='absolute left-0 top-0 h-7 w-7 rounded-full border bg-black text-xs text-white hover:bg-black dark:hover:text-primary md:hidden' />
+          <EditActionBtn className='absolute left-0 top-0 h-7 w-7 rounded-full border bg-black text-xs text-white hover:bg-black dark:hover:text-primary md:hidden' />
 
           {/* 상태 편집 버튼 - 모바일용 */}
           <StatusBtn className='absolute bottom-0 right-0 h-7 w-7 rounded-full border bg-black text-xs hover:bg-black dark:hover:text-primary md:hidden' />
 
           {/* 이미지 편집 및 상태 편집 - 데스크탑용*/}
           <div className='absolute -bottom-2 left-0 z-10 hidden w-full items-center justify-between md:bottom-12 md:flex'>
-            <PictureEditBtn className='rounded-full border bg-black text-xs text-white hover:bg-black dark:hover:text-primary' />
+            <EditActionBtn className='rounded-full border bg-black text-xs text-white hover:bg-black dark:hover:text-primary' />
 
             <StatusBtn className='rounded-full border bg-black text-xs hover:bg-black dark:hover:text-primary' />
           </div>

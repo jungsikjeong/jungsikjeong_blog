@@ -40,6 +40,7 @@ import {
   $isParagraphNode,
   $isTextNode,
   LexicalNode,
+  TextNode,
 } from 'lexical'
 
 import {
@@ -251,11 +252,72 @@ const mapToTableCells = (textContent: string): Array<TableCellNode> | null => {
   return match[1].split('|').map((text) => $createTableCell(text))
 }
 
+// 텍스트 포맷 변환기 추가
+const BOLD: TextMatchTransformer = {
+  dependencies: [],
+  export: (node) => {
+    if (!$isTextNode(node) || !node.hasFormat('bold')) return null
+    return `**${node.getTextContent()}**`
+  },
+  type: 'text-match',
+  regExp: /\*\*([^*]+)\*\*/,
+  replace: (textNode, match) => {
+    textNode.setFormat('bold')
+    textNode.setTextContent(match[1])
+  },
+}
+
+const ITALIC: TextMatchTransformer = {
+  dependencies: [],
+  export: (node) => {
+    if (!$isTextNode(node) || !node.hasFormat('italic')) return null
+    return `_${node.getTextContent()}_`
+  },
+  type: 'text-match',
+  regExp: /\_([^_]+)\_/,
+  replace: (textNode: TextNode, match: RegExpMatchArray) => {
+    textNode.setFormat('italic')
+    textNode.setTextContent(match[1])
+  },
+}
+
+const STRIKETHROUGH: TextMatchTransformer = {
+  dependencies: [],
+  export: (node) => {
+    if (!$isTextNode(node) || !node.hasFormat('strikethrough')) return null
+    return `~~${node.getTextContent()}~~`
+  },
+  type: 'text-match',
+  regExp: /~~([^~]+)~~/,
+  replace: (textNode: TextNode, match: RegExpMatchArray) => {
+    textNode.setFormat('strikethrough')
+    textNode.setTextContent(match[1])
+  },
+}
+
+const INLINE_CODE: TextMatchTransformer = {
+  dependencies: [],
+  export: (node) => {
+    if (!$isTextNode(node) || !node.hasFormat('code')) return null
+    return `\`${node.getTextContent()}\``
+  },
+  type: 'text-match',
+  regExp: /`([^`]+)`/,
+  replace: (textNode: TextNode, match: RegExpMatchArray) => {
+    textNode.setFormat('code')
+    textNode.setTextContent(match[1])
+  },
+}
+
 export const PLAYGROUND_TRANSFORMERS: Array<Transformer> = [
   TABLE,
   HR,
   IMAGE,
   CHECK_LIST,
+  BOLD,
+  ITALIC,
+  STRIKETHROUGH,
+  INLINE_CODE,
   ...ELEMENT_TRANSFORMERS,
   ...MULTILINE_ELEMENT_TRANSFORMERS,
   ...TEXT_FORMAT_TRANSFORMERS,

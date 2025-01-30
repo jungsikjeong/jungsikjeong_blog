@@ -31,6 +31,9 @@ export function ToolbarPlugin() {
   const [isOrderedList, setIsOrderedList] = useState(false)
   const [isUnorderedList, setIsUnorderedList] = useState(false)
 
+  const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0
+  const modifierKey = isMac ? '⌘' : 'Ctrl'
+
   useEffect(() => {
     return editor.registerUpdateListener(({ editorState }) => {
       editorState.read(() => {
@@ -170,6 +173,8 @@ export function ToolbarPlugin() {
     <div className='toolbar sticky top-0 z-10 flex items-center gap-1 border-b bg-white p-2 shadow-sm dark:bg-header'>
       <div className='group relative'>
         <button
+          type='button'
+          title={`굵게 (${modifierKey}+B)`}
           onClick={formatBold}
           className={`toolbar-item rounded-md p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${isBold ? 'bg-gray-200 text-blue-600 dark:bg-gray-700 dark:text-blue-400' : 'dark:text-gray-200'}`}
           aria-label='굵게'
@@ -188,12 +193,14 @@ export function ToolbarPlugin() {
             />
           </svg>
           <span className='absolute -bottom-8 left-1/2 hidden -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-white group-hover:block dark:bg-gray-700'>
-            굵게
+            굵게 ({modifierKey}+B)
           </span>
         </button>
       </div>
       <div className='group relative'>
         <button
+          type='button'
+          title={`기울임 (${modifierKey}+I)`}
           onClick={formatItalic}
           className={`toolbar-item rounded-md p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${isItalic ? 'bg-gray-200 text-blue-600 dark:bg-gray-700 dark:text-blue-400' : 'dark:text-gray-200'}`}
           aria-label='기울임'
@@ -212,7 +219,7 @@ export function ToolbarPlugin() {
             />
           </svg>
           <span className='absolute -bottom-8 left-1/2 hidden -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-white group-hover:block dark:bg-gray-700'>
-            기울임
+            기울임 ({modifierKey}+I)
           </span>
         </button>
       </div>
@@ -321,6 +328,7 @@ export function ToolbarPlugin() {
       <div className='group relative'>
         <button
           onClick={insertCodeBlock}
+          title={'코드 블럭'}
           className='toolbar-item rounded-md p-2 transition-colors hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'
           aria-label='코드'
         >
@@ -338,7 +346,7 @@ export function ToolbarPlugin() {
             />
           </svg>
           <span className='absolute -bottom-8 left-1/2 hidden -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-xs text-white group-hover:block dark:bg-gray-700'>
-            코드
+            코드 블럭
           </span>
         </button>
       </div>

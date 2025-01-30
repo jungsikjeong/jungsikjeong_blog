@@ -32,7 +32,67 @@ const EditorTheme = {
   quote: 'border-l-4 border-gray-200 pl-4 my-4 italic',
 
   // 코드 블록 스타일링
-  code: 'bg-gray-100 rounded px-1.5 py-0.5 font-mono text-sm',
+  code: `
+    relative 
+    block
+    bg-[#f7fafb]
+    dark:bg-gray-800 
+    font-mono 
+    text-[14px]
+    text-gray-900
+    dark:text-gray-100
+    px-2 
+    py-2 
+    pl-[52px] 
+    my-2
+    leading-[1.6]
+    overflow-x-auto 
+    tab-[2]
+    before:content-[attr(data-gutter)]
+    before:text-gray-400
+    dark:before:text-gray-500
+    before:absolute
+    before:top-0
+    before:left-0
+    before:bg-[#d9dddf]
+    dark:before:bg-gray-700
+    before:p-2
+    before:min-w-[32px]
+    before:h-full
+    before:text-right
+  `,
+  codeHighlight: {
+    atrule: 'text-purple-500 dark:text-purple-400',
+    attr: 'text-purple-500 dark:text-purple-400',
+    boolean: 'text-blue-500 dark:text-blue-400',
+    builtin: 'text-green-500 dark:text-green-400',
+    cdata: 'text-gray-500 dark:text-gray-400 italic',
+    char: 'text-green-500 dark:text-green-400',
+    class: 'text-yellow-500 dark:text-yellow-400',
+    'class-name': 'text-yellow-500 dark:text-yellow-400',
+    comment: 'text-gray-500 dark:text-gray-400 italic',
+    constant: 'text-blue-500 dark:text-blue-400',
+    deleted: 'text-blue-500 dark:text-blue-400',
+    doctype: 'text-gray-500 dark:text-gray-400 italic',
+    entity: 'text-pink-500 dark:text-pink-400',
+    function: 'text-yellow-500 dark:text-yellow-400',
+    important: 'text-red-500 dark:text-red-400',
+    inserted: 'text-green-500 dark:text-green-400',
+    keyword: 'text-purple-500 dark:text-purple-400',
+    namespace: 'text-red-500 dark:text-red-400',
+    number: 'text-blue-500 dark:text-blue-400',
+    operator: 'text-pink-500 dark:text-pink-400',
+    prolog: 'text-gray-500 dark:text-gray-400 italic',
+    property: 'text-blue-500 dark:text-blue-400',
+    punctuation: 'text-gray-500 dark:text-gray-400',
+    regex: 'text-red-500 dark:text-red-400',
+    selector: 'text-green-500 dark:text-green-400',
+    string: 'text-green-500 dark:text-green-400',
+    symbol: 'text-blue-500 dark:text-blue-400',
+    tag: 'text-blue-500 dark:text-blue-400',
+    url: 'text-pink-500 dark:text-pink-400',
+    variable: 'text-red-500 dark:text-red-400',
+  },
   codeBlock: 'bg-gray-50 rounded-lg p-4 my-4 font-mono text-sm',
 
   // 링크 스타일링

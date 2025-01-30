@@ -9,7 +9,9 @@ export default function page() {
 
       <div className='relative flex flex-col px-4 md:container md:flex-row'>
         <div className='w-full md:w-[300px]'>
-          <MyProfile />
+          <Suspense fallback={<div>Loading...</div>}>
+            <MyProfile />
+          </Suspense>
         </div>
 
         <div className='ml-0 mt-4 flex-1 md:ml-8'>

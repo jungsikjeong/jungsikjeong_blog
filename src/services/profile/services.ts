@@ -2,7 +2,7 @@ import Service from '../Service'
 
 class ProfileService extends Service {
   async getProfile() {
-    const { data: profile, error } = await this.supabase
+    const { data, error } = await this.supabase
       .from('members')
       .select(
         `
@@ -15,7 +15,20 @@ class ProfileService extends Service {
 
     if (error) throw error
 
-    return profile
+    const profileData = {
+      avatar_url: data.avatar_url,
+      username: data.username,
+      nickname: data.nickname,
+      bio: data.profile.bio,
+      blog: data.profile.blog,
+      created_at: data.profile.created_at,
+      description: data.profile.description,
+      email: data.profile.email,
+      location: data.profile.location,
+      social_accounts: data.profile.social_accounts,
+    }
+
+    return profileData
   }
 }
 

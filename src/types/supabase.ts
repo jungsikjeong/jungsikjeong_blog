@@ -44,6 +44,7 @@ export type Database = {
           bio: string | null
           blog: string | null
           created_at: string
+          description: string | null
           email: string
           location: string | null
           social_accounts: string[] | null
@@ -52,6 +53,7 @@ export type Database = {
           bio?: string | null
           blog?: string | null
           created_at?: string
+          description?: string | null
           email: string
           location?: string | null
           social_accounts?: string[] | null
@@ -60,11 +62,20 @@ export type Database = {
           bio?: string | null
           blog?: string | null
           created_at?: string
+          description?: string | null
           email?: string
           location?: string | null
           social_accounts?: string[] | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profile_email_fkey"
+            columns: ["email"]
+            isOneToOne: true
+            referencedRelation: "members"
+            referencedColumns: ["email"]
+          },
+        ]
       }
     }
     Views: {

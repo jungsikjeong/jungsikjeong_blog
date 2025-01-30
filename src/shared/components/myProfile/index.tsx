@@ -1,13 +1,14 @@
-import { MapPin, PencilLine, Smile } from 'lucide-react'
+'use client'
+
+import { MapPin } from 'lucide-react'
 import Image from 'next/image'
-import { Button } from '../ui/button'
-import { Label } from '../ui/label'
-import ProfileEditBtn from '../buttons/ProfileEditBtn'
-// import { useAuth } from '@/providers/AuthProvider'
 import { EditActionBtn, StatusBtn } from '../buttons'
+import ProfileEditBtn from '../buttons/ProfileEditBtn'
+import { Label } from '../ui/label'
+import { useGetProfile } from '@/services/profile/useProfile'
 
 export default function MyProfile() {
-  // const { user } = useAuth()
+  const { data: profile } = useGetProfile()
 
   return (
     <div className='md:absolute md:-top-7'>
@@ -39,19 +40,19 @@ export default function MyProfile() {
         </div>
 
         <div className='md:w-full'>
-          <h3 className='text-2xl'>정중식</h3>
-          <span className='text-sm'>JungsikJeong</span>
+          <h3 className='text-2xl'>{profile.username}</h3>
+          <span className='text-sm'>{profile.nickname}</span>
         </div>
       </div>
 
       <div className='flex flex-col gap-2 text-sm md:gap-4'>
         <div className='pt-4 text-base md:border-b md:pb-2'>
-          <p>프론트엔드 비중이 높은 풀스택 개발자</p>
+          <p>{profile.description}</p>
         </div>
 
         <div className='pb-2 md:border-b'>
           <p className='flex items-center gap-1'>
-            <MapPin /> Bucheon, Korea
+            <MapPin /> {profile.location}
           </p>
         </div>
 

@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import { ProgressLink } from '@/shared/components/navigationProgress/ProgressLink'
 import { usePathname } from 'next/navigation'
 
 export default function NavTabs() {
@@ -13,39 +13,39 @@ export default function NavTabs() {
         <div />
         <ul className='flex h-11 list-none items-center gap-4'>
           <li>
-            <Link
+            <ProgressLink
               href='/'
-              className={`github-hover inline-block px-2 ${
+              className={`inline-block px-2 github-hover ${
                 activeTab === '' &&
                 'relative after:absolute after:bottom-[-11px] after:left-0 after:z-10 after:h-[1px] after:w-full after:bg-orange-500'
               }`}
             >
               Overview
-            </Link>
+            </ProgressLink>
           </li>
 
           <li>
-            <Link
+            <ProgressLink
               href='/repositories'
-              className={`github-hover inline-block px-2 ${
+              className={`inline-block px-2 github-hover ${
                 activeTab === 'repositories' &&
                 'relative after:absolute after:bottom-[-11px] after:left-0 after:z-10 after:h-[1px] after:w-full after:bg-orange-500'
               }`}
             >
               Repositories
-            </Link>
+            </ProgressLink>
           </li>
 
           <li>
-            <Link
+            <ProgressLink
               href='/projects'
-              className={`github-hover inline-block px-2 ${
+              className={`inline-block px-2 github-hover ${
                 activeTab === 'projects' &&
                 'relative after:absolute after:bottom-[-11px] after:left-0 after:z-10 after:h-[1px] after:w-full after:bg-orange-500'
               }`}
             >
               Projects
-            </Link>
+            </ProgressLink>
           </li>
         </ul>
       </nav>

@@ -7,6 +7,7 @@ import { getCurrentUser } from '@/utils/supabase/auth'
 import React from 'react'
 import './globals.css'
 import { spoqa } from './nextFont'
+import { NavigationProgress } from '@/shared/components/navigationProgress'
 
 export const viewport = {
   width: 'device-width',
@@ -38,7 +39,10 @@ export default async function RootLayout({
             enableColorScheme={false} // color-scheme 스타일 비활성화
           >
             <ReactQueryProviders>
-              <AuthProvider initialUser={currentUser}>{children}</AuthProvider>
+              <AuthProvider initialUser={currentUser}>
+                <NavigationProgress />
+                {children}
+              </AuthProvider>
             </ReactQueryProviders>
           </ThemeProvider>
         </main>

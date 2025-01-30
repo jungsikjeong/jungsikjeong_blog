@@ -17,6 +17,9 @@ import {
   $insertNodes,
   $isRangeSelection,
   FORMAT_TEXT_COMMAND,
+  $createParagraphNode,
+  KEY_ENTER_COMMAND,
+  COMMAND_PRIORITY_LOW,
 } from 'lexical'
 import { $createImageNode } from '../../nodes/ImageNode/ImageNode'
 import { useState, useEffect } from 'react'
@@ -47,6 +50,34 @@ export function ToolbarPlugin() {
         }
       })
     })
+  }, [editor])
+
+  useEffect(() => {
+    // 코드 블록 Enter 키 이벤트 리스너 등록
+    return editor.registerCommand(
+      KEY_ENTER_COMMAND,
+      (event) => {
+        const selection = $getSelection()
+        if ($isRangeSelection(selection)) {
+          const node = selection.anchor.getNode()
+          const parent = node.getParent()
+          if (parent && parent.__type === 'code') {
+            // 코드 블록 내부이고 현재 라인이 비어있을 때
+            if (node.getTextContent().trim() === '') {
+              event?.preventDefault()
+              editor.update(() => {
+                const paragraph = $createParagraphNode()
+                parent.replace(paragraph)
+                paragraph.select()
+              })
+              return true
+            }
+          }
+        }
+        return false
+      },
+      COMMAND_PRIORITY_LOW,
+    )
   }, [editor])
 
   const formatBold = () => {

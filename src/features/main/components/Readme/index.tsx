@@ -1,25 +1,18 @@
 'use client'
 
 import { useGetProfile } from '@/services/profile/useProfile'
-import { EditActionBtn } from '@/shared/components/buttons'
+import { nodes } from '@/shared/editor/nodes'
+import CodeHighlightPlugin from '@/shared/editor/plugins/CodeHighlightPlugin'
+import MarkdownPlugin from '@/shared/editor/plugins/MarkdownPlugin'
+import PlaceholderPlugin from '@/shared/editor/plugins/PlaceholderPlugin'
+import { ToolbarPlugin } from '@/shared/editor/plugins/ToolbarPlugin'
+import EditorTheme from '@/shared/editor/themes'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
-import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
-import { ToolbarPlugin } from '@/shared/editor/plugins/ToolbarPlugin'
-import { ListPlugin } from '@lexical/react/LexicalListPlugin'
 import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin'
-import CodeHighlightPlugin from '@/shared/editor/plugins/CodeHighlightPlugin'
-import { HeadingNode, QuoteNode } from '@lexical/rich-text'
-import { ListNode, ListItemNode } from '@lexical/list'
-import { CodeNode, CodeHighlightNode } from '@lexical/code'
-import { LinkNode } from '@lexical/link'
-import MarkdownPlugin from '@/shared/editor/plugins/MarkdownPlugin'
-import { ImageNode } from '@/shared/editor/nodes/ImageNode/ImageNode'
-import { TableNode, TableCellNode, TableRowNode } from '@lexical/table'
-import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode'
-import EditorTheme from '@/shared/editor/themes'
-import { nodes } from '@/shared/editor/nodes'
+import { ListPlugin } from '@lexical/react/LexicalListPlugin'
+import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 
 const initialConfig = {
   namespace: 'MyReadmeEditor',
@@ -42,11 +35,9 @@ export default function Readme() {
           <ListPlugin />
           <RichTextPlugin
             contentEditable={
-              <ContentEditable className='editor-input h-[300px] overflow-y-auto px-4 py-3 text-gray-900 focus:border-none focus:outline-none focus:ring-0 dark:text-gray-100' />
-            }
-            placeholder={
-              <div className='editor-placeholder text-gray-500 dark:text-gray-400'>
-                내용을 입력하세요...
+              <div className='relative'>
+                <ContentEditable className='editor-input h-[300px] overflow-y-auto px-4 py-3 text-gray-900 focus:border-none focus:outline-none focus:ring-0 dark:text-gray-100' />
+                <PlaceholderPlugin />
               </div>
             }
             ErrorBoundary={LexicalErrorBoundary}

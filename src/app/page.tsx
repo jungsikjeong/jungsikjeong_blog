@@ -10,7 +10,7 @@ export default function page() {
       <NavTabs />
 
       <div className='relative flex flex-col px-4 md:container md:flex-row'>
-        <div className='w-[300px]'>
+        <div className='w-full md:w-[300px]'>
           <MyProfile />
         </div>
 

@@ -23,6 +23,9 @@ const config = {
         header: {
           DEFAULT: 'hsl(var(--header))',
         },
+        black: {
+          DEFAULT: 'hsl(var(--black))',
+        },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

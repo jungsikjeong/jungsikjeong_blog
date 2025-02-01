@@ -48,7 +48,7 @@ export default function EditProfileForm({
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input {...field} className='mt-1 h-7' />
+                  <Input {...field} className='mt-1 h-7' placeholder='Name' />
                 </FormControl>
               </FormItem>
             )}
@@ -61,7 +61,11 @@ export default function EditProfileForm({
               <FormItem>
                 <FormLabel>Nickname</FormLabel>
                 <FormControl>
-                  <Input {...field} className='mt-1 h-7' />
+                  <Input
+                    {...field}
+                    className='mt-1 h-7'
+                    placeholder='Nickname'
+                  />
                 </FormControl>
               </FormItem>
             )}
@@ -74,7 +78,7 @@ export default function EditProfileForm({
               <FormItem>
                 <FormLabel>Bio</FormLabel>
                 <FormControl>
-                  <Textarea {...field} className='mt-1' />
+                  <Textarea {...field} className='mt-1' placeholder='Bio' />
                 </FormControl>
               </FormItem>
             )}
@@ -87,7 +91,11 @@ export default function EditProfileForm({
               <FormItem>
                 <FormLabel>Location</FormLabel>
                 <FormControl>
-                  <Input {...field} className='mt-1 h-7' />
+                  <Input
+                    {...field}
+                    className='mt-1 h-7'
+                    placeholder='Location'
+                  />
                 </FormControl>
               </FormItem>
             )}
@@ -100,7 +108,12 @@ export default function EditProfileForm({
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input {...field} className='mt-1 h-7' type='email' />
+                  <Input
+                    {...field}
+                    className='mt-1 h-7'
+                    type='email'
+                    placeholder='Email'
+                  />
                 </FormControl>
               </FormItem>
             )}

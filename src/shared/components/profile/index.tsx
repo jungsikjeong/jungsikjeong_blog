@@ -3,7 +3,7 @@
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useGetProfile } from '@/services/profile/useProfile'
 import { IProfileInfo } from '@/types/profile'
-import { MapPin, PencilLine } from 'lucide-react'
+import { MapPin } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
 import { EditActionBtn } from '../buttons'
@@ -24,10 +24,10 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '../ui/drawer'
-import { Label } from '../ui/label'
 import EditProfileForm from './EditProfileForm'
 import { useUpdateProfileStatus } from './hooks/useUpdateProfileStatus'
-import StatusBtn from './StatusBtn'
+import ProfileImageChangeButton from './ProfileImageChangeButton'
+import ProfileStatusButton from './ProfileStatusButton'
 
 export default function Profile() {
   const [isEditProfile, setIsEditProfile] = useState(false)
@@ -73,25 +73,19 @@ function ProfileImage({
   return (
     <div className='relative flex h-20 w-20 items-center justify-center rounded-full border md:h-80 md:w-80'>
       <Image
-        src={avatarUrl ?? '/images/no-avatar.png'}
+        src={`${avatarUrl ?? '/images/no-avatar.png'}`}
         alt='avatar'
         fill
         priority={true}
         className='rounded-full object-cover'
         sizes='(max-width: 768px) 5rem, 20rem'
       />
-      <Label htmlFor='file' />
-      <input type='file' id='file' className='hidden' />
 
       {/* 이미지 편집 버튼 -모바일용 */}
-      <EditActionBtn
-        tooltip='set Image'
-        title={<PencilLine className='h-4 w-4' />}
-        className='rounded-full border bg-black text-xs text-white hover:bg-black dark:hover:text-primary'
-      />
+      <ProfileImageChangeButton className='absolute -left-2 top-0 h-7 w-7 rounded-full border bg-black text-xs text-white hover:bg-black dark:hover:text-primary md:hidden' />
 
       {/* 상태 편집 버튼 - 모바일용 */}
-      <StatusBtn
+      <ProfileStatusButton
         title='Set Status'
         className='absolute bottom-0 right-0 h-7 w-7 rounded-full border bg-black text-xs hover:bg-black dark:hover:text-primary md:hidden'
         onClick={() => setIsStatusModalOpen(true)}
@@ -100,13 +94,9 @@ function ProfileImage({
 
       {/* 이미지 편집 및 상태 편집 - 데스크탑용*/}
       <div className='absolute -bottom-2 left-0 z-10 hidden w-full items-center justify-between md:bottom-12 md:flex'>
-        <EditActionBtn
-          tooltip='set Image'
-          title={<PencilLine className='h-4 w-4' />}
-          className='rounded-full border bg-black text-xs text-white hover:bg-black dark:hover:text-primary'
-        />
+        <ProfileImageChangeButton className='h-9 w-9 rounded-full border bg-black text-xs text-white hover:bg-black hover:text-accent-foreground hover:text-white dark:hover:text-primary' />
 
-        <StatusBtn
+        <ProfileStatusButton
           title='Set Status'
           className='rounded-full border bg-black text-xs hover:bg-black dark:hover:text-primary'
           onClick={() => setIsStatusModalOpen(true)}

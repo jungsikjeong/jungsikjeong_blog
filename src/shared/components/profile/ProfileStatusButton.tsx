@@ -5,7 +5,7 @@ import { Smile } from 'lucide-react'
 import { Button } from '../ui/button'
 import { cn } from '@/lib/utils'
 
-export default function StatusBtn({
+export default function ProfileStatusButton({
   className,
   title,
   onClick,

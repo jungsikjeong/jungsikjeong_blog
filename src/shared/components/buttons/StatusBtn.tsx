@@ -5,13 +5,26 @@ import { cn } from '@/lib/utils'
 export default function StatusBtn({
   className,
   title,
+  onClick,
+  profileStatus,
 }: {
   className: string
   title: string
+  onClick?: () => void
+  profileStatus: string | null
 }) {
   return (
-    <Button size={'icon'} className={cn('', className)} title={title}>
-      <Smile className='h-4 w-4' />
+    <Button
+      size={'icon'}
+      className={cn('', className)}
+      title={title}
+      onClick={onClick}
+    >
+      {profileStatus ? (
+        <span className='h-4 w-4'>{profileStatus}</span>
+      ) : (
+        <Smile className='h-4 w-4' />
+      )}
     </Button>
   )
 }

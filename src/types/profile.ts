@@ -7,7 +7,7 @@ export interface IProfile {
   username: string
   nickname: string | null
   bio: string | null
-  blog: string | null
+  status: string | null
   created_at: string
   display_email: string | null
   location: string | null

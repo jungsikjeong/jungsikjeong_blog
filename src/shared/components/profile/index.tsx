@@ -9,6 +9,25 @@ import { EditActionBtn, StatusBtn } from '../buttons'
 import ProfileEditBtn from '../buttons/ProfileEditBtn'
 import { Label } from '../ui/label'
 import EditProfileForm from './EditProfileForm'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '../ui/dialog'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+} from '../ui/drawer'
+import { Button } from '../ui/button'
+import { useUpdateProfileStatus } from './hooks/useUpdateProfileStatus'
 
 export default function Profile() {
   const [isEditProfile, setIsEditProfile] = useState(false)
@@ -17,7 +36,10 @@ export default function Profile() {
 
   return (
     <div className='md:absolute md:-top-7'>
-      <ProfileImage avatarUrl={profile?.avatar_url} />
+      <ProfileImage
+        avatarUrl={profile?.avatar_url}
+        profileStatus={profile.status}
+      />
 
       {isEditProfile ? (
         <EditProfileForm
@@ -37,7 +59,15 @@ export default function Profile() {
   )
 }
 
-function ProfileImage({ avatarUrl }: { avatarUrl: string | null }) {
+function ProfileImage({
+  avatarUrl,
+  profileStatus,
+}: {
+  avatarUrl: string | null
+  profileStatus: string | null
+}) {
+  const [isStatusModalOpen, setIsStatusModalOpen] = useState(false)
+
   return (
     <div className='relative flex h-20 w-20 items-center justify-center rounded-full border md:h-80 md:w-80'>
       <Image
@@ -61,6 +91,8 @@ function ProfileImage({ avatarUrl }: { avatarUrl: string | null }) {
       <StatusBtn
         title='Set Status'
         className='absolute bottom-0 right-0 h-7 w-7 rounded-full border bg-black text-xs hover:bg-black dark:hover:text-primary md:hidden'
+        onClick={() => setIsStatusModalOpen(true)}
+        profileStatus={profileStatus}
       />
 
       {/* 이미지 편집 및 상태 편집 - 데스크탑용*/}
@@ -73,8 +105,14 @@ function ProfileImage({ avatarUrl }: { avatarUrl: string | null }) {
         <StatusBtn
           title='Set Status'
           className='rounded-full border bg-black text-xs hover:bg-black dark:hover:text-primary'
+          onClick={() => setIsStatusModalOpen(true)}
+          profileStatus={profileStatus}
         />
       </div>
+
+      {isStatusModalOpen && (
+        <StatusModal onClose={() => setIsStatusModalOpen(false)} />
+      )}
     </div>
   )
 }
@@ -127,5 +165,68 @@ function ProfileInfo({ profile }: IProfileInfo) {
         </div>
       </div>
     </>
+  )
+}
+
+function StatusModal({ onClose }: { onClose: () => void }) {
+  const { mutate: updateStatus } = useUpdateProfileStatus()
+
+  const isDesktop = useMediaQuery('(min-width: 768px)')
+  const emojis = ['😊', '😎', '🎉', '💻', '☕️', '🌟', '🎯', '💪', '✨', '🚀']
+
+  const handleEmojiSelect = (emoji: string) => {
+    updateStatus(emoji)
+    onClose()
+  }
+
+  const EmojiGrid = () => (
+    <div className='grid grid-cols-5 gap-4 p-4'>
+      {emojis.map((emoji) => (
+        <Button
+          key={emoji}
+          onClick={() => handleEmojiSelect(emoji)}
+          className='text-2xl transition-transform hover:scale-125 hover:bg-transparent'
+          variant='ghost'
+          type='button'
+        >
+          {emoji}
+        </Button>
+      ))}
+    </div>
+  )
+
+  if (isDesktop) {
+    return (
+      <Dialog open={true} onOpenChange={() => onClose()}>
+        <DialogContent className='sm:max-w-[425px]'>
+          <DialogHeader>
+            <DialogTitle>상태 설정</DialogTitle>
+            <DialogDescription>
+              원하시는 이모지를 선택해주세요
+            </DialogDescription>
+          </DialogHeader>
+          <EmojiGrid />
+        </DialogContent>
+      </Dialog>
+    )
+  }
+
+  return (
+    <Drawer open={true} onOpenChange={onClose}>
+      <DrawerContent>
+        <DrawerHeader className='text-left'>
+          <DrawerTitle>상태 설정</DrawerTitle>
+          <DrawerDescription>원하시는 이모지를 선택해주세요</DrawerDescription>
+        </DrawerHeader>
+        <EmojiGrid />
+        <DrawerFooter className='pt-2'>
+          <DrawerClose asChild>
+            <Button variant='outline' className='w-full' type='button'>
+              취소
+            </Button>
+          </DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
   )
 }

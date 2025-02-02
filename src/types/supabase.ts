@@ -42,30 +42,30 @@ export type Database = {
       profile: {
         Row: {
           bio: string | null
-          blog: string | null
           created_at: string
           display_email: string | null
           email: string
           location: string | null
           social_accounts: string[] | null
+          status: string | null
         }
         Insert: {
           bio?: string | null
-          blog?: string | null
           created_at?: string
           display_email?: string | null
           email: string
           location?: string | null
           social_accounts?: string[] | null
+          status?: string | null
         }
         Update: {
           bio?: string | null
-          blog?: string | null
           created_at?: string
           display_email?: string | null
           email?: string
           location?: string | null
           social_accounts?: string[] | null
+          status?: string | null
         }
         Relationships: [
           {

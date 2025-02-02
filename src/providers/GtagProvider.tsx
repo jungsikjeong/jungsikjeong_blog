@@ -1,6 +1,6 @@
 'use client'
 
-import useGtagEffect from '@/hook/useGtagEffect'
+import useGtagEffect from '@/hooks/useGtagEffect'
 
 export const GtagProvider = ({ children }: { children: React.ReactNode }) => {
   useGtagEffect()

@@ -21,7 +21,7 @@ class ProfileService extends Service {
       username: data.username,
       nickname: data.nickname,
       bio: data.profile.bio,
-      blog: data.profile.blog,
+      status: data.profile.status,
       created_at: data.profile.created_at,
       display_email: data.profile.display_email,
       location: data.profile.location,
@@ -51,6 +51,15 @@ class ProfileService extends Service {
       .eq('email', process.env.NEXT_PUBLIC_ADMIN_EMAIL as string)
 
     if (profileError) throw profileError
+  }
+
+  async updateStatus(status: string) {
+    const { error } = await this.supabase
+      .from('profile')
+      .update({ status })
+      .eq('email', process.env.NEXT_PUBLIC_ADMIN_EMAIL as string)
+
+    if (error) throw error
   }
 }
 

@@ -1,14 +1,13 @@
 'use client'
 
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useGetProfile } from '@/services/profile/useProfile'
 import { IProfileInfo } from '@/types/profile'
-import { MapPin } from 'lucide-react'
+import { MapPin, PencilLine } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
-import { EditActionBtn, StatusBtn } from '../buttons'
-import ProfileEditBtn from '../buttons/ProfileEditBtn'
-import { Label } from '../ui/label'
-import EditProfileForm from './EditProfileForm'
+import { EditActionBtn } from '../buttons'
+import { Button } from '../ui/button'
 import {
   Dialog,
   DialogContent,
@@ -16,7 +15,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '../ui/dialog'
-import { useMediaQuery } from '@/hooks/useMediaQuery'
 import {
   Drawer,
   DrawerClose,
@@ -26,8 +24,10 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '../ui/drawer'
-import { Button } from '../ui/button'
+import { Label } from '../ui/label'
+import EditProfileForm from './EditProfileForm'
 import { useUpdateProfileStatus } from './hooks/useUpdateProfileStatus'
+import StatusBtn from './StatusBtn'
 
 export default function Profile() {
   const [isEditProfile, setIsEditProfile] = useState(false)
@@ -49,9 +49,11 @@ export default function Profile() {
       ) : (
         <div className='w-full'>
           <ProfileInfo profile={profile} />
-          <ProfileEditBtn
-            onAction={() => setIsEditProfile(true)}
-            className='my-4 rounded-md'
+          <EditActionBtn
+            onClick={() => setIsEditProfile(true)}
+            className='my-4 w-full rounded-md border'
+            title='Edit profile'
+            tooltip='Edit profile'
           />
         </div>
       )}
@@ -83,8 +85,9 @@ function ProfileImage({
 
       {/* 이미지 편집 버튼 -모바일용 */}
       <EditActionBtn
-        title='set Image'
-        className='absolute left-0 top-0 h-7 w-7 rounded-full border bg-black text-xs text-white hover:bg-black dark:hover:text-primary md:hidden'
+        tooltip='set Image'
+        title={<PencilLine className='h-4 w-4' />}
+        className='rounded-full border bg-black text-xs text-white hover:bg-black dark:hover:text-primary'
       />
 
       {/* 상태 편집 버튼 - 모바일용 */}
@@ -98,7 +101,8 @@ function ProfileImage({
       {/* 이미지 편집 및 상태 편집 - 데스크탑용*/}
       <div className='absolute -bottom-2 left-0 z-10 hidden w-full items-center justify-between md:bottom-12 md:flex'>
         <EditActionBtn
-          title='set Image'
+          tooltip='set Image'
+          title={<PencilLine className='h-4 w-4' />}
           className='rounded-full border bg-black text-xs text-white hover:bg-black dark:hover:text-primary'
         />
 

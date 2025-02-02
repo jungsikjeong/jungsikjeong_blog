@@ -1,3 +1,6 @@
+'use client'
+
+import { useAuth } from '@/providers/AuthProvider'
 import { Smile } from 'lucide-react'
 import { Button } from '../ui/button'
 import { cn } from '@/lib/utils'
@@ -13,6 +16,10 @@ export default function StatusBtn({
   onClick?: () => void
   profileStatus: string | null
 }) {
+  const { user } = useAuth()
+
+  if (!user?.is_admin) return null
+
   return (
     <Button
       size={'icon'}

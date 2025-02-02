@@ -1,29 +1,35 @@
 'use client'
 
-import { PencilLine } from 'lucide-react'
-import { Button } from '../ui/button'
 import { cn } from '@/lib/utils'
+import { useAuth } from '@/providers/AuthProvider'
+import { Button } from '../ui/button'
 
 export default function EditActionBtn({
   className,
   variant,
   onClick,
   title,
+  tooltip,
 }: {
   className: string
   variant?: 'ghost' | 'default'
   onClick?: () => void
-  title?: string
+  title?: string | React.ReactNode
+  tooltip?: string
 }) {
+  const { user } = useAuth()
+
+  if (!user?.is_admin) return null
+
   return (
     <Button
       className={cn('', className)}
       size={'icon'}
       variant={variant}
       onClick={onClick}
-      title={title}
+      title={tooltip}
     >
-      <PencilLine className='h-4 w-4' />
+      {title}
     </Button>
   )
 }

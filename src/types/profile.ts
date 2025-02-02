@@ -9,7 +9,7 @@ export interface IProfile {
   bio: string | null
   blog: string | null
   created_at: string
-  display_email: string
+  display_email: string | null
   location: string | null
   social_accounts: string[] | null
 }

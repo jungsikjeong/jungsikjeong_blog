@@ -25,13 +25,13 @@ export default function Profile() {
           onClose={() => setIsEditProfile(false)}
         />
       ) : (
-        <>
+        <div className='w-full'>
           <ProfileInfo profile={profile} />
           <ProfileEditBtn
             onAction={() => setIsEditProfile(true)}
             className='my-4 rounded-md'
           />
-        </>
+        </div>
       )}
     </div>
   )
@@ -82,29 +82,31 @@ function ProfileInfo({ profile }: IProfileInfo) {
           <p>{profile.bio}</p>
         </div>
 
-        <div className=''>
-          <a
-            href={`mailto:${profile.display_email}`}
-            className='transition-colors duration-200 hover:text-blue-500'
-          >
-            {profile.display_email}
-          </a>
-        </div>
+        <div className='my-2 flex flex-col gap-2'>
+          <div className=''>
+            <a
+              href={`mailto:${profile.display_email}`}
+              className='transition-colors duration-200 hover:text-blue-500'
+            >
+              {profile.display_email}
+            </a>
+          </div>
 
-        {profile.social_accounts &&
-          profile.social_accounts
-            .filter((account) => account.trim() !== '')
-            .map((account, index) => (
-              <div className='' key={account + index}>
-                <a
-                  href={account}
-                  target='_blank'
-                  className='transition-colors duration-200 hover:text-blue-500'
-                >
-                  {account}
-                </a>
-              </div>
-            ))}
+          {profile.social_accounts &&
+            profile.social_accounts
+              .filter((account) => account.trim() !== '')
+              .map((account, index) => (
+                <div key={account + index}>
+                  <a
+                    href={account}
+                    target='_blank'
+                    className='transition-colors duration-200 hover:text-blue-500'
+                  >
+                    {account}
+                  </a>
+                </div>
+              ))}
+        </div>
 
         <div className='pb-2 md:border-b'>
           <p className='flex items-center gap-1'>

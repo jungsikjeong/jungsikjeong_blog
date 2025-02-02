@@ -7,7 +7,7 @@ class ProfileService extends Service {
       .from('members')
       .select(
         `
-        username, email, avatar_url, nickname,
+        username, avatar_url, nickname,
         profile!inner(*)
       `,
       )
@@ -23,7 +23,7 @@ class ProfileService extends Service {
       bio: data.profile.bio,
       blog: data.profile.blog,
       created_at: data.profile.created_at,
-      display_email: data.profile.email,
+      display_email: data.profile.display_email,
       location: data.profile.location,
       social_accounts: data.profile.social_accounts,
     }
@@ -49,8 +49,6 @@ class ProfileService extends Service {
         social_accounts: social_accounts?.map((account) => account.url),
       })
       .eq('email', process.env.NEXT_PUBLIC_ADMIN_EMAIL as string)
-
-    console.log(social_accounts?.map((account) => account.url))
 
     if (profileError) throw profileError
   }

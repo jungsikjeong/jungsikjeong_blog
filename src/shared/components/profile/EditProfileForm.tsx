@@ -2,7 +2,14 @@
 import { IProfile } from '@/types/profile'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { Button } from '../ui/button'
-import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '../ui/form'
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
 import { Textarea } from '../ui/textarea'
@@ -27,14 +34,14 @@ export default function EditProfileForm({
       nickname: profile.nickname,
       bio: profile.bio ?? undefined,
       location: profile.location ?? undefined,
-      display_email: profile.display_email,
+      display_email: profile.display_email ?? undefined,
       social_accounts: profile.social_accounts?.map((account) => ({
         url: account,
       })) ?? [{ url: '' }, { url: '' }, { url: '' }, { url: '' }],
     },
   })
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append } = useFieldArray({
     control: form.control,
     name: 'social_accounts',
   })
@@ -47,8 +54,6 @@ export default function EditProfileForm({
         onClose()
       },
     })
-
-    console.log(data)
   }
 
   return (
@@ -58,29 +63,43 @@ export default function EditProfileForm({
           <FormField
             control={form.control}
             name='username'
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input {...field} className='mt-1 h-8' placeholder='Name' />
+                  <Input
+                    {...field}
+                    className={`mt-1 h-8 ${
+                      fieldState.error
+                        ? 'focus:ring-red-500 focus-visible:ring-red-500'
+                        : ''
+                    }`}
+                    placeholder='Name'
+                  />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
           <FormField
             control={form.control}
             name='nickname'
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <FormItem>
                 <FormLabel>Nickname</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     value={field.value ?? ''}
-                    className='mt-1 h-8'
+                    className={`mt-1 h-8 ${
+                      fieldState.error
+                        ? 'focus:ring-red-500 focus-visible:ring-red-500'
+                        : ''
+                    }`}
                     placeholder='Nickname'
                   />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -93,6 +112,7 @@ export default function EditProfileForm({
                 <FormControl>
                   <Textarea {...field} className='mt-1' placeholder='Bio' />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -109,6 +129,7 @@ export default function EditProfileForm({
                     placeholder='Location'
                   />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -122,28 +143,42 @@ export default function EditProfileForm({
                   <Input
                     {...field}
                     className='mt-1 h-8'
+                    value={field.value ?? ''}
                     type='email'
                     placeholder='Email'
                   />
-                </FormControl>
+                </FormControl>{' '}
+                <FormMessage />
               </FormItem>
             )}
           />
 
           <div>
             <Label>Social accounts</Label>
+
             {fields.map((field, index) => (
               <div key={field.id} className='mt-2'>
-                <FormItem className='w-full'>
-                  <FormControl>
-                    <Input
-                      {...form.register(`social_accounts.${index}.url`)}
-                      placeholder='Link to social profile'
-                      className='h-8'
-                      type='text'
-                    />
-                  </FormControl>
-                </FormItem>
+                <FormField
+                  control={form.control}
+                  name={`social_accounts.${index}.url`}
+                  render={({ field, fieldState }) => (
+                    <FormItem className='w-full'>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder='Link to social profile'
+                          className={`h-8 ${
+                            fieldState.error
+                              ? 'focus:ring-red-500 focus-visible:ring-red-500'
+                              : ''
+                          }`}
+                          type='text'
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
             ))}
           </div>

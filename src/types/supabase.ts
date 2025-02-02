@@ -44,6 +44,7 @@ export type Database = {
           bio: string | null
           blog: string | null
           created_at: string
+          display_email: string | null
           email: string
           location: string | null
           social_accounts: string[] | null
@@ -52,6 +53,7 @@ export type Database = {
           bio?: string | null
           blog?: string | null
           created_at?: string
+          display_email?: string | null
           email: string
           location?: string | null
           social_accounts?: string[] | null
@@ -60,6 +62,7 @@ export type Database = {
           bio?: string | null
           blog?: string | null
           created_at?: string
+          display_email?: string | null
           email?: string
           location?: string | null
           social_accounts?: string[] | null

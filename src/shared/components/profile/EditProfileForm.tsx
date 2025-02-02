@@ -6,7 +6,10 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form'
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
 import { Textarea } from '../ui/textarea'
-import { ProfileFormSchema } from './schema'
+import { ProfileFormSchema, profileSchema } from './schema'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Plus, X } from 'lucide-react'
+import { useUpdateProfile } from './hooks/useUpdateProfile'
 
 interface IEditProfileProps {
   profile: IProfile
@@ -18,22 +21,33 @@ export default function EditProfileForm({
   onClose,
 }: IEditProfileProps) {
   const form = useForm<ProfileFormSchema>({
+    resolver: zodResolver(profileSchema),
     defaultValues: {
       username: profile.username,
-      nickname: profile.nickname ?? '',
-      bio: profile.bio ?? '',
-      location: profile.location ?? '',
-      email: profile.email,
-      social_accounts: profile.social_accounts?.map((url) => ({ url })),
+      nickname: profile.nickname,
+      bio: profile.bio ?? undefined,
+      location: profile.location ?? undefined,
+      display_email: profile.display_email,
+      social_accounts: profile.social_accounts?.map((account) => ({
+        url: account,
+      })) ?? [{ url: '' }, { url: '' }, { url: '' }, { url: '' }],
     },
   })
 
-  const { fields, append, replace, remove } = useFieldArray<ProfileFormSchema>({
+  const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: 'social_accounts',
   })
 
+  const { mutate: updateProfile } = useUpdateProfile()
+
   const onSubmit = (data: ProfileFormSchema) => {
+    updateProfile(data, {
+      onSuccess: () => {
+        onClose()
+      },
+    })
+
     console.log(data)
   }
 
@@ -48,12 +62,11 @@ export default function EditProfileForm({
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input {...field} className='mt-1 h-7' placeholder='Name' />
+                  <Input {...field} className='mt-1 h-8' placeholder='Name' />
                 </FormControl>
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name='nickname'
@@ -63,14 +76,14 @@ export default function EditProfileForm({
                 <FormControl>
                   <Input
                     {...field}
-                    className='mt-1 h-7'
+                    value={field.value ?? ''}
+                    className='mt-1 h-8'
                     placeholder='Nickname'
                   />
                 </FormControl>
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name='bio'
@@ -83,7 +96,6 @@ export default function EditProfileForm({
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name='location'
@@ -93,24 +105,23 @@ export default function EditProfileForm({
                 <FormControl>
                   <Input
                     {...field}
-                    className='mt-1 h-7'
+                    className='mt-1 h-8'
                     placeholder='Location'
                   />
                 </FormControl>
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
-            name='email'
+            name='display_email'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    className='mt-1 h-7'
+                    className='mt-1 h-8'
                     type='email'
                     placeholder='Email'
                   />
@@ -121,27 +132,20 @@ export default function EditProfileForm({
 
           <div>
             <Label>Social accounts</Label>
-            {Array(4)
-              .fill(null)
-              .map((_, index) => (
-                <FormField
-                  key={`social-${index}`}
-                  control={form.control}
-                  name={`social_accounts.${index}.url`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder='Link to social profile'
-                          className='mt-1 h-7'
-                          type='url'
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              ))}
+            {fields.map((field, index) => (
+              <div key={field.id} className='mt-2'>
+                <FormItem className='w-full'>
+                  <FormControl>
+                    <Input
+                      {...form.register(`social_accounts.${index}.url`)}
+                      placeholder='Link to social profile'
+                      className='h-8'
+                      type='text'
+                    />
+                  </FormControl>
+                </FormItem>
+              </div>
+            ))}
           </div>
 
           <div className='flex justify-end gap-2'>

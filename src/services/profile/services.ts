@@ -50,6 +50,8 @@ class ProfileService extends Service {
       })
       .eq('email', process.env.NEXT_PUBLIC_ADMIN_EMAIL as string)
 
+    console.log(social_accounts?.map((account) => account.url))
+
     if (profileError) throw profileError
   }
 }

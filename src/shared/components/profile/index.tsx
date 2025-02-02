@@ -29,7 +29,7 @@ export default function Profile() {
           <ProfileInfo profile={profile} />
           <ProfileEditBtn
             onAction={() => setIsEditProfile(true)}
-            className='mt-4 rounded-md'
+            className='my-4 rounded-md'
           />
         </>
       )}
@@ -77,10 +77,34 @@ function ProfileInfo({ profile }: IProfileInfo) {
         </div>
       </div>
 
-      <div className='flex flex-col gap-2 text-sm md:gap-4'>
+      <div className='flex flex-col gap-2 text-sm md:gap-3'>
         <div className='pt-4 text-base md:border-b md:pb-2'>
           <p>{profile.bio}</p>
         </div>
+
+        <div className=''>
+          <a
+            href={`mailto:${profile.display_email}`}
+            className='transition-colors duration-200 hover:text-blue-500'
+          >
+            {profile.display_email}
+          </a>
+        </div>
+
+        {profile.social_accounts &&
+          profile.social_accounts
+            .filter((account) => account.trim() !== '')
+            .map((account, index) => (
+              <div className='' key={account + index}>
+                <a
+                  href={account}
+                  target='_blank'
+                  className='transition-colors duration-200 hover:text-blue-500'
+                >
+                  {account}
+                </a>
+              </div>
+            ))}
 
         <div className='pb-2 md:border-b'>
           <p className='flex items-center gap-1'>

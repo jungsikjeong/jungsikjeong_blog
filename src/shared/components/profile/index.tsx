@@ -25,7 +25,7 @@ import {
   DrawerTitle,
 } from '../ui/drawer'
 import EditProfileForm from './EditProfileForm'
-import { useUpdateProfileStatus } from './hooks/useUpdateProfileStatus'
+import { useUpdateMasterProfileStatus } from './hooks/useUpdateMasterProfileStatus'
 import ProfileImageChangeButton from './ProfileImageChangeButton'
 import ProfileStatusButton from './ProfileStatusButton'
 
@@ -73,7 +73,13 @@ function ProfileImage({
   return (
     <div className='relative flex h-20 w-20 items-center justify-center rounded-full border md:h-80 md:w-80'>
       <Image
-        src={`${avatarUrl ?? '/images/no-avatar.png'}`}
+        src={
+          avatarUrl
+            ? avatarUrl.includes('kakaocdn.net')
+              ? avatarUrl
+              : `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_PROFILE_MASTER_URL}/${avatarUrl}`
+            : '/images/no-avatar.png'
+        }
         alt='avatar'
         fill
         priority={true}
@@ -163,7 +169,7 @@ function ProfileInfo({ profile }: IProfileInfo) {
 }
 
 function StatusModal({ onClose }: { onClose: () => void }) {
-  const { mutate: updateStatus } = useUpdateProfileStatus()
+  const { mutate: updateStatus } = useUpdateMasterProfileStatus()
 
   const isDesktop = useMediaQuery('(min-width: 768px)')
   const emojis = ['😊', '😎', '🎉', '💻', '☕️', '🌟', '🎯', '💪', '✨', '🚀']

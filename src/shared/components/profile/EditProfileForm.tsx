@@ -16,7 +16,7 @@ import { Textarea } from '../ui/textarea'
 import { ProfileFormSchema, profileSchema } from './schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Plus, X } from 'lucide-react'
-import { useUpdateProfile } from './hooks/useUpdateProfile'
+import { useUpdateMasterProfile } from './hooks/useUpdateMasterProfile'
 
 interface IEditProfileProps {
   profile: IProfile
@@ -46,7 +46,7 @@ export default function EditProfileForm({
     name: 'social_accounts',
   })
 
-  const { mutate: updateProfile } = useUpdateProfile()
+  const { mutate: updateProfile } = useUpdateMasterProfile()
 
   const onSubmit = (data: ProfileFormSchema) => {
     updateProfile(data, {

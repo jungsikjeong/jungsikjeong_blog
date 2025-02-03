@@ -1,5 +1,6 @@
 import { ProfileFormSchema } from '@/shared/components/profile/schema'
 import Service from '../Service'
+import { File } from 'buffer'
 
 class MasterProfileService extends Service {
   async getMasterProfile() {
@@ -60,6 +61,15 @@ class MasterProfileService extends Service {
       .eq('email', process.env.NEXT_PUBLIC_ADMIN_EMAIL as string)
 
     if (error) throw error
+  }
+
+  async updateMasterImage(fileFullPath: string) {
+    const { error: memberError } = await this.supabase
+      .from('members')
+      .update({ avatar_url: fileFullPath })
+      .eq('email', process.env.NEXT_PUBLIC_ADMIN_EMAIL as string)
+
+    if (memberError) throw memberError
   }
 }
 

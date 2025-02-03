@@ -4,7 +4,7 @@ import MasterProfileService from '@/services/master_profile/services'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ProfileFormSchema } from '../schema'
 
-export const useUpdateProfile = () => {
+export const useUpdateMasterProfile = () => {
   const supabase = useCreateClient()
 
   const queryclient = useQueryClient()

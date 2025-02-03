@@ -5,6 +5,9 @@ import { Button } from '../ui/button'
 import { PencilLine } from 'lucide-react'
 import { useState } from 'react'
 import { Label } from '../ui/label'
+import { uploadFile } from '@/utils/supabase/storage'
+import useCreateClient from '@/lib/supabase/client'
+import { useUpdateMasterProfileImage } from './hooks/useUpdateMasterProfileImage'
 
 export default function ProfileImageChangeButton({
   className,
@@ -12,11 +15,16 @@ export default function ProfileImageChangeButton({
   className: string
 }) {
   const { user, setUser } = useAuth()
+  const supabase = useCreateClient()
+  const updateImage = useUpdateMasterProfileImage()
 
   if (!user?.is_admin) return null
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = event.target.files?.[0]
+
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
         alert('파일 크기는 5MB 이하여야 합니다.')
@@ -33,9 +41,10 @@ export default function ProfileImageChangeButton({
         setUser({ ...user, avatar_url: reader.result as string })
       }
       reader.readAsDataURL(file)
+      const res = await uploadFile(file, `master/${user.email}`, supabase)
+      updateImage.mutate(res?.fullPath as string)
     }
   }
-
   return (
     <Label
       htmlFor='file'

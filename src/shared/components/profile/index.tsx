@@ -1,7 +1,7 @@
 'use client'
 
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import { useGetProfile } from '@/services/profile/useProfile'
+import { useGetMasterProfile } from '@/services/master_profile/useProfile'
 import { IProfileInfo } from '@/types/profile'
 import { MapPin } from 'lucide-react'
 import Image from 'next/image'
@@ -32,7 +32,7 @@ import ProfileStatusButton from './ProfileStatusButton'
 export default function Profile() {
   const [isEditProfile, setIsEditProfile] = useState(false)
 
-  const { data: profile } = useGetProfile()
+  const { data: profile } = useGetMasterProfile()
 
   return (
     <div className='md:absolute md:-top-7'>

@@ -11,8 +11,7 @@ export default function ProfileImageChangeButton({
 }: {
   className: string
 }) {
-  const { user } = useAuth()
-  const [previewImage, setPreviewImage] = useState<string | null>()
+  const { user, setUser } = useAuth()
 
   if (!user?.is_admin) return null
 
@@ -31,7 +30,7 @@ export default function ProfileImageChangeButton({
 
       const reader = new FileReader()
       reader.onloadend = () => {
-        setPreviewImage(reader.result as string)
+        setUser({ ...user, avatar_url: reader.result as string })
       }
       reader.readAsDataURL(file)
     }

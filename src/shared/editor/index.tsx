@@ -1,4 +1,4 @@
-import { useGetProfile } from '@/services/profile/useProfile'
+import { useGetMasterProfile } from '@/services/master_profile/useProfile'
 import { nodes } from '@/shared/editor/nodes'
 import CodeHighlightPlugin from '@/shared/editor/plugins/CodeHighlightPlugin'
 import MarkdownPlugin from '@/shared/editor/plugins/MarkdownPlugin'

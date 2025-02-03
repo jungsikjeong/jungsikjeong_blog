@@ -1,8 +1,8 @@
 import { ProfileFormSchema } from '@/shared/components/profile/schema'
 import Service from '../Service'
 
-class ProfileService extends Service {
-  async getProfile() {
+class MasterProfileService extends Service {
+  async getMasterProfile() {
     const { data, error } = await this.supabase
       .from('members')
       .select(
@@ -29,7 +29,7 @@ class ProfileService extends Service {
     }
   }
 
-  async updateProfile(profileFormData: ProfileFormSchema) {
+  async updateMasterProfile(profileFormData: ProfileFormSchema) {
     const { bio, display_email, location, social_accounts, ...memberData } =
       profileFormData
 
@@ -53,7 +53,7 @@ class ProfileService extends Service {
     if (profileError) throw profileError
   }
 
-  async updateStatus(status: string) {
+  async updateMasterStatus(status: string) {
     const { error } = await this.supabase
       .from('profile')
       .update({ status })
@@ -63,4 +63,4 @@ class ProfileService extends Service {
   }
 }
 
-export default ProfileService
+export default MasterProfileService

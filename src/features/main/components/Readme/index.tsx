@@ -1,12 +1,12 @@
 'use client'
 
-import { useGetProfile } from '@/services/profile/useProfile'
+import { useGetMasterProfile } from '@/services/master_profile/useProfile'
 import { EditActionBtn } from '@/shared/components/buttons'
 import RichTextEditor from '@/shared/editor'
 import { useState } from 'react'
 
 export default function Readme() {
-  const { data: profile } = useGetProfile()
+  const { data: profile } = useGetMasterProfile()
   const [isEditing, setIsEditing] = useState(false)
 
   return (

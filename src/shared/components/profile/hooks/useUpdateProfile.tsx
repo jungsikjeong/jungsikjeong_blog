@@ -1,6 +1,6 @@
 import useCreateClient from '@/lib/supabase/client'
-import { profileQueryKeys } from '@/services/profile/queries'
-import ProfileService from '@/services/profile/services'
+import { masterProfileQueryKeys } from '@/services/master_profile/queries'
+import MasterProfileService from '@/services/master_profile/services'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ProfileFormSchema } from '../schema'
 
@@ -11,11 +11,13 @@ export const useUpdateProfile = () => {
 
   return useMutation({
     mutationFn: (profileFormData: ProfileFormSchema) => {
-      return new ProfileService(supabase).updateProfile(profileFormData)
+      return new MasterProfileService(supabase).updateMasterProfile(
+        profileFormData,
+      )
     },
     onSuccess: async () => {
       await queryclient.invalidateQueries({
-        queryKey: profileQueryKeys.profile,
+        queryKey: masterProfileQueryKeys.profile,
       })
     },
     onError: (error) => {

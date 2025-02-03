@@ -81,10 +81,10 @@ function ProfileImage({
         sizes='(max-width: 768px) 5rem, 20rem'
       />
 
-      {/* 이미지 편집 버튼 -모바일용 */}
+      {/* 이미지 편집 버튼 -모바일 사이즈 */}
       <ProfileImageChangeButton className='absolute -left-2 top-0 h-7 w-7 rounded-full border bg-black text-xs text-white hover:bg-black dark:hover:text-primary md:hidden' />
 
-      {/* 상태 편집 버튼 - 모바일용 */}
+      {/* 상태 편집 버튼 - 모바일 사이즈 */}
       <ProfileStatusButton
         title='Set Status'
         className='absolute bottom-0 right-0 h-7 w-7 rounded-full border bg-black text-xs hover:bg-black dark:hover:text-primary md:hidden'
@@ -92,7 +92,7 @@ function ProfileImage({
         profileStatus={profileStatus}
       />
 
-      {/* 이미지 편집 및 상태 편집 - 데스크탑용*/}
+      {/* 이미지 편집 및 상태 편집 - 데스크탑 사이즈*/}
       <div className='absolute -bottom-2 left-0 z-10 hidden w-full items-center justify-between md:bottom-12 md:flex'>
         <ProfileImageChangeButton className='h-9 w-9 rounded-full border bg-black text-xs text-white hover:bg-black hover:text-accent-foreground hover:text-white dark:hover:text-primary' />
 

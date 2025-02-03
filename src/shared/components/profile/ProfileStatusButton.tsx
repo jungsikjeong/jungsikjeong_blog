@@ -18,14 +18,12 @@ export default function ProfileStatusButton({
 }) {
   const { user } = useAuth()
 
-  if (!user?.is_admin) return null
-
   return (
     <Button
       size={'icon'}
       className={cn('', className)}
-      title={title}
-      onClick={onClick}
+      title={user?.is_admin ? title : '현재 상태'}
+      onClick={user?.is_admin ? onClick : undefined}
     >
       {profileStatus ? (
         <span className='h-4 w-4'>{profileStatus}</span>

@@ -1,9 +1,18 @@
 import { NavTabs, Readme } from '@/features/main'
+import { createClient } from '@/lib/supabase/server'
+import { masterProfileQueryOptions } from '@/services/master_profile/queries'
 import { Header } from '@/shared/components/header'
 import Profile from '@/shared/components/profile'
+import { getDehydratedQueries, Hydrate } from '@/utils/react-query'
 import { Suspense } from 'react'
 
-export default function page() {
+export default async function page() {
+  const supabase = await createClient()
+
+  const queries = await getDehydratedQueries([
+    masterProfileQueryOptions(supabase).getMasterProfile(),
+  ])
+
   return (
     <section>
       <Header />
@@ -12,9 +21,9 @@ export default function page() {
       <div className='py-4'>
         <div className='relative flex flex-col px-4 md:container md:flex-row'>
           <div className='w-full md:w-[300px]'>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Hydrate state={{ queries }}>
               <Profile />
-            </Suspense>
+            </Hydrate>
           </div>
 
           <div className='ml-0 mt-4 flex-1 md:ml-8'>

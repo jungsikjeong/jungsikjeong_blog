@@ -34,10 +34,11 @@ export default function Profile() {
   const [isEditProfile, setIsEditProfile] = useState(false)
 
   const { data: profile } = useGetMasterProfile()
+
   return (
     <div className='md:absolute md:-top-7'>
       <ProfileImage
-        avatarUrl={profile?.avatar_url}
+        avatarUrl={profile.avatar_url}
         profileStatus={profile.status}
       />
 

@@ -46,7 +46,7 @@ export default function ProfileImageChangeButton({
       const res = await uploadFile({
         file,
         newPath: `master/${uuid()}`,
-        oldPath: user.avatar_url ?? '',
+        oldPath: user.avatar_url ? `master/${user.avatar_url}` : '',
         supabase,
       })
 

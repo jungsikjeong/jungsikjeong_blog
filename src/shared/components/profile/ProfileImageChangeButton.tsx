@@ -8,6 +8,7 @@ import { Label } from '../ui/label'
 import { uploadFile } from '@/utils/supabase/storage'
 import useCreateClient from '@/lib/supabase/client'
 import { useUpdateMasterProfileImage } from './hooks/useUpdateMasterProfileImage'
+import { v4 as uuid } from 'uuid'
 
 export default function ProfileImageChangeButton({
   className,
@@ -41,8 +42,15 @@ export default function ProfileImageChangeButton({
         setUser({ ...user, avatar_url: reader.result as string })
       }
       reader.readAsDataURL(file)
-      const res = await uploadFile(file, `master/${user.email}`, supabase)
-      updateImage.mutate(res?.fullPath as string)
+
+      const res = await uploadFile({
+        file,
+        newPath: `master/${uuid()}`,
+        oldPath: user.avatar_url ?? '',
+        supabase,
+      })
+
+      updateImage.mutate(res as string)
     }
   }
   return (

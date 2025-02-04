@@ -1,18 +1,33 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import { v4 as uuid } from 'uuid'
 
-export const uploadFile = async (
-  file: File,
-  path: string,
-  supabase: SupabaseClient,
-) => {
-  const { data, error } = await supabase.storage
-    .from('profile_image')
-    .upload(path, file, { upsert: true })
+interface IUploadFileParams {
+  file: File
+  newPath: string
+  oldPath: string | null
+  supabase: SupabaseClient
+}
 
-  if (error) {
-    console.error('Error uploading file:', error)
+export const uploadFile = async ({
+  file,
+  newPath,
+  oldPath,
+  supabase,
+}: IUploadFileParams) => {
+  try {
+    if (oldPath) {
+      await supabase.storage.from('profile_image').remove([oldPath])
+    }
+
+    const { data, error } = await supabase.storage
+      .from('profile_image')
+      .upload(newPath, file)
+
+    if (error) throw error
+
+    return data.path.split('/').pop()
+  } catch (error) {
+    console.error('Error in uploadFile:', error)
     return null
   }
-
-  return data
 }

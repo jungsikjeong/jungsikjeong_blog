@@ -63,10 +63,10 @@ class MasterProfileService extends Service {
     if (error) throw error
   }
 
-  async updateMasterImage(fileFullPath: string) {
+  async updateMasterImage(fileName: string) {
     const { error: memberError } = await this.supabase
       .from('members')
-      .update({ avatar_url: fileFullPath })
+      .update({ avatar_url: fileName })
       .eq('email', process.env.NEXT_PUBLIC_ADMIN_EMAIL as string)
 
     if (memberError) throw memberError

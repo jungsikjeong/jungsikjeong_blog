@@ -10,8 +10,8 @@ export const useUpdateMasterProfileImage = () => {
   const queryclient = useQueryClient()
 
   return useMutation({
-    mutationFn: (fileFullPath: string) => {
-      return new MasterProfileService(supabase).updateMasterImage(fileFullPath)
+    mutationFn: (fileName: string) => {
+      return new MasterProfileService(supabase).updateMasterImage(fileName)
     },
     onSuccess: async () => {
       await queryclient.invalidateQueries({

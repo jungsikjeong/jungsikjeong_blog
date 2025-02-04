@@ -28,6 +28,7 @@ import EditProfileForm from './EditProfileForm'
 import { useUpdateMasterProfileStatus } from './hooks/useUpdateMasterProfileStatus'
 import ProfileImageChangeButton from './ProfileImageChangeButton'
 import ProfileStatusButton from './ProfileStatusButton'
+import { getStorageImageUrl } from '@/utils/supabase/get-image-url'
 
 export default function Profile() {
   const [isEditProfile, setIsEditProfile] = useState(false)
@@ -72,13 +73,7 @@ function ProfileImage({
   return (
     <div className='relative flex h-20 w-20 items-center justify-center rounded-full border md:h-80 md:w-80'>
       <Image
-        src={
-          avatarUrl
-            ? avatarUrl.includes('kakaocdn.net')
-              ? avatarUrl
-              : `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_PROFILE_MASTER_URL}/${avatarUrl}`
-            : '/images/no-avatar.png'
-        }
+        src={getStorageImageUrl(avatarUrl)}
         alt='avatar'
         fill
         priority={true}

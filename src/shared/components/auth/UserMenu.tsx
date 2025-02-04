@@ -11,6 +11,7 @@ import { Tables } from '@/types/supabase'
 import { ChevronDown } from 'lucide-react'
 import LogoutButton from './LogoutButton'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { getStorageImageUrl } from '@/utils/supabase/get-image-url'
 
 export default function UserMenu({ user }: { user: Tables<'members'> }) {
   return (
@@ -18,7 +19,10 @@ export default function UserMenu({ user }: { user: Tables<'members'> }) {
       <DropdownMenuTrigger asChild>
         <Button variant='ghost' size='icon' className='hover:bg-transparent'>
           <Avatar className='h-8 w-8'>
-            <AvatarImage src={user.avatar_url || ''} />
+            <AvatarImage
+              src={getStorageImageUrl(user.avatar_url)}
+              className='object-cover'
+            />
             <AvatarFallback>{user.username[0]}</AvatarFallback>
           </Avatar>
 

@@ -37,18 +37,14 @@ export default function ProfileImageChangeButton({
         return
       }
 
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        setUser({ ...user, avatar_url: reader.result as string })
-      }
-      reader.readAsDataURL(file)
-
       const res = await uploadFile({
         file,
         newPath: `master/${uuid()}`,
         oldPath: user.avatar_url ? `master/${user.avatar_url}` : '',
         supabase,
       })
+
+      setUser({ ...user, avatar_url: res as string })
 
       updateImage.mutate(res as string)
     }

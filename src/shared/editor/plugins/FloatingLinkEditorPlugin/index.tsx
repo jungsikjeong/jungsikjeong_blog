@@ -58,7 +58,11 @@ function FloatingLinkEditor({
   useEffect(() => {
     if (isLink) {
       setEditedLinkUrl(linkUrl)
-      inputRef.current?.focus()
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus({ preventScroll: true })
+        }
+      }, 0)
     }
   }, [isLink, linkUrl])
 

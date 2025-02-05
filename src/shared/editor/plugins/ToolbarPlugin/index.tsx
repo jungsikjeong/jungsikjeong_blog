@@ -1,7 +1,11 @@
 'use client'
 
 import { $createCodeNode, getDefaultCodeLanguage } from '@lexical/code'
-import { $createLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link'
+import {
+  $createLinkNode,
+  $isLinkNode,
+  TOGGLE_LINK_COMMAND,
+} from '@lexical/link'
 import {
   INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
@@ -28,6 +32,7 @@ export function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext()
   const [isBold, setIsBold] = useState(false)
   const [isItalic, setIsItalic] = useState(false)
+  const [isLink, setIsLink] = useState(false)
   const [isOrderedList, setIsOrderedList] = useState(false)
   const [isUnorderedList, setIsUnorderedList] = useState(false)
   const [modifierKey, setModifierKey] = useState('Ctrl')
@@ -47,6 +52,8 @@ export function ToolbarPlugin() {
 
           const node = selection.anchor.getNode()
           const parent = node.getParent()
+          setIsLink($isLinkNode(parent) || $isLinkNode(node))
+
           setIsOrderedList(
             $isListNode(parent) && parent.getListType() === 'number',
           )
@@ -233,7 +240,11 @@ export function ToolbarPlugin() {
       <div className='group relative'>
         <button
           onClick={insertLink}
-          className='toolbar-item rounded-md p-2 transition-colors hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'
+          className={`toolbar-item rounded-md p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${
+            isLink
+              ? 'bg-gray-200 text-blue-600 dark:bg-gray-700 dark:text-blue-400'
+              : 'dark:text-gray-200'
+          }`}
           aria-label='링크'
         >
           <svg

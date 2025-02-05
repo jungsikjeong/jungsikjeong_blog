@@ -39,8 +39,15 @@ export default function RichTextEditor({
           <RichTextPlugin
             contentEditable={
               <div className='relative'>
-                <ContentEditable className='editor-input h-[280px] overflow-y-auto px-4 py-3 text-gray-900 focus:border-none focus:outline-none focus:ring-0 dark:text-gray-100' />
-                <PlaceholderPlugin />
+                <ContentEditable
+                  className='editor-input relative h-[280px] overflow-y-auto px-4 py-3 text-gray-900 focus:border-none focus:outline-none focus:ring-0 dark:text-gray-100'
+                  aria-placeholder='내용을 입력하세요'
+                  placeholder={
+                    <div className='absolute left-4 top-3 z-0 text-gray-500 dark:text-gray-400'>
+                      내용을 입력하세요
+                    </div>
+                  }
+                />
               </div>
             }
             ErrorBoundary={LexicalErrorBoundary}

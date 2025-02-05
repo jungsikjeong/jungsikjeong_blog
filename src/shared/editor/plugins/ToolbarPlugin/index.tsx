@@ -108,16 +108,26 @@ export function ToolbarPlugin() {
   }
 
   const insertImage = () => {
-    const url = prompt('이미지 URL을 입력하세요:')
-    if (url) {
-      editor.update(() => {
-        const imageNode = $createImageNode({
-          src: url,
-          altText: '',
-        })
-        $insertNodes([imageNode])
-      })
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = 'image/*'
+    input.onchange = async (event) => {
+      const file = (event.target as HTMLInputElement).files?.[0]
+      if (file) {
+        const reader = new FileReader()
+        reader.onloadend = () => {
+          editor.update(() => {
+            const imageNode = $createImageNode({
+              src: reader.result as string,
+              altText: file.name,
+            })
+            $insertNodes([imageNode])
+          })
+        }
+        reader.readAsDataURL(file)
+      }
     }
+    input.click()
   }
 
   const insertOrderedList = () => {

@@ -26,7 +26,7 @@ export default function ProfileStatusButton({
       onClick={user?.is_admin ? onClick : undefined}
     >
       {profileStatus ? (
-        <span className='h-4 w-4'>{profileStatus}</span>
+        <span className='text-sm md:text-2xl'>{profileStatus}</span>
       ) : (
         <Smile className='h-4 w-4' />
       )}

@@ -2,7 +2,6 @@ import { useGetMasterProfile } from '@/services/master_profile/useProfile'
 import { nodes } from '@/shared/editor/nodes'
 import CodeHighlightPlugin from '@/shared/editor/plugins/CodeHighlightPlugin'
 import MarkdownPlugin from '@/shared/editor/plugins/MarkdownPlugin'
-import PlaceholderPlugin from '@/shared/editor/plugins/PlaceholderPlugin'
 import { ToolbarPlugin } from '@/shared/editor/plugins/ToolbarPlugin'
 import EditorTheme from '@/shared/editor/themes'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
@@ -40,7 +39,7 @@ export default function RichTextEditor({
             contentEditable={
               <div className='relative'>
                 <ContentEditable
-                  className='editor-input relative h-[280px] overflow-y-auto px-4 py-3 text-gray-900 focus:border-none focus:outline-none focus:ring-0 dark:text-gray-100'
+                  className='editor-input relative z-10 h-[280px] overflow-y-auto px-4 py-3 text-gray-900 focus:border-none focus:outline-none focus:ring-0 dark:text-gray-100'
                   aria-placeholder='내용을 입력하세요'
                   placeholder={
                     <div className='absolute left-4 top-3 z-0 text-gray-500 dark:text-gray-400'>

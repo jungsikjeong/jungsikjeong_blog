@@ -96,7 +96,17 @@ const EditorTheme = {
   codeBlock: 'bg-gray-50 rounded-lg p-4 my-4 font-mono text-sm',
 
   // 링크 스타일링
-  link: 'text-blue-600 hover:text-blue-800 underline',
+  link: `
+    text-blue-600 
+    dark:text-blue-400
+    hover:text-blue-800 
+    dark:hover:text-blue-300
+    underline 
+    decoration-1 
+    underline-offset-2
+    transition-colors
+    cursor-pointer
+  `,
 
   // 이미지 스타일링
   image: 'max-w-full h-auto rounded-lg my-4',

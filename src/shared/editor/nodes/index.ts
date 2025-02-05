@@ -1,6 +1,6 @@
 import { ImageNode } from '@/shared/editor/nodes/ImageNode/ImageNode'
 import { CodeHighlightNode, CodeNode } from '@lexical/code'
-import { LinkNode } from '@lexical/link'
+import { LinkNode, AutoLinkNode } from '@lexical/link'
 import { ListItemNode, ListNode } from '@lexical/list'
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode'
 import { HeadingNode, QuoteNode } from '@lexical/rich-text'
@@ -18,6 +18,7 @@ export const nodes: Klass<LexicalNode>[] = [
   ListNode,
   ListItemNode,
   LinkNode,
+  AutoLinkNode,
   ImageNode,
   HorizontalRuleNode,
 ]

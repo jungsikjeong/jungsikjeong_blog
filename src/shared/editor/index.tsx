@@ -7,7 +7,7 @@ import EditorTheme from '@/shared/editor/themes'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
-import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin'
+import { LinkPlugins } from '@/shared/editor/plugins/LinkPlugins'
 import { ListPlugin } from '@lexical/react/LexicalListPlugin'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 import { Button } from '../components/ui/button'
@@ -51,7 +51,7 @@ export default function RichTextEditor({
             }
             ErrorBoundary={LexicalErrorBoundary}
           />
-          <LinkPlugin />
+          <LinkPlugins />
           <CodeHighlightPlugin />
           <MarkdownPlugin />
         </div>

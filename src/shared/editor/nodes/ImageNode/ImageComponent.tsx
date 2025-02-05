@@ -320,9 +320,13 @@ export default function ImageComponent({
 
   return (
     <Suspense fallback={'로딩중'}>
-      <div className='relative'>
+      <div className='relative inline-block'>
         <div
-          className={`relative inline-block ${isFocused ? 'outline outline-2 outline-[#3c84f4]' : ''}`}
+          className={`${isFocused ? 'outline outline-2 outline-[#3c84f4]' : ''}`}
+          style={{
+            width: width === 'inherit' ? 'auto' : width,
+            height: height === 'inherit' ? 'auto' : height,
+          }}
         >
           {isLoadError ? (
             <BrokenImage />

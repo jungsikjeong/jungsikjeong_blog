@@ -14,6 +14,7 @@ import {
 } from 'lexical'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { cn } from '@/lib/utils'
 
 function FloatingLinkEditor({
   editor,
@@ -127,7 +128,10 @@ function FloatingLinkEditor({
   return (
     <div
       ref={editorRef}
-      className='absolute z-50 min-w-[300px] rounded-lg border border-gray-200 bg-white p-2 shadow-lg dark:border-gray-700 dark:bg-gray-800'
+      className={cn(
+        'absolute z-50 min-w-[300px] rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-opacity duration-200 dark:border-gray-700 dark:bg-gray-800',
+        position.top === 0 ? 'pointer-events-none opacity-0' : 'opacity-100',
+      )}
       style={{
         top: position.top,
         left: position.left,

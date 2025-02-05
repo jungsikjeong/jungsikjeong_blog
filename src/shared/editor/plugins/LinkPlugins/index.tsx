@@ -1,4 +1,4 @@
-import { AutoLinkPlugin } from '@lexical/react/LexicalAutoLinkPlugin'
+import { AutoLinkPlugin as LexicalAutoLinkPlugin } from '@lexical/react/LexicalAutoLinkPlugin'
 import { LinkPlugin as LexicalLinkPlugin } from '@lexical/react/LexicalLinkPlugin'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { $createLinkNode, LinkNode } from '@lexical/link'
@@ -10,6 +10,8 @@ import {
   PASTE_COMMAND,
 } from 'lexical'
 import { useEffect } from 'react'
+import { AutoLinkNode } from '@lexical/link'
+import { TextNode } from 'lexical'
 
 // URL 매칭을 위한 정규식
 const URL_MATCHER =
@@ -30,6 +32,22 @@ const MATCHERS = [
   },
 ]
 
+function AutoLinkPlugin() {
+  const [editor] = useLexicalComposerContext()
+
+  useEffect(() => {
+    if (!editor.hasNodes([AutoLinkNode])) {
+      throw new Error('AutoLinkPlugin: AutoLinkNode not registered on editor')
+    }
+
+    return editor.registerNodeTransform(TextNode, (textNode: TextNode) => {
+      // ... existing transform logic ...
+    })
+  }, [editor])
+
+  return null
+}
+
 function ClickableLinkPlugin() {
   const [editor] = useLexicalComposerContext()
 
@@ -39,14 +57,22 @@ function ClickableLinkPlugin() {
       const closestLink = target.closest('a')
 
       if (closestLink) {
-        window.open(closestLink.href, '_blank')
+        e.preventDefault()
+
+        // href가 실제로 존재하는 경우에만 새 창 열기
+        if (closestLink.href) {
+          window.open(closestLink.href, '_blank', 'noopener,noreferrer')
+        }
       }
     }
 
-    editor.getRootElement()?.addEventListener('click', onClick)
-
-    return () => {
-      editor.getRootElement()?.removeEventListener('click', onClick)
+    const rootElement = editor.getRootElement()
+    if (rootElement) {
+      // 캡처링 단계에서 이벤트 처리
+      rootElement.addEventListener('click', onClick, true)
+      return () => {
+        rootElement.removeEventListener('click', onClick, true)
+      }
     }
   }, [editor])
 
@@ -87,7 +113,7 @@ export function LinkPlugins() {
   return (
     <>
       <LexicalLinkPlugin />
-      <AutoLinkPlugin matchers={MATCHERS} />
+      <LexicalAutoLinkPlugin matchers={MATCHERS} />
       <ClickableLinkPlugin />
       <LinkPastePlugin />
     </>

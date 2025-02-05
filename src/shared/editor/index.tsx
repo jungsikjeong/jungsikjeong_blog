@@ -11,6 +11,7 @@ import { LinkPlugins } from '@/shared/editor/plugins/LinkPlugins'
 import { ListPlugin } from '@lexical/react/LexicalListPlugin'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 import { Button } from '../components/ui/button'
+import FloatingLinkEditorPlugin from './plugins/FloatingLinkEditorPlugin'
 
 const initialConfig = {
   namespace: 'MyReadmeEditor',
@@ -52,6 +53,7 @@ export default function RichTextEditor({
             ErrorBoundary={LexicalErrorBoundary}
           />
           <LinkPlugins />
+          <FloatingLinkEditorPlugin />
           <CodeHighlightPlugin />
           <MarkdownPlugin />
         </div>

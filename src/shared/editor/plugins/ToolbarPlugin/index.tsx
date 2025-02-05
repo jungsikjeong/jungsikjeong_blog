@@ -1,7 +1,7 @@
 'use client'
 
 import { $createCodeNode, getDefaultCodeLanguage } from '@lexical/code'
-import { $createLinkNode } from '@lexical/link'
+import { $createLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link'
 import {
   INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
@@ -95,16 +95,7 @@ export function ToolbarPlugin() {
   }
 
   const insertLink = () => {
-    const url = prompt('링크를 입력하세요:')
-    if (url) {
-      editor.update(() => {
-        const selection = $getSelection()
-        if ($isRangeSelection(selection)) {
-          const linkNode = $createLinkNode(url)
-          selection.insertNodes([linkNode])
-        }
-      })
-    }
+    editor.dispatchCommand(TOGGLE_LINK_COMMAND, '')
   }
 
   const insertImage = () => {

@@ -1,5 +1,5 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js'
-import { v4 as uuid } from 'uuid'
+import { SupabaseClient } from '@supabase/supabase-js'
+import { v4 as uuidv4 } from 'uuid'
 
 interface IUploadFileParams {
   file: File
@@ -30,4 +30,28 @@ export const uploadFile = async ({
     console.error('Error in uploadFile:', error)
     return null
   }
+}
+
+export const uploadReadmeImageToStorage = async (
+  file: File,
+  folderPath: string,
+  supabase: SupabaseClient,
+): Promise<string> => {
+  console.log(`${folderPath}/${uuidv4()}`)
+  const response = await supabase.storage
+    .from('readme')
+    .upload(`${folderPath}/${uuidv4()}`, file, {
+      contentType: 'image/jpg',
+      upsert: true,
+    })
+
+  if (response.error) {
+    throw new Error('이미지 업로드 실패: ' + response.error.message)
+  }
+
+  const { data } = supabase.storage
+    .from('readme')
+    .getPublicUrl(response.data.path)
+
+  return data.publicUrl
 }

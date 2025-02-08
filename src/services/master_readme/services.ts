@@ -17,7 +17,6 @@ class MasterReadmeService extends Service {
   }
 
   async updateMasterReadme(contents: string, email: string) {
-    console.log(contents, email)
     const { data, error } = await this.supabase
       .from('readme')
       .upsert([{ contents, email }])

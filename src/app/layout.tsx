@@ -8,6 +8,7 @@ import { getCurrentUser } from '@/utils/supabase/auth'
 import React from 'react'
 import './globals.css'
 import { spoqa } from './nextFont'
+import { Toaster } from 'sonner'
 
 export const viewport = {
   width: 'device-width',
@@ -43,6 +44,7 @@ export default async function RootLayout({
                 <NavigationProgress />
 
                 {children}
+                <Toaster />
               </AuthProvider>
             </ReactQueryProviders>
           </ThemeProvider>

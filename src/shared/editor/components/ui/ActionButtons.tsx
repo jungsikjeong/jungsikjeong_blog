@@ -8,6 +8,7 @@ import { useState } from 'react'
 import { $isImageNode, ImageNode } from '../../nodes/ImageNode/ImageNode'
 import { uploadReadmeImageToStorage } from '@/utils/supabase/storage'
 import useCreateClient from '@/lib/supabase/client'
+import { toast } from 'sonner'
 
 interface IActionButtonsProps {
   onSave: (contents: string) => void
@@ -70,8 +71,7 @@ export default function ActionButtons({
       onSave(finalHtml)
     } catch (error) {
       console.error('Save failed:', error)
-
-      // toast.error('저장 중 오류가 발생했습니다.')
+      toast.error('저장 중 오류가 발생했습니다.')
     } finally {
       setIsSaving(false)
     }

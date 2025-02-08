@@ -1,23 +1,20 @@
 'use client'
 
-import { useGetMasterProfile } from '@/services/master_profile/useProfile'
 import { nodes } from '@/shared/editor/nodes'
 import CodeHighlightPlugin from '@/shared/editor/plugins/CodeHighlightPlugin'
+import { LinkPlugins } from '@/shared/editor/plugins/LinkPlugins'
 import MarkdownPlugin from '@/shared/editor/plugins/MarkdownPlugin'
 import { ToolbarPlugin } from '@/shared/editor/plugins/ToolbarPlugin'
 import EditorTheme from '@/shared/editor/themes'
+import { $generateNodesFromDOM } from '@lexical/html'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
-import { LinkPlugins } from '@/shared/editor/plugins/LinkPlugins'
 import { ListPlugin } from '@lexical/react/LexicalListPlugin'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
-import { Button } from '../components/ui/button'
-import FloatingLinkEditorPlugin from './plugins/FloatingLinkEditorPlugin'
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { $getRoot, EditorState } from 'lexical'
+import { $getRoot, LexicalEditor } from 'lexical'
 import ActionButtons from './components/ui/ActionButtons'
-import { useEffect, useState } from 'react'
+import FloatingLinkEditorPlugin from './plugins/FloatingLinkEditorPlugin'
 
 const createInitialConfig = (initialContent?: string) => ({
   namespace: 'MyReadmeEditor',
@@ -25,23 +22,33 @@ const createInitialConfig = (initialContent?: string) => ({
   editable: true,
   nodes: nodes,
   theme: EditorTheme,
-  editorState: initialContent,
+  editorState: (editor: LexicalEditor) => {
+    if (initialContent) {
+      const parser = new DOMParser()
+      const dom = parser.parseFromString(initialContent, 'text/html')
+      const nodes = $generateNodesFromDOM(editor, dom)
+
+      const root = $getRoot()
+      root.clear()
+      root.append(...nodes)
+    }
+  },
 })
 
 interface IRichTextEditorProps {
   onCancel: () => void
   onSave: (contents: string) => void
-  initialContent?: string
+  defaultContent?: string
 }
 
 export default function RichTextEditor({
   onCancel,
   onSave,
-  initialContent,
+  defaultContent,
 }: IRichTextEditorProps) {
   return (
     <>
-      <LexicalComposer initialConfig={createInitialConfig(initialContent)}>
+      <LexicalComposer initialConfig={createInitialConfig(defaultContent)}>
         <div className='relative'>
           <ToolbarPlugin />
           <ListPlugin />
@@ -61,6 +68,7 @@ export default function RichTextEditor({
             }
             ErrorBoundary={LexicalErrorBoundary}
           />
+
           <LinkPlugins />
           <FloatingLinkEditorPlugin />
           <CodeHighlightPlugin />

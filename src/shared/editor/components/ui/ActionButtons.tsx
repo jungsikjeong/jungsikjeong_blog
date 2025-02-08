@@ -21,23 +21,37 @@ export default function ActionButtons({
 }: IActionButtonsProps) {
   const [editor] = useLexicalComposerContext()
   const [isSaving, setIsSaving] = useState(false)
-
   const supabase = useCreateClient()
+
+  // 이미지 URL에서 파일 이름 추출하는 함수
+  const getImageFileName = (url: string) => {
+    const parts = url.split('/')
+    return parts[parts.length - 1]
+  }
+
+  // HTML 문자열에서 모든 이미지 URL 추출
+  const extractImageUrls = (html: string) => {
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(html, 'text/html')
+    const imgTags = Array.from(doc.getElementsByTagName('img'))
+    return imgTags.map((img) => img.src)
+  }
 
   const handleSave = async () => {
     try {
       setIsSaving(true)
 
-      let htmlString = ''
+      // 현재 에디터의 HTML 가져오기
+      let currentHtmlString = ''
       editor.update(() => {
-        htmlString = $generateHtmlFromNodes(editor)
+        currentHtmlString = $generateHtmlFromNodes(editor)
       })
 
       const parser = new DOMParser()
-      const doc = parser.parseFromString(htmlString, 'text/html')
+      const doc = parser.parseFromString(currentHtmlString, 'text/html')
       const imgTags = Array.from(doc.getElementsByTagName('img'))
 
-      // 이미지 업로드 처리
+      // 새로운 base64 이미지 업로드 처리
       const uploadPromises = imgTags.map(async (img) => {
         const src = img.src
         if (src.startsWith('data:image')) {
@@ -61,14 +75,37 @@ export default function ActionButtons({
       const results = await Promise.all(uploadPromises)
 
       // HTML 문자열에서 base64 이미지 URL을 실제 URL로 교체
-      let finalHtml = htmlString
+      let finalHtml = currentHtmlString
       results.forEach((result) => {
         if (result) {
           finalHtml = finalHtml.replace(result.src, result.url)
         }
       })
 
-      onSave(finalHtml)
+      // 이전 이미지와 현재 이미지 URL 비교
+      const currentImageUrls = extractImageUrls(finalHtml)
+        .filter((url) => url.includes('supabase.co')) // Supabase 이미지만 필터링
+        .map(getImageFileName)
+
+      // Storage에서 불필요한 이미지 삭제
+      const { data: existingFiles } = await supabase.storage
+        .from('readme')
+        .list('master')
+
+      if (existingFiles) {
+        const deletePromises = existingFiles
+          .filter((file) => !currentImageUrls.includes(file.name))
+          .map((file) =>
+            supabase.storage.from('readme').remove([`master/${file.name}`]),
+          )
+
+        await Promise.all(deletePromises)
+      }
+
+      await onSave(finalHtml)
+
+      // 상태 업데이트와 라우팅이 완료될 때까지 약간의 지연 추가
+      await new Promise((resolve) => setTimeout(resolve, 1000))
     } catch (error) {
       console.error('Save failed:', error)
       toast.error('저장 중 오류가 발생했습니다.')

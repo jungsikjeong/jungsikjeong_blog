@@ -48,7 +48,7 @@ export default function Readme({ user }: { user: Tables<'members'> | null }) {
             {profile?.username} / README.md
           </div>
 
-          <RichTextViewer content={readme?.contents ?? null} />
+          <RichTextViewer htmlContent={readme?.contents as string} />
 
           <EditActionBtn
             className='absolute right-4 top-4 z-50'

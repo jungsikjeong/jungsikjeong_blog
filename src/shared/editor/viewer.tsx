@@ -11,38 +11,26 @@ import { ListPlugin } from '@lexical/react/LexicalListPlugin'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 import { $getRoot, $createParagraphNode, LexicalEditor } from 'lexical'
 import { $generateNodesFromDOM } from '@lexical/html'
-
-const createViewerConfig = (content: string | null) => ({
-  namespace: 'MyReadmeViewer',
-  onError: (error: Error) => console.error(error),
-  editable: false,
-  nodes: nodes,
-  theme: EditorTheme,
-  editorState: (editor: LexicalEditor) => {
-    editor.update(() => {
-      if (!content) {
-        const paragraph = $createParagraphNode()
-        $getRoot().append(paragraph)
-        return
-      }
-
-      const parser = new DOMParser()
-      const dom = parser.parseFromString(content, 'text/html')
-      const nodes = $generateNodesFromDOM(editor, dom)
-      const root = $getRoot()
-      root.clear()
-      nodes.forEach((node) => root.append(node))
-    })
-  },
-})
+import HTMLImportPlugin from './plugins/HTMLImportPlugin/HTMLImportPlugin'
 
 interface IRichTextViewerProps {
-  content: string | null
+  htmlContent: string | null
 }
 
-export default function RichTextViewer({ content }: IRichTextViewerProps) {
+const initialConfig = {
+  namespace: 'LexicalViewer',
+  editable: false,
+  onError: (error: any) => {
+    console.error(error)
+  },
+  nodes: nodes,
+  readOnly: true,
+  disableImageEdit: true,
+} as const
+
+export default function RichTextViewer({ htmlContent }: IRichTextViewerProps) {
   return (
-    <LexicalComposer initialConfig={createViewerConfig(content)}>
+    <LexicalComposer initialConfig={initialConfig}>
       <div className='relative'>
         <RichTextPlugin
           contentEditable={
@@ -53,6 +41,7 @@ export default function RichTextViewer({ content }: IRichTextViewerProps) {
         <ListPlugin />
         <CodeHighlightPlugin />
         <MarkdownPlugin />
+        <HTMLImportPlugin htmlString={htmlContent as string} />
       </div>
     </LexicalComposer>
   )

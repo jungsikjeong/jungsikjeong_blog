@@ -37,7 +37,6 @@ export const uploadReadmeImageToStorage = async (
   folderPath: string,
   supabase: SupabaseClient,
 ): Promise<string> => {
-  console.log(`${folderPath}/${uuidv4()}`)
   const response = await supabase.storage
     .from('readme')
     .upload(`${folderPath}/${uuidv4()}`, file, {

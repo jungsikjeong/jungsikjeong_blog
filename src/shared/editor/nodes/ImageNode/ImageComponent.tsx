@@ -52,7 +52,7 @@ import {
 } from 'lexical'
 import * as React from 'react'
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
-
+/* eslint-disable import/no-cycle */
 import { $isImageNode } from './ImageNode'
 import ImageResizer from '../../components/ui/ImageResizer'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
@@ -161,6 +161,9 @@ export default function ImageComponent({
   width: 'inherit' | number
 }): JSX.Element {
   const imageRef = useRef<null | HTMLImageElement>(null)
+  const wrapperRef = useRef<null | HTMLDivElement>(null)
+  const [currentWidth, setCurrentWidth] = useState(width)
+  const [currentHeight, setCurrentHeight] = useState(height)
   const [isSelected, setSelected, clearSelection] =
     useLexicalNodeSelection(nodeKey)
   const [isResizing, setIsResizing] = useState<boolean>(false)
@@ -304,6 +307,9 @@ export default function ImageComponent({
       setIsResizing(false)
     }, 200)
 
+    setCurrentWidth(nextWidth)
+    setCurrentHeight(nextHeight)
+
     editor.update(() => {
       const node = $getNodeByKey(nodeKey)
       if ($isImageNode(node)) {
@@ -322,10 +328,11 @@ export default function ImageComponent({
     <Suspense fallback={'로딩중'}>
       <div className='relative inline-block'>
         <div
-          className={`${isFocused ? 'outline outline-2 outline-[#3c84f4]' : ''}`}
+          ref={wrapperRef}
+          className={`${isFocused ? 'relative outline outline-2 outline-[#3c84f4]' : ''}`}
           style={{
-            width: width === 'inherit' ? 'auto' : width,
-            height: height === 'inherit' ? 'auto' : height,
+            width: currentWidth === 'inherit' ? 'auto' : currentWidth,
+            height: currentHeight === 'inherit' ? 'auto' : currentHeight,
           }}
         >
           {isLoadError ? (
@@ -358,6 +365,7 @@ export default function ImageComponent({
             showCaption={false}
             setShowCaption={() => {}}
             captionsEnabled={false}
+            wrapperRef={wrapperRef}
           />
         )}
       </div>

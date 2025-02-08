@@ -50,6 +50,7 @@ export default function ImageResizer({
   showCaption,
   setShowCaption,
   captionsEnabled,
+  wrapperRef,
 }: {
   editor: LexicalEditor
   buttonRef: { current: null | HTMLButtonElement }
@@ -60,6 +61,7 @@ export default function ImageResizer({
   setShowCaption: (show: boolean) => void
   showCaption: boolean
   captionsEnabled: boolean
+  wrapperRef: React.RefObject<HTMLDivElement>
 }): JSX.Element {
   const controlWrapperRef = useRef<HTMLDivElement>(null)
   const userSelect = useRef({
@@ -240,6 +242,16 @@ export default function ImageResizer({
 
         image.style.width = `${width}px`
         positioning.currentWidth = width
+      }
+
+      // 이미지 크기 업데이트
+      image.style.width = `${positioning.currentWidth}px`
+      image.style.height = `${positioning.currentHeight}px`
+
+      // wrapper 크기도 함께 업데이트
+      if (wrapperRef.current) {
+        wrapperRef.current.style.width = `${positioning.currentWidth}px`
+        wrapperRef.current.style.height = `${positioning.currentHeight}px`
       }
     }
   }

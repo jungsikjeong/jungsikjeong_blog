@@ -12,7 +12,7 @@ export const getCurrentUser = async (): Promise<Tables<'members'> | null> => {
     return null
   }
 
-  const { data: userData, error: userError } = await supabase
+  const { data: user, error: userError } = await supabase
     .from('members')
     .select('*')
     .eq('id', authData.user.id)
@@ -23,5 +23,5 @@ export const getCurrentUser = async (): Promise<Tables<'members'> | null> => {
     return null
   }
 
-  return userData
+  return user
 }

@@ -1,3 +1,5 @@
+'use client'
+
 import { useGetMasterProfile } from '@/services/master_profile/useProfile'
 import { nodes } from '@/shared/editor/nodes'
 import CodeHighlightPlugin from '@/shared/editor/plugins/CodeHighlightPlugin'
@@ -12,27 +14,34 @@ import { ListPlugin } from '@lexical/react/LexicalListPlugin'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 import { Button } from '../components/ui/button'
 import FloatingLinkEditorPlugin from './plugins/FloatingLinkEditorPlugin'
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
+import { $getRoot, EditorState } from 'lexical'
+import ActionButtons from './components/ui/ActionButtons'
+import { useEffect, useState } from 'react'
 
-const initialConfig = {
+const createInitialConfig = (initialContent?: string) => ({
   namespace: 'MyReadmeEditor',
   onError: (error: Error) => console.error(error),
   editable: true,
   nodes: nodes,
   theme: EditorTheme,
-}
+  editorState: initialContent,
+})
 
 interface IRichTextEditorProps {
   onCancel: () => void
-  onSave: () => void
+  onSave: (contents: string) => void
+  initialContent?: string
 }
 
 export default function RichTextEditor({
   onCancel,
   onSave,
+  initialContent,
 }: IRichTextEditorProps) {
   return (
     <>
-      <LexicalComposer initialConfig={initialConfig}>
+      <LexicalComposer initialConfig={createInitialConfig(initialContent)}>
         <div className='relative'>
           <ToolbarPlugin />
           <ListPlugin />
@@ -57,23 +66,9 @@ export default function RichTextEditor({
           <CodeHighlightPlugin />
           <MarkdownPlugin />
         </div>
-      </LexicalComposer>
 
-      <div className='mt-1 flex justify-end gap-2'>
-        <Button
-          onClick={onSave}
-          className='h-7 bg-blue-600 text-sm text-white hover:bg-blue-700'
-        >
-          Save
-        </Button>
-        <Button
-          onClick={onCancel}
-          variant='outline'
-          className='bg- h-7 text-sm text-gray-600 hover:bg-hover-bg'
-        >
-          Cancel
-        </Button>
-      </div>
+        <ActionButtons onSave={onSave} onCancel={onCancel} />
+      </LexicalComposer>
     </>
   )
 }

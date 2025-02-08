@@ -3,6 +3,7 @@
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/providers/AuthProvider'
 import { Button } from '../ui/button'
+import { Tables } from '@/types/supabase'
 
 export default function EditActionBtn({
   className,
@@ -10,15 +11,15 @@ export default function EditActionBtn({
   onClick,
   title,
   tooltip,
+  user,
 }: {
   className: string
   variant?: 'ghost' | 'default'
   onClick?: () => void
   title?: string | React.ReactNode
   tooltip?: string
+  user: Tables<'members'> | null
 }) {
-  const { user } = useAuth()
-
   if (!user?.is_admin) return null
 
   return (

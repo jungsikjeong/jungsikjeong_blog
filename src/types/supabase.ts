@@ -77,6 +77,32 @@ export type Database = {
           },
         ]
       }
+      readme: {
+        Row: {
+          contents: string | null
+          created_at: string
+          email: string
+        }
+        Insert: {
+          contents?: string | null
+          created_at?: string
+          email: string
+        }
+        Update: {
+          contents?: string | null
+          created_at?: string
+          email?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "readme_email_fkey"
+            columns: ["email"]
+            isOneToOne: true
+            referencedRelation: "members"
+            referencedColumns: ["email"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

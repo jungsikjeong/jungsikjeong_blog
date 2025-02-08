@@ -36,7 +36,7 @@ export default function Readme({ user }: { user: Tables<'members'> | null }) {
   }
 
   return (
-    <div className='relative h-[390px] w-full rounded-lg border px-6 py-5'>
+    <div className='relative h-[390px] w-full overflow-auto rounded-lg border px-6 pb-5'>
       {isEditing ? (
         <RichTextEditor
           onCancel={() => setIsEditing(false)}
@@ -44,12 +44,14 @@ export default function Readme({ user }: { user: Tables<'members'> | null }) {
         />
       ) : (
         <>
-          <div className='text-sm'>{profile?.username} / README.md</div>
+          <div className='sticky top-0 z-50 bg-background p-4 text-sm'>
+            {profile?.username} / README.md
+          </div>
 
           <RichTextViewer content={readme?.contents ?? null} />
 
           <EditActionBtn
-            className='absolute right-4 top-4'
+            className='absolute right-4 top-4 z-50'
             variant='ghost'
             onClick={() => setIsEditing(true)}
             title='편집'

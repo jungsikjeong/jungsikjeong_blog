@@ -28,7 +28,7 @@ export default async function page() {
           <Hydrate state={{ queries }}>
             <div className='w-full md:w-[300px]'>
               <Suspense fallback={<div>Loading...</div>}>
-                <Profile />
+                <Profile user={user} />
               </Suspense>
             </div>
 

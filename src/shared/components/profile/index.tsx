@@ -29,8 +29,9 @@ import { useUpdateMasterProfileStatus } from './hooks/useUpdateMasterProfileStat
 import ProfileImageChangeButton from './ProfileImageChangeButton'
 import ProfileStatusButton from './ProfileStatusButton'
 import { getStorageImageUrl } from '@/utils/supabase/get-image-url'
+import { Tables } from '@/types/supabase'
 
-export default function Profile() {
+export default function Profile({ user }: { user: Tables<'members'> | null }) {
   const [isEditProfile, setIsEditProfile] = useState(false)
 
   const { data: profile } = useGetMasterProfile()
@@ -51,6 +52,7 @@ export default function Profile() {
         <div className='w-full'>
           <ProfileInfo profile={profile} />
           <EditActionBtn
+            user={user}
             onClick={() => setIsEditProfile(true)}
             className='my-4 w-full rounded-md border'
             title='Edit profile'

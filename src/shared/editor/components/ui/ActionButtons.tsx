@@ -9,6 +9,7 @@ import { $isImageNode, ImageNode } from '../../nodes/ImageNode/ImageNode'
 import { uploadReadmeImageToStorage } from '@/utils/supabase/storage'
 import useCreateClient from '@/lib/supabase/client'
 import { toast } from 'sonner'
+import { useImageHandler } from '../../hooks/useImageHandler'
 
 interface IActionButtonsProps {
   onSave: (contents: string) => void
@@ -21,21 +22,12 @@ export default function ActionButtons({
 }: IActionButtonsProps) {
   const [editor] = useLexicalComposerContext()
   const [isSaving, setIsSaving] = useState(false)
-  const supabase = useCreateClient()
-
-  // 이미지 URL에서 파일 이름 추출하는 함수
-  const getImageFileName = (url: string) => {
-    const parts = url.split('/')
-    return parts[parts.length - 1]
-  }
-
-  // HTML 문자열에서 모든 이미지 URL 추출
-  const extractImageUrls = (html: string) => {
-    const parser = new DOMParser()
-    const doc = parser.parseFromString(html, 'text/html')
-    const imgTags = Array.from(doc.getElementsByTagName('img'))
-    return imgTags.map((img) => img.src)
-  }
+  const {
+    extractImageUrls,
+    uploadNewImages,
+    cleanupUnusedImages,
+    getImageFileName,
+  } = useImageHandler()
 
   const handleSave = async () => {
     try {
@@ -51,30 +43,10 @@ export default function ActionButtons({
       const doc = parser.parseFromString(currentHtmlString, 'text/html')
       const imgTags = Array.from(doc.getElementsByTagName('img'))
 
-      // 새로운 base64 이미지 업로드 처리
-      const uploadPromises = imgTags.map(async (img) => {
-        const src = img.src
-        if (src.startsWith('data:image')) {
-          try {
-            const blob = await fetch(src).then((r) => r.blob())
-            const file = new File([blob], 'image.jpg', { type: 'image/jpeg' })
-            const url = await uploadReadmeImageToStorage(
-              file,
-              'master',
-              supabase,
-            )
-            return { src, url }
-          } catch (error) {
-            console.error('Image upload failed:', error)
-            throw error
-          }
-        }
-        return null
-      })
+      // 이미지 업로드 처리
+      const results = await uploadNewImages(imgTags)
 
-      const results = await Promise.all(uploadPromises)
-
-      // HTML 문자열에서 base64 이미지 URL을 실제 URL로 교체
+      // HTML 문자열 업데이트
       let finalHtml = currentHtmlString
       results.forEach((result) => {
         if (result) {
@@ -82,29 +54,15 @@ export default function ActionButtons({
         }
       })
 
-      // 이전 이미지와 현재 이미지 URL 비교
+      // 불필요한 이미지 정리
       const currentImageUrls = extractImageUrls(finalHtml)
-        .filter((url) => url.includes('supabase.co')) // Supabase 이미지만 필터링
+        .filter((url) => url.includes('supabase.co'))
         .map(getImageFileName)
 
-      // Storage에서 불필요한 이미지 삭제
-      const { data: existingFiles } = await supabase.storage
-        .from('readme')
-        .list('master')
-
-      if (existingFiles) {
-        const deletePromises = existingFiles
-          .filter((file) => !currentImageUrls.includes(file.name))
-          .map((file) =>
-            supabase.storage.from('readme').remove([`master/${file.name}`]),
-          )
-
-        await Promise.all(deletePromises)
-      }
-
+      await cleanupUnusedImages(currentImageUrls)
       await onSave(finalHtml)
 
-      // 상태 업데이트와 라우팅이 완료될 때까지 약간의 지연 추가
+      // 저장 후 1초대기해서 onSave()의 콜백으로 편집에디터 닫힐때까지 기다리기
       await new Promise((resolve) => setTimeout(resolve, 1000))
     } catch (error) {
       console.error('Save failed:', error)

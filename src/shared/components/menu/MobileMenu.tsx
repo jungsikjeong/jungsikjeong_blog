@@ -3,7 +3,7 @@
 import { Tables } from '@/types/supabase'
 import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import SearchInput from '../search'
 import HamburgerMenuBtn from '../ui/hamburger-menu-btn'
 import ActionSearchBar from '../ui/search-bar/action-search-bar'
@@ -21,6 +21,18 @@ interface IMobileMenuProps {
 
 export default function MobileMenu({ user }: IMobileMenuProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isMenuOpen])
 
   return (
     <>

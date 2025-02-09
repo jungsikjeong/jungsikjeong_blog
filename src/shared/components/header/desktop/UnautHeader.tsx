@@ -4,15 +4,16 @@ import { ThemeToggle } from '../../theme/theme-mode-toggle'
 import LoginButton from '../../auth/LoginButton'
 import SearchInput from '../../search'
 import Logo from '../../logo'
+import ActionSearchBar from '../../ui/search-bar/action-search-bar'
 
 export default function UnautHeader() {
   return (
     <nav className='flex h-full items-center'>
       <div className='flex h-full w-full items-center'>
         <div className='flex-1'>
-          <SearchInput
+          <ActionSearchBar
             placeholder='Search or jump to...'
-            className='hidden h-8 w-60 text-sm md:block'
+            className='absolute left-5 top-0 w-80'
           />
         </div>
 

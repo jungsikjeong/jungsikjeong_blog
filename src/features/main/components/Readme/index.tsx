@@ -45,14 +45,14 @@ export default function Readme({ user }: { user: Tables<'members'> | null }) {
         />
       ) : (
         <>
-          <div className='sticky top-0 z-50 bg-background p-4 text-sm'>
+          <div className='sticky top-0 z-20 bg-background p-4 text-sm'>
             {profile?.username} / README.md
           </div>
 
           <RichTextViewer htmlContent={readme?.contents as string} />
 
           <EditActionBtn
-            className='absolute right-4 top-4 z-50'
+            className='absolute right-4 top-4 z-20'
             variant='ghost'
             onClick={() => setIsEditing(true)}
             title='편집'

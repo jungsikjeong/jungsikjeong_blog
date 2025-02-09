@@ -7,7 +7,7 @@ import MobileMenu from '../../menu/MobileMenu'
 
 export default function AuthHeader({ user }: { user: Tables<'members'> }) {
   return (
-    <div className='flex items-center'>
+    <div className='flex w-full items-center justify-between'>
       <MobileMenu user={user} />
 
       <div className='ml-auto flex'>

@@ -9,7 +9,7 @@ import Logo from '../../logo'
 
 export default function UnautHeader() {
   return (
-    <nav className='flex h-full items-center'>
+    <nav className='flex h-full w-full items-center justify-between'>
       <div className='flex h-full w-full items-center'>
         <MobileMenu />
 

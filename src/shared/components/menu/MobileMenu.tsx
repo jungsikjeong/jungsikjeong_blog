@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import SearchInput from '../search'
 import HamburgerMenuBtn from '../ui/hamburger-menu-btn'
+import ActionSearchBar from '../ui/search-bar/action-search-bar'
 
 // TODO: 추후 db 테이블에 넣고 사용할지 고민..
 const MENU_ITEMS = [

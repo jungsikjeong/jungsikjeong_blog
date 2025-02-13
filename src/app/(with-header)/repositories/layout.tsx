@@ -15,15 +15,15 @@ export default async function layout({ children }: React.PropsWithChildren) {
   return (
     <div>
       <div className='py-4'>
-        <div className='relative flex flex-col px-4 md:container md:flex-row'>
+        <div className='relative grid grid-cols-1 gap-4 px-4 md:container md:grid-cols-3'>
           <Hydrate state={{ queries }}>
-            <div className='w-full md:w-[300px]'>
+            <div>
               <Suspense fallback={<div>Loading...</div>}>
                 <Profile user={user} />
               </Suspense>
             </div>
 
-            <div className='ml-0 mt-4 flex-1 md:ml-8'>{children}</div>
+            <div className='col-span-2'>{children}</div>
           </Hydrate>
         </div>
       </div>

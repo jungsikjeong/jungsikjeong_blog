@@ -1,0 +1,173 @@
+export interface Repository {
+  id: number
+  title: string
+  description: string
+  category: string
+  createdAt: string
+}
+
+export const categories = [
+  'Web Development',
+  'Mobile Development',
+  'Backend',
+  'Frontend',
+  'DevOps',
+  'Database',
+  'Machine Learning',
+  'Artificial Intelligence',
+  'Data Science',
+  'Cloud Computing',
+  'Security',
+  'Testing',
+  'UI/UX',
+  'Game Development',
+  'IoT',
+  'Blockchain',
+  'AR/VR',
+  'System Architecture',
+  'Automation',
+  'Documentation',
+]
+
+export const repositories: Repository[] = [
+  {
+    id: 1,
+    title: 'Next.js Blog Platform',
+    description: 'Modern blog platform built with Next.js 14',
+    category: 'Web Development',
+    createdAt: '2024-02-09',
+  },
+  {
+    id: 2,
+    title: 'React Native Social App',
+    description: 'Cross-platform social media application',
+    category: 'Mobile Development',
+    createdAt: '2024-02-08',
+  },
+  {
+    id: 3,
+    title: 'Spring Boot Microservices',
+    description: 'Microservices architecture implementation',
+    category: 'Backend',
+    createdAt: '2024-02-07',
+  },
+  {
+    id: 4,
+    title: 'Vue.js Component Library',
+    description: 'Reusable UI components for Vue',
+    category: 'Frontend',
+    createdAt: '2024-02-06',
+  },
+  {
+    id: 5,
+    title: 'Kubernetes Deployment Tools',
+    description: 'Tools for K8s deployment automation',
+    category: 'DevOps',
+    createdAt: '2024-02-05',
+  },
+  {
+    id: 6,
+    title: 'PostgreSQL Query Optimizer',
+    description: 'Query optimization tools for PostgreSQL',
+    category: 'Database',
+    createdAt: '2024-02-04',
+  },
+  {
+    id: 7,
+    title: 'TensorFlow Image Recognition',
+    description: 'Image recognition model using TensorFlow',
+    category: 'Machine Learning',
+    createdAt: '2024-02-03',
+  },
+  {
+    id: 8,
+    title: 'GPT Fine-tuning Tools',
+    description: 'Tools for fine-tuning GPT models',
+    category: 'Artificial Intelligence',
+    createdAt: '2024-02-02',
+  },
+  {
+    id: 9,
+    title: 'Data Visualization Dashboard',
+    description: 'Interactive data visualization tools',
+    category: 'Data Science',
+    createdAt: '2024-02-01',
+  },
+  {
+    id: 10,
+    title: 'AWS Lambda Functions',
+    description: 'Serverless functions collection',
+    category: 'Cloud Computing',
+    createdAt: '2024-01-31',
+  },
+  {
+    id: 11,
+    title: 'Security Audit Tools',
+    description: 'Security testing and audit tools',
+    category: 'Security',
+    createdAt: '2024-01-30',
+  },
+  {
+    id: 12,
+    title: 'Jest Testing Framework Extensions',
+    description: 'Custom extensions for Jest',
+    category: 'Testing',
+    createdAt: '2024-01-29',
+  },
+  {
+    id: 13,
+    title: 'Design System',
+    description: 'Comprehensive design system',
+    category: 'UI/UX',
+    createdAt: '2024-01-28',
+  },
+  {
+    id: 14,
+    title: 'Unity 3D Game',
+    description: '3D game built with Unity',
+    category: 'Game Development',
+    createdAt: '2024-01-27',
+  },
+  {
+    id: 15,
+    title: 'IoT Home Automation',
+    description: 'Smart home automation system',
+    category: 'IoT',
+    createdAt: '2024-01-26',
+  },
+  {
+    id: 16,
+    title: 'Ethereum Smart Contracts',
+    description: 'Smart contracts for DeFi',
+    category: 'Blockchain',
+    createdAt: '2024-01-25',
+  },
+  {
+    id: 17,
+    title: 'AR Navigation App',
+    description: 'Augmented reality navigation',
+    category: 'AR/VR',
+    createdAt: '2024-01-24',
+  },
+  {
+    id: 18,
+    title: 'Microservices Architecture',
+    description: 'Reference architecture for microservices',
+    category: 'System Architecture',
+    createdAt: '2024-01-23',
+  },
+  {
+    id: 19,
+    title: 'CI/CD Pipeline Tools',
+    description: 'Automation tools for CI/CD',
+    category: 'Automation',
+    createdAt: '2024-01-22',
+  },
+  {
+    id: 20,
+    title: 'Technical Documentation Generator',
+    description: 'Automated documentation tools',
+    category: 'Documentation',
+    createdAt: '2024-01-21',
+  },
+]

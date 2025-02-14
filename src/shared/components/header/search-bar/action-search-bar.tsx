@@ -165,7 +165,8 @@ function ActionSearchBar({
   return (
     <div className={cn(className)}>
       <div className='relative flex min-h-[300px] flex-col items-center justify-start'>
-        <div className='sticky top-0 z-10 w-full max-w-sm bg-header pb-1 pt-4'>
+        <div className='sticky top-0 z-10 w-full bg-header pb-1 pt-4'>
+          {/* <div className='sticky top-0 z-10 w-full max-w-sm bg-header pb-1 pt-4'> */}
           <div className='relative'>
             <Input
               type='text'

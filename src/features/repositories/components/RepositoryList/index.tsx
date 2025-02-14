@@ -15,15 +15,33 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/shared/components/ui/sheet'
-import { ListFilter } from 'lucide-react'
+import { Badge, BookMarked, ListFilter } from 'lucide-react'
 import { useState } from 'react'
 import { categories, repositories } from './data'
 import { format } from 'date-fns'
 import { ko } from 'date-fns/locale'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+  SelectTrigger,
+} from '@/shared/components/ui/select'
+import ActionSearchBar from '@/shared/components/header/search-bar/action-search-bar'
+import SearchInput from '@/shared/components/search'
+import Link from 'next/link'
+import { cn } from '@/lib/utils'
+import { badgeVariants } from '@/shared/components/ui/badge'
+import { buttonVariants } from '@/shared/components/ui/button'
+import { Tables } from '@/types/supabase'
 
 const ITEMS_PER_PAGE = 3
 
-export default function RepositoryList() {
+export default function RepositoryList({
+  user,
+}: {
+  user: Tables<'members'> | null
+}) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -53,85 +71,46 @@ export default function RepositoryList() {
 
   return (
     <div className='sm mx-auto w-full max-w-4xl space-y-6'>
-      <div className='relative flex items-center'>
-        <Carousel
-          opts={{
-            align: 'start',
-            loop: true,
-            dragFree: true,
-            skipSnaps: false,
-            inViewThreshold: 0.7,
-          }}
-          className='w-full pr-12'
+      <div className='relative flex flex-wrap items-stretch gap-2 md:flex-nowrap'>
+        <SearchInput
+          placeholder='Find a repository...'
+          className='h-full w-full rounded-lg'
+        />
+
+        <Select
+          value={selectedCategory ?? 'all'}
+          onValueChange={(value) =>
+            handleCategorySelect(value === 'all' ? null : value)
+          }
         >
-          <CarouselContent>
-            <CarouselItem className='basis-auto pl-2 md:pl-4'>
-              <Button
-                variant={selectedCategory === null ? 'default' : 'outline'}
-                onClick={() => handleCategorySelect(null)}
-                className='whitespace-nowrap text-sm'
-              >
-                All
-              </Button>
-            </CarouselItem>
+          <SelectTrigger className='w-[180px]'>
+            <SelectValue placeholder='카테고리 선택' />
+          </SelectTrigger>
+
+          <SelectContent>
+            <SelectItem value='all'>전체</SelectItem>
             {categories.map((category) => (
-              <CarouselItem key={category} className='basis-auto pl-2 md:pl-4'>
-                <Button
-                  variant={
-                    selectedCategory === category ? 'default' : 'outline'
-                  }
-                  onClick={() => handleCategorySelect(category)}
-                  className='whitespace-nowrap text-sm'
-                >
-                  {category}
-                </Button>
-              </CarouselItem>
+              <SelectItem key={category} value={category}>
+                {category}
+              </SelectItem>
             ))}
-          </CarouselContent>
-        </Carousel>
+          </SelectContent>
+        </Select>
 
-        <Sheet>
-          <SheetTrigger asChild className='absolute right-0 !m-0'>
-            <Button
-              variant='outline'
-              size='icon'
-              className='shrink-0'
-              title='all tags'
+        {user && user.is_admin && (
+          <div>
+            <Link
+              href={'/'}
+              className={cn(
+                badgeVariants({ variant: 'default' }),
+                'flex h-full items-center gap-2',
+              )}
             >
-              <ListFilter className='h-4 w-4' />
-            </Button>
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle>All Categories</SheetTitle>
-              <SheetDescription>
-                Select a category to filter repositories
-              </SheetDescription>
-            </SheetHeader>
-
-            <div className='mt-4 grid grid-cols-2 gap-2'>
-              <Button
-                variant={selectedCategory === null ? 'default' : 'outline'}
-                onClick={() => handleCategorySelect(null)}
-                className='whitespace-nowrap text-sm'
-              >
-                All
-              </Button>
-              {categories.map((category) => (
-                <Button
-                  key={category}
-                  variant={
-                    selectedCategory === category ? 'default' : 'outline'
-                  }
-                  onClick={() => handleCategorySelect(category)}
-                  className='whitespace-nowrap text-sm'
-                >
-                  {category}
-                </Button>
-              ))}
-            </div>
-          </SheetContent>
-        </Sheet>
+              <BookMarked className='h-4 w-4' />
+              New
+            </Link>
+          </div>
+        )}
       </div>
 
       <div className='space-y-4'>

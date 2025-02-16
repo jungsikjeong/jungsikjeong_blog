@@ -101,7 +101,7 @@ export default function RepositoryList({
         {user && user.is_admin && (
           <div>
             <Link
-              href={'/'}
+              href={'/post/create'}
               className={cn(
                 badgeVariants({ variant: 'default' }),
                 'flex h-full items-center gap-2',

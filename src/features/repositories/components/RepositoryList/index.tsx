@@ -27,8 +27,8 @@ import {
   SelectValue,
   SelectTrigger,
 } from '@/shared/components/ui/select'
-import ActionSearchBar from '@/shared/components/header/search-bar/action-search-bar'
-import SearchInput from '@/shared/components/search'
+import ActionSearchBar from '@/shared/components/search-input/AnimatedSearchInput'
+import SearchInput from '@/shared/components/search-input/BasicSearchInput'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { badgeVariants } from '@/shared/components/ui/badge'

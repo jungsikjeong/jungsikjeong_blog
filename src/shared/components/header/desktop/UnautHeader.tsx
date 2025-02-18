@@ -2,9 +2,8 @@
 
 import { ThemeToggle } from '../../theme/theme-mode-toggle'
 import LoginButton from '../../auth/LoginButton'
-import SearchInput from '../../search'
 import Logo from '../../logo'
-import ActionSearchBar from '../search-bar/action-search-bar'
+import ActionSearchBar from '../../search-input/AnimatedSearchInput'
 
 export default function UnautHeader() {
   return (

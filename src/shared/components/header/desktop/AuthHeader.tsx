@@ -6,7 +6,7 @@ import UserMenu from '../../auth/UserMenu'
 import { Input } from '../../ui/input'
 import { ThemeToggle } from '../../theme/theme-mode-toggle'
 import Logo from '../../logo'
-import ActionSearchBar from '../search-bar/action-search-bar'
+import ActionSearchBar from '../../search-input/AnimatedSearchInput'
 
 export default function AuthHeader({ user }: { user: Tables<'members'> }) {
   return (

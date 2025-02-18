@@ -181,7 +181,7 @@ export function ToolbarPlugin() {
   }
 
   return (
-    <div className='toolbar sticky top-0 z-10 flex items-center gap-1 border-b bg-white p-2 shadow-sm dark:bg-header'>
+    <div className='toolbar sticky top-0 z-10 flex items-center gap-1 border-b p-2 shadow-sm dark:bg-header'>
       <div className='group relative'>
         <button
           type='button'
@@ -239,6 +239,7 @@ export function ToolbarPlugin() {
 
       <div className='group relative'>
         <button
+          type='button'
           onClick={insertLink}
           className={`toolbar-item rounded-md p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${
             isLink
@@ -267,6 +268,7 @@ export function ToolbarPlugin() {
       </div>
       <div className='group relative'>
         <button
+          type='button'
           onClick={insertImage}
           className='toolbar-item rounded-md p-2 transition-colors hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'
           aria-label='이미지'
@@ -294,6 +296,7 @@ export function ToolbarPlugin() {
 
       <div className='group relative'>
         <button
+          type='button'
           onClick={insertOrderedList}
           className={`toolbar-item rounded-md p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${isOrderedList ? 'bg-gray-200 text-blue-600 dark:bg-gray-700 dark:text-blue-400' : 'dark:text-gray-200'}`}
           aria-label='번호 목록'
@@ -318,6 +321,7 @@ export function ToolbarPlugin() {
       </div>
       <div className='group relative'>
         <button
+          type='button'
           onClick={insertUnorderedList}
           className={`toolbar-item rounded-md p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${isUnorderedList ? 'bg-gray-200 text-blue-600 dark:bg-gray-700 dark:text-blue-400' : 'dark:text-gray-200'}`}
           aria-label='글머리 기호'
@@ -342,6 +346,7 @@ export function ToolbarPlugin() {
       </div>
       <div className='group relative'>
         <button
+          type='button'
           onClick={insertCodeBlock}
           title={'코드 블럭'}
           className='toolbar-item rounded-md p-2 transition-colors hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'

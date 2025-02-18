@@ -71,7 +71,7 @@ const allActions = [
   },
 ]
 
-function ActionSearchBar({
+function AnimatedSearchInput({
   className,
   placeholder,
   actions = allActions,
@@ -164,7 +164,12 @@ function ActionSearchBar({
 
   return (
     <div className={cn(className)}>
-      <div className='relative flex min-h-[300px] flex-col items-center justify-start'>
+      <div
+        className={cn(
+          'relative flex flex-col items-center justify-start',
+          isFocused ? 'min-h-[300px]' : '',
+        )}
+      >
         <div className='sticky top-0 z-10 w-full bg-header pb-1 pt-4'>
           {/* <div className='sticky top-0 z-10 w-full max-w-sm bg-header pb-1 pt-4'> */}
           <div className='relative'>
@@ -209,7 +214,10 @@ function ActionSearchBar({
           <AnimatePresence>
             {isFocused && result && !selectedAction && (
               <motion.div
-                className='absolute z-[9999] mt-1 w-full overflow-hidden rounded-md border bg-white shadow-sm dark:border-gray-800 dark:bg-black'
+                className={cn(
+                  'absolute mt-1 w-full overflow-hidden rounded-md border bg-white shadow-sm dark:border-gray-800 dark:bg-black',
+                  isFocused ? 'z-[9999]' : 'z-0',
+                )}
                 variants={container}
                 initial='hidden'
                 animate='show'
@@ -261,4 +269,4 @@ function ActionSearchBar({
   )
 }
 
-export default ActionSearchBar
+export default AnimatedSearchInput

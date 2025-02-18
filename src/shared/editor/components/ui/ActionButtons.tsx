@@ -6,10 +6,10 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import { $getRoot } from 'lexical'
 import { useState } from 'react'
 import { $isImageNode, ImageNode } from '../../nodes/ImageNode/ImageNode'
-import { uploadReadmeImageToStorage } from '@/utils/supabase/storage'
 import useCreateClient from '@/lib/supabase/client'
 import { toast } from 'sonner'
 import { useImageHandler } from '../../hooks/useImageHandler'
+import { useParams, usePathname } from 'next/navigation'
 
 interface IActionButtonsProps {
   onSave: (contents: string) => void
@@ -22,6 +22,11 @@ export default function ActionButtons({
 }: IActionButtonsProps) {
   const [editor] = useLexicalComposerContext()
   const [isSaving, setIsSaving] = useState(false)
+  const pathname = usePathname()
+  // const storagePath = pathname.type === 'readme' ? 'readme' : 'posts'
+
+  console.log('pathname:', pathname)
+
   const {
     extractImageUrls,
     uploadNewImages,

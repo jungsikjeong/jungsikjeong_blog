@@ -39,6 +39,7 @@ export default function Readme({ user }: { user: Tables<'members'> | null }) {
     <div className='relative h-[390px] w-full overflow-auto rounded-lg border px-6 pb-5'>
       {isEditing ? (
         <RichTextEditor
+          placeholder='내용을 입력하세요'
           defaultContent={readme?.contents as string}
           onCancel={() => setIsEditing(false)}
           onSave={(contents: string) => handleSave(contents)}

@@ -39,28 +39,30 @@ interface IRichTextEditorProps {
   onCancel: () => void
   onSave: (contents: string) => void
   defaultContent?: string
+  placeholder: string
 }
 
 export default function RichTextEditor({
   onCancel,
   onSave,
+  placeholder,
   defaultContent,
 }: IRichTextEditorProps) {
   return (
     <>
       <LexicalComposer initialConfig={createInitialConfig(defaultContent)}>
-        <div className='relative'>
+        <div className='relative mt-4 rounded-md border focus-within:border-primary focus-within:ring-1 focus-within:ring-primary'>
           <ToolbarPlugin />
           <ListPlugin />
           <RichTextPlugin
             contentEditable={
               <div className='relative'>
                 <ContentEditable
-                  className='editor-input relative z-10 h-[280px] overflow-y-auto px-4 py-3 text-gray-900 focus:border-none focus:outline-none focus:ring-0 dark:text-gray-100'
-                  aria-placeholder='내용을 입력하세요'
+                  className='editor-input relative z-10 h-[280px] overflow-y-auto px-4 py-3 text-gray-900 focus:outline-none dark:text-gray-100'
+                  aria-placeholder={placeholder}
                   placeholder={
                     <div className='absolute left-4 top-3 z-0 text-gray-500 dark:text-gray-400'>
-                      내용을 입력하세요
+                      {placeholder}
                     </div>
                   }
                 />

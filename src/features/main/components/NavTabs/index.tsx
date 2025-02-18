@@ -1,6 +1,6 @@
 'use client'
 
-import { ProgressLink } from '@/shared/components/navigation_progress/ProgressLink'
+import { ProgressLink } from '@/shared/components/navigation-progress/ProgressLink'
 import { usePathname } from 'next/navigation'
 
 export default function NavTabs() {

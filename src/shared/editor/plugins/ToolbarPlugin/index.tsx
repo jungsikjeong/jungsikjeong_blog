@@ -186,36 +186,14 @@ export default function ToolbarPlugin({ mode, setMode }: IToolbarPluginProps) {
   }
 
   return (
-    <div className='toolbar sticky top-0 z-10 flex items-center justify-between rounded-tl-lg rounded-tr-lg border-b shadow-sm dark:bg-gray-900'>
-      {/* 탭 네비게이션 */}
-      <div className='-mb-[1px] flex'>
-        <button
-          type='button'
-          onClick={() => setMode('write')}
-          className={`rounded-t-md border-l-[1px] border-r-[1px] px-3 py-2 ${
-            mode === 'write'
-              ? 'border-gray-200 bg-background dark:border-gray-700'
-              : 'border-transparent text-gray-400'
-          }`}
-        >
-          작성
-        </button>
-        <button
-          type='button'
-          onClick={() => setMode('preview')}
-          className={`rounded-t-md border-l-[1px] border-r-[1px] px-3 py-2 ${
-            mode === 'preview'
-              ? 'border-gray-200 bg-background dark:border-gray-700'
-              : 'border-transparent text-gray-400'
-          }`}
-        >
-          미리보기
-        </button>
-      </div>
-
-      {/* 툴바 버튼 그룹 */}
+    <div className='toolbar sticky top-0 z-10 flex flex-col rounded-tl-lg rounded-tr-lg shadow-sm dark:border-b dark:bg-gray-900 sm:flex-row sm:items-center sm:justify-between'>
+      {/* 툴바 버튼 그룹 - 모바일에서는 위로 */}
       <div
-        className={`${mode === 'preview' ? 'hidden' : 'flex items-center gap-1 pr-2'}`}
+        className={`${
+          mode === 'preview'
+            ? 'hidden'
+            : 'order-1 flex flex-wrap items-center gap-1 border-b p-0 px-2 sm:order-2 sm:border-none sm:pr-2'
+        }`}
       >
         <div className='group relative'>
           <button
@@ -405,6 +383,32 @@ export default function ToolbarPlugin({ mode, setMode }: IToolbarPluginProps) {
             </span>
           </button>
         </div>
+      </div>
+
+      {/* 탭 네비게이션 - 모바일에서는 아래로 */}
+      <div className='order-2 -mb-[1px] mt-2 flex sm:order-1 sm:mt-0'>
+        <button
+          type='button'
+          onClick={() => setMode('write')}
+          className={`rounded-t-md border-l-0 border-r-[1px] border-t-[1px] px-3 py-2 sm:border-l-[1px] sm:border-t-0 ${
+            mode === 'write'
+              ? 'border-gray-200 bg-background dark:border-gray-700'
+              : 'border-transparent text-gray-400'
+          }`}
+        >
+          <span className='text-sm'>Write</span>
+        </button>
+        <button
+          type='button'
+          onClick={() => setMode('preview')}
+          className={`rounded-t-md border-l-[1px] border-r-[1px] border-t-[1px] px-3 py-2 sm:border-t-0 ${
+            mode === 'preview'
+              ? 'border-gray-200 bg-background dark:border-gray-700'
+              : 'border-transparent text-gray-400'
+          }`}
+        >
+          <span className='text-sm'>Preview</span>
+        </button>
       </div>
     </div>
   )

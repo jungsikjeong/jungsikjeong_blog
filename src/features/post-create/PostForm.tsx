@@ -61,6 +61,7 @@ export default function PostForm() {
         />
 
         <RichTextEditor
+          className='h-80'
           placeholder='Type your contents here...'
           onCancel={() => {}}
           onSave={() => {

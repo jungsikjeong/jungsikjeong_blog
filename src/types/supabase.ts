@@ -9,6 +9,18 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      categories: {
+        Row: {
+          category: string
+        }
+        Insert: {
+          category: string
+        }
+        Update: {
+          category?: string
+        }
+        Relationships: []
+      }
       members: {
         Row: {
           avatar_url: string | null
@@ -100,6 +112,38 @@ export type Database = {
             isOneToOne: true
             referencedRelation: "members"
             referencedColumns: ["email"]
+          },
+        ]
+      }
+      repositories: {
+        Row: {
+          category: string
+          contents: string | null
+          created_at: string
+          id: string
+          title: string
+        }
+        Insert: {
+          category: string
+          contents?: string | null
+          created_at?: string
+          id?: string
+          title: string
+        }
+        Update: {
+          category?: string
+          contents?: string | null
+          created_at?: string
+          id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "repositories_category_fkey"
+            columns: ["category"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["category"]
           },
         ]
       }

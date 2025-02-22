@@ -1,22 +1,11 @@
-import { PostForm } from '@/features/post-create'
+import { PostForm } from '@/features/post'
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from '@/shared/components/ui/avatar'
-import {
-  Form,
-  FormLabel,
-  FormControl,
-  FormMessage,
-  FormItem,
-  FormField,
-} from '@/shared/components/ui/form'
-import { Input } from '@/shared/components/ui/input'
 import { requireAuth } from '@/utils/supabase/auth'
 import { getStorageImageUrl } from '@/utils/supabase/get-image-url'
-import React from 'react'
-import { useForm } from 'react-hook-form'
 
 export default async function CreatePage() {
   const { user } = await requireAuth()

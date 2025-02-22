@@ -128,3 +128,14 @@
     @apply border-b-2 border-[hsl(var(--hover-border))] bg-[hsl(var(--hover-bg))];
   }
 }
+
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

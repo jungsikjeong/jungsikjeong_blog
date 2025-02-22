@@ -10,9 +10,11 @@ import {
 } from '@/shared/components/ui/form'
 import { Input } from '@/shared/components/ui/input'
 import RichTextEditor from '@/shared/editor'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { CategoryCombobox } from './CategoryCombobox'
+import { PackageCombobox } from './PackageCombobox'
 
 const postFormSchema = z.object({
   title: z
@@ -60,14 +62,21 @@ export default function PostForm() {
           )}
         />
 
-        <RichTextEditor
-          className='h-80'
-          placeholder='Type your contents here...'
-          onCancel={() => {}}
-          onSave={() => {
-            form.handleSubmit(onSubmit)()
-          }}
-        />
+        <section>
+          <RichTextEditor
+            className='h-96'
+            placeholder='Type your contents here...'
+            onCancel={() => {}}
+            onSave={() => {
+              form.handleSubmit(onSubmit)()
+            }}
+          />
+
+          <div className='mt-3 flex flex-wrap gap-2'>
+            <CategoryCombobox />
+            <PackageCombobox />
+          </div>
+        </section>
       </form>
     </Form>
   )

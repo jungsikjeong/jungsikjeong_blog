@@ -1,40 +1,32 @@
 'use client'
 
-import { useMediaQuery } from '@/hooks/useMediaQuery'
-import { useGetMasterProfile } from '@/services/master_profile/useProfile'
-import { IProfileInfo } from '@/types/profile'
+import { useGetProfileByMemberId } from '@/services/profile/useProfile'
+import { IProfile, IProfileInfo } from '@/types/profile'
+import { Tables } from '@/types/supabase'
+import { getStorageImageUrl } from '@/utils/supabase/get-image-url'
 import { MapPin } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
 import { EditActionBtn } from '../buttons'
-import { Button } from '../ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '../ui/dialog'
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from '../ui/drawer'
 import EditProfileForm from './EditProfileForm'
-import { useUpdateMasterProfileStatus } from './hooks/useUpdateMasterProfileStatus'
 import ProfileImageChangeButton from './ProfileImageChangeButton'
 import ProfileStatusButton from './ProfileStatusButton'
-import { getStorageImageUrl } from '@/utils/supabase/get-image-url'
-import { Tables } from '@/types/supabase'
+import StatusModal from './StatusModal'
 
-export default function Profile({ user }: { user: Tables<'members'> | null }) {
+export default function Profile({
+  user,
+  isGuestUser,
+}: {
+  user: Tables<'members'> | null
+  isGuestUser: boolean
+}) {
   const [isEditProfile, setIsEditProfile] = useState(false)
 
-  const { data: profile } = useGetMasterProfile()
+  const { data: profile } = useGetProfileByMemberId(
+    isGuestUser && user
+      ? user.id
+      : (process.env.NEXT_PUBLIC_ADMIN_ID as string),
+  )
 
   return (
     <div className='md:absolute md:-top-7'>
@@ -45,12 +37,12 @@ export default function Profile({ user }: { user: Tables<'members'> | null }) {
 
       {isEditProfile ? (
         <EditProfileForm
-          profile={profile}
+          profile={profile as IProfile}
           onClose={() => setIsEditProfile(false)}
         />
       ) : (
         <div className='w-full'>
-          <ProfileInfo profile={profile} />
+          <ProfileInfo profile={profile as IProfile} />
           <EditActionBtn
             user={user}
             onClick={() => setIsEditProfile(true)}
@@ -76,18 +68,22 @@ function ProfileImage({
   return (
     <div className='relative flex h-20 w-20 items-center justify-center rounded-full border md:h-80 md:w-80'>
       <Image
-        src={getStorageImageUrl(avatarUrl)}
-        alt='avatar'
+        src={
+          avatarUrl
+            ? getStorageImageUrl(avatarUrl)
+            : '/profile_images/meme_patrick_i_have_3_dollars.png'
+        }
+        alt='avatar_img'
         fill
         priority={true}
         className='rounded-full object-cover'
         sizes='(max-width: 768px) 5rem, 20rem'
       />
 
-      {/* 이미지 편집 버튼 -모바일 사이즈 */}
+      {/* 이미지 편집 버튼 -모바일  */}
       <ProfileImageChangeButton className='absolute -left-2 top-0 h-7 w-7 rounded-full border bg-black text-xs text-white hover:bg-black dark:hover:text-primary md:hidden' />
 
-      {/* 상태 편집 버튼 - 모바일 사이즈 */}
+      {/* 상태 편집 버튼 - 모바일  */}
       <ProfileStatusButton
         title='Set Status'
         className='absolute bottom-0 right-0 h-7 w-7 rounded-full border bg-black text-xs hover:bg-black dark:hover:text-primary md:hidden'
@@ -95,7 +91,7 @@ function ProfileImage({
         profileStatus={profileStatus}
       />
 
-      {/* 이미지 편집 및 상태 편집 - 데스크탑 사이즈*/}
+      {/* 이미지 편집 및 상태 편집 - 데스크탑 */}
       <div className='absolute -bottom-2 left-0 z-10 hidden w-full items-center justify-between md:bottom-12 md:flex'>
         <ProfileImageChangeButton className='h-9 w-9 rounded-full border bg-black text-xs text-white hover:bg-black hover:text-accent-foreground hover:text-white dark:hover:text-primary' />
 
@@ -125,19 +121,23 @@ function ProfileInfo({ profile }: IProfileInfo) {
       </div>
 
       <div className='flex flex-col gap-2 text-sm md:gap-3'>
-        <div className='pt-4 text-base md:border-b md:pb-2'>
-          <p>{profile.bio}</p>
-        </div>
+        {profile.bio && (
+          <div className='pt-4 text-base md:border-b md:pb-2'>
+            <p>{profile.bio}</p>
+          </div>
+        )}
 
         <div className='my-2 flex flex-col gap-2'>
-          <div className=''>
-            <a
-              href={`mailto:${profile.display_email}`}
-              className='transition-colors duration-200 hover:text-blue-500'
-            >
-              {profile.display_email}
-            </a>
-          </div>
+          {profile.display_email && (
+            <div>
+              <a
+                href={`mailto:${profile.display_email}`}
+                className='transition-colors duration-200 hover:text-blue-500'
+              >
+                {profile.display_email}
+              </a>
+            </div>
+          )}
 
           {profile.social_accounts &&
             profile.social_accounts
@@ -155,75 +155,14 @@ function ProfileInfo({ profile }: IProfileInfo) {
               ))}
         </div>
 
-        <div className='pb-2 md:border-b'>
-          <p className='flex items-center gap-1'>
-            <MapPin /> {profile.location}
-          </p>
-        </div>
+        {profile.location && (
+          <div className='pb-2 md:border-b'>
+            <p className='flex items-center gap-1'>
+              <MapPin /> {profile.location}
+            </p>
+          </div>
+        )}
       </div>
     </>
-  )
-}
-
-function StatusModal({ onClose }: { onClose: () => void }) {
-  const { mutate: updateStatus } = useUpdateMasterProfileStatus()
-
-  const isDesktop = useMediaQuery('(min-width: 768px)')
-  const emojis = ['😊', '😎', '🎉', '💻', '☕️', '🌟', '🎯', '💪', '✨', '🚀']
-
-  const handleEmojiSelect = (emoji: string) => {
-    updateStatus(emoji)
-    onClose()
-  }
-
-  const EmojiGrid = () => (
-    <div className='grid grid-cols-5 gap-4 p-4'>
-      {emojis.map((emoji) => (
-        <Button
-          key={emoji}
-          onClick={() => handleEmojiSelect(emoji)}
-          className='text-2xl transition-transform hover:scale-125 hover:bg-transparent'
-          variant='ghost'
-          type='button'
-        >
-          {emoji}
-        </Button>
-      ))}
-    </div>
-  )
-
-  if (isDesktop) {
-    return (
-      <Dialog open={true} onOpenChange={() => onClose()}>
-        <DialogContent className='sm:max-w-[425px]'>
-          <DialogHeader>
-            <DialogTitle>상태 설정</DialogTitle>
-            <DialogDescription>
-              원하시는 이모지를 선택해주세요
-            </DialogDescription>
-          </DialogHeader>
-          <EmojiGrid />
-        </DialogContent>
-      </Dialog>
-    )
-  }
-
-  return (
-    <Drawer open={true} onOpenChange={onClose}>
-      <DrawerContent>
-        <DrawerHeader className='text-left'>
-          <DrawerTitle>상태 설정</DrawerTitle>
-          <DrawerDescription>원하시는 이모지를 선택해주세요</DrawerDescription>
-        </DrawerHeader>
-        <EmojiGrid />
-        <DrawerFooter className='pt-2'>
-          <DrawerClose asChild>
-            <Button variant='outline' className='w-full' type='button'>
-              취소
-            </Button>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
   )
 }

@@ -46,7 +46,12 @@ export default function ProfileImageChangeButton({
 
       setUser({ ...user, avatar_url: res as string })
 
-      updateImage.mutate(res as string)
+      updateImage.mutate(
+        { fileName: res as string, userId: user.id },
+        {
+          onSuccess(data, variables, context) {},
+        },
+      )
     }
   }
   return (

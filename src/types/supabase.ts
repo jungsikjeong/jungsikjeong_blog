@@ -11,24 +11,32 @@ export type Database = {
     Tables: {
       categories: {
         Row: {
-          category: string
-          constructor: string
           created_at: string
           id: string
+          member_id: string
+          name: string
         }
         Insert: {
-          category: string
-          constructor?: string
           created_at?: string
           id?: string
+          member_id?: string
+          name: string
         }
         Update: {
-          category?: string
-          constructor?: string
           created_at?: string
           id?: string
+          member_id?: string
+          name?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "categories_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "members"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       members: {
         Row: {
@@ -65,7 +73,7 @@ export type Database = {
           bio: string | null
           created_at: string
           display_email: string | null
-          email: string
+          id: string
           location: string | null
           social_accounts: string[] | null
           status: string | null
@@ -74,7 +82,7 @@ export type Database = {
           bio?: string | null
           created_at?: string
           display_email?: string | null
-          email: string
+          id?: string
           location?: string | null
           social_accounts?: string[] | null
           status?: string | null
@@ -83,18 +91,18 @@ export type Database = {
           bio?: string | null
           created_at?: string
           display_email?: string | null
-          email?: string
+          id?: string
           location?: string | null
           social_accounts?: string[] | null
           status?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "profile_email_fkey"
-            columns: ["email"]
+            foreignKeyName: "profile_id_fkey"
+            columns: ["id"]
             isOneToOne: true
             referencedRelation: "members"
-            referencedColumns: ["email"]
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -102,59 +110,66 @@ export type Database = {
         Row: {
           contents: string | null
           created_at: string
-          email: string
+          member_id: string
         }
         Insert: {
           contents?: string | null
           created_at?: string
-          email: string
+          member_id?: string
         }
         Update: {
           contents?: string | null
           created_at?: string
-          email?: string
+          member_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "readme_email_fkey"
-            columns: ["email"]
+            foreignKeyName: "readme_member_id_fkey"
+            columns: ["member_id"]
             isOneToOne: true
             referencedRelation: "members"
-            referencedColumns: ["email"]
+            referencedColumns: ["id"]
           },
         ]
       }
       repositories: {
         Row: {
-          category: string
-          constructor: string
-          contents: string | null
+          category_id: string
+          contents: string
           created_at: string
-          id: number
+          id: string
+          member_id: string
           title: string
         }
         Insert: {
-          category: string
-          constructor?: string
-          contents?: string | null
+          category_id?: string
+          contents: string
           created_at?: string
-          id?: number
+          id?: string
+          member_id?: string
           title: string
         }
         Update: {
-          category?: string
-          constructor?: string
-          contents?: string | null
+          category_id?: string
+          contents?: string
           created_at?: string
-          id?: number
+          id?: string
+          member_id?: string
           title?: string
         }
         Relationships: [
           {
-            foreignKeyName: "repositories_category_fkey"
-            columns: ["category"]
+            foreignKeyName: "repositories_category_id_fkey"
+            columns: ["category_id"]
             isOneToOne: false
             referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "repositories_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "members"
             referencedColumns: ["id"]
           },
         ]

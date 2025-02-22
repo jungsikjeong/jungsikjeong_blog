@@ -1,11 +1,11 @@
 import useCreateClient from '@/lib/supabase/client'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { masterProfileQueryOptions } from './queries'
+import { profileQueryOptions } from './queries'
 
-export const useGetMasterProfile = () => {
+export const useGetProfileByMemberId = (userId: string) => {
   const supabase = useCreateClient()
 
   return useSuspenseQuery({
-    ...masterProfileQueryOptions(supabase).getMasterProfile(),
+    ...profileQueryOptions(supabase, userId).getProfileByMemberId(),
   })
 }

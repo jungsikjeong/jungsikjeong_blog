@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { masterProfileQueryOptions } from '@/services/master_profile/queries'
+import { profileQueryOptions } from '@/services/profile/queries'
 import Profile from '@/shared/components/profile'
 import { getDehydratedQueries, Hydrate } from '@/utils/react-query'
 import { getCurrentUser } from '@/utils/supabase/auth'
@@ -9,7 +9,7 @@ export default async function layout({ children }: React.PropsWithChildren) {
   const supabase = await createClient()
   const user = await getCurrentUser()
   const queries = await getDehydratedQueries([
-    masterProfileQueryOptions(supabase).getMasterProfile(),
+    profileQueryOptions(supabase).getProfileByMemberId(),
   ])
 
   return (

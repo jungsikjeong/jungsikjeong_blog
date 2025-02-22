@@ -1,7 +1,7 @@
 import { NavTabs, Readme } from '@/features/main'
 import { createClient } from '@/lib/supabase/server'
-import { masterProfileQueryOptions } from '@/services/master_profile/queries'
-import { masterReadmeQueryOptions } from '@/services/master_readme/queries'
+import { profileQueryOptions } from '@/services/profile/queries'
+import { masterReadmeQueryOptions } from '@/services/readme/queries'
 import { Header } from '@/shared/components/header'
 import Profile from '@/shared/components/profile'
 import { getDehydratedQueries, Hydrate } from '@/utils/react-query'
@@ -14,7 +14,10 @@ export default async function page() {
   const user = await getCurrentUser()
 
   const queries = await getDehydratedQueries([
-    masterProfileQueryOptions(supabase).getMasterProfile(),
+    profileQueryOptions(
+      supabase,
+      process.env.NEXT_PUBLIC_ADMIN_ID as string,
+    ).getProfileByMemberId(),
     masterReadmeQueryOptions(supabase).getMasterReadme(),
   ])
 
@@ -28,7 +31,7 @@ export default async function page() {
           <Hydrate state={{ queries }}>
             <div className='w-full md:w-[300px]'>
               <Suspense fallback={<div>Loading...</div>}>
-                <Profile user={user} />
+                <Profile user={user} isGuestUser={false} />
               </Suspense>
             </div>
 

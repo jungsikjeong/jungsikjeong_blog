@@ -1,7 +1,7 @@
 import useCreateClient from '@/lib/supabase/client'
-import MasterProfileService from '@/services/master_profile/services'
+import ProfileService from '@/services/profile/services'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { masterProfileQueryKeys } from '@/services/master_profile/queries'
+import { profileQueryKeys } from '@/services/profile/queries'
 
 export const useUpdateMasterProfileStatus = () => {
   const supabase = useCreateClient()
@@ -10,10 +10,10 @@ export const useUpdateMasterProfileStatus = () => {
 
   return useMutation({
     mutationFn: (status: string) =>
-      new MasterProfileService(supabase).updateMasterStatus(status),
+      new ProfileService(supabase).updateStatus(status),
     onSuccess: async () => {
       await queryclient.invalidateQueries({
-        queryKey: masterProfileQueryKeys.profile,
+        queryKey: profileQueryKeys.profile,
       })
     },
   })

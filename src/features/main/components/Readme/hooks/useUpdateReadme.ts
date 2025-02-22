@@ -1,6 +1,6 @@
 import useCreateClient from '@/lib/supabase/client'
-import { masterReadmeQueryKeys } from '@/services/master_readme/queries'
-import MasterReadmeService from '@/services/master_readme/services'
+import { masterReadmeQueryKeys } from '@/services/readme/queries'
+import MasterReadmeService from '@/services/readme/services'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export const useUpdateReadme = () => {

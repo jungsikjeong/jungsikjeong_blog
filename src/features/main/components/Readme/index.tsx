@@ -1,7 +1,7 @@
 'use client'
 
-import { useGetMasterProfile } from '@/services/master_profile/useProfile'
-import { useGetMasterReadme } from '@/services/master_readme/useReadme'
+import { useGetProfileByMemberId } from '@/services/profile/useProfile'
+import { useGetMasterReadme } from '@/services/readme/useReadme'
 import { EditActionBtn } from '@/shared/components/buttons'
 import RichTextEditor from '@/shared/editor'
 import { useState } from 'react'
@@ -11,7 +11,9 @@ import { Tables } from '@/types/supabase'
 import RichTextViewer from '@/shared/editor/viewer'
 
 export default function Readme({ user }: { user: Tables<'members'> | null }) {
-  const { data: profile } = useGetMasterProfile()
+  const { data: profile } = useGetProfileByMemberId(
+    user ? user.id : (process.env.NEXT_PUBLIC_ADMIN_ID as string),
+  )
   const { data: readme } = useGetMasterReadme()
   const updateReadme = useUpdateReadme()
 

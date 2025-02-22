@@ -35,9 +35,10 @@ export default function EditProfileForm({
       bio: profile.bio ?? undefined,
       location: profile.location ?? undefined,
       display_email: profile.display_email ?? undefined,
-      social_accounts: profile.social_accounts?.map((account) => ({
-        url: account,
-      })) ?? [{ url: '' }, { url: '' }, { url: '' }, { url: '' }],
+      social_accounts:
+        profile.social_accounts?.map((account) => ({
+          url: account,
+        })) ?? [],
     },
   })
 

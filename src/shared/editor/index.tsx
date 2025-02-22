@@ -69,7 +69,7 @@ export default function RichTextEditor({
                   className={`editor-input relative z-10 h-[280px] overflow-y-auto px-4 py-3 text-gray-900 focus:outline-none dark:text-gray-100 ${className}`}
                   aria-placeholder={placeholder}
                   placeholder={
-                    <div className='absolute left-4 top-3 z-0 text-gray-500 dark:text-gray-400'>
+                    <div className='absolute left-4 top-3 z-0 text-sm text-gray-500 dark:text-gray-400'>
                       {placeholder}
                     </div>
                   }

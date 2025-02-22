@@ -2,8 +2,16 @@ import Image from 'next/image'
 import { Button } from '@/shared/components/ui/button'
 import Link from 'next/link'
 import { KaKaoLoginBtn } from '@/features/auth'
+import { getCurrentUser } from '@/utils/supabase/auth'
+import { redirect } from 'next/navigation'
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const user = await getCurrentUser()
+
+  if (user) {
+    redirect('/')
+  }
+
   return (
     <section className='flex h-[calc(100vh-100px)] items-center justify-center'>
       <div className='flex w-full justify-center'>

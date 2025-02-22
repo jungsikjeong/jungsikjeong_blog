@@ -87,45 +87,6 @@ export default function RichTextEditor({
 
         <ActionButtons onSave={onSave} onCancel={onCancel} />
       </LexicalComposer>
-
-      {/* {mode === 'write' ? (
-        <LexicalComposer initialConfig={createInitialConfig(defaultContent)}>
-          <div className='relative mt-4 rounded-md border focus-within:border-primary focus-within:ring-1 focus-within:ring-primary'>
-            <ToolbarPlugin mode={mode} setMode={setMode} />
-            <ListPlugin />
-            <RichTextPlugin
-              contentEditable={
-                <div className='relative'>
-                  <ContentEditable
-                    className='editor-input relative z-10 h-[280px] overflow-y-auto px-4 py-3 text-gray-900 focus:outline-none dark:text-gray-100'
-                    aria-placeholder={placeholder}
-                    placeholder={
-                      <div className='absolute left-4 top-3 z-0 text-gray-500 dark:text-gray-400'>
-                        {placeholder}
-                      </div>
-                    }
-                  />
-                </div>
-              }
-              ErrorBoundary={LexicalErrorBoundary}
-            />
-
-            <LinkPlugins />
-            <FloatingLinkEditorPlugin />
-            <CodeHighlightPlugin />
-            <MarkdownPlugin />
-          </div>
-
-          <ActionButtons onSave={onSave} onCancel={onCancel} />
-        </LexicalComposer>
-      ) : (
-        <div className='mt-4 rounded-md border p-4'>
-          <div
-            className='prose dark:prose-invert'
-            dangerouslySetInnerHTML={{ __html: editorContent }}
-          />
-        </div>
-      )} */}
     </div>
   )
 }

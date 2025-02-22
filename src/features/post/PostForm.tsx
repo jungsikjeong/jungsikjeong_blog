@@ -12,24 +12,17 @@ import { Input } from '@/shared/components/ui/input'
 import RichTextEditor from '@/shared/editor'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 import { CategoryCombobox } from './CategoryCombobox'
 import { PackageCombobox } from './PackageCombobox'
-
-const postFormSchema = z.object({
-  title: z
-    .string()
-    .min(1, '제목을 입력해주세요')
-    .max(20, '제목은 20자 이내로 입력해주세요'),
-})
-
-type PostFormValues = z.infer<typeof postFormSchema>
+import { postFormSchema, PostFormValues } from './schema'
 
 export default function PostForm() {
   const form = useForm<PostFormValues>({
     resolver: zodResolver(postFormSchema),
     defaultValues: {
       title: '',
+      category: undefined,
+      package: undefined,
     },
   })
 

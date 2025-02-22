@@ -19,7 +19,8 @@ import {
   PopoverTrigger,
 } from '@/shared/components/ui/popover'
 import { Label } from '@/shared/components/ui/label'
-
+import { useFormContext } from 'react-hook-form'
+import { PostFormValues } from './schema'
 const categories = [
   {
     value: 'next.js',
@@ -45,7 +46,9 @@ const categories = [
 
 export function CategoryCombobox() {
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState('')
+
+  const form = useFormContext<PostFormValues>()
+  const categoryValue = form.watch('category')
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -54,12 +57,17 @@ export function CategoryCombobox() {
           variant='outline'
           role='combobox'
           aria-expanded={open}
-          className='w-full justify-between border-none sm:w-52'
+          className={`w-full justify-between border-none sm:w-52 ${
+            form.formState.errors.category && 'text-red-500'
+          }`}
         >
-          {value
-            ? categories.find((category) => category.value === value)?.label
+          {categoryValue
+            ? categories.find((category) => category.value === categoryValue)
+                ?.label
             : 'category'}
-          <Settings className='opacity-50' />
+          <Settings
+            className={`${!form.formState.errors.category && 'opacity-50'}`}
+          />
         </Button>
       </PopoverTrigger>
 
@@ -86,7 +94,8 @@ export function CategoryCombobox() {
                   key={category.value}
                   value={category.value}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? '' : currentValue)
+                    form.setValue('category', currentValue)
+                    form.trigger('category')
                     setOpen(false)
                   }}
                 >
@@ -94,7 +103,9 @@ export function CategoryCombobox() {
                   <Check
                     className={cn(
                       'ml-auto',
-                      value === category.value ? 'opacity-100' : 'opacity-0',
+                      categoryValue === category.value
+                        ? 'opacity-100'
+                        : 'opacity-0',
                     )}
                   />
                 </CommandItem>

@@ -25,7 +25,7 @@ export default function ActionButtons({
   const pathname = usePathname()
   // const storagePath = pathname.type === 'readme' ? 'readme' : 'posts'
 
-  console.log('pathname:', pathname)
+  // console.log('pathname:', pathname)
 
   const {
     extractImageUrls,
@@ -59,12 +59,12 @@ export default function ActionButtons({
         }
       })
 
-      // 불필요한 이미지 정리
-      const currentImageUrls = extractImageUrls(finalHtml)
-        .filter((url) => url.includes('supabase.co'))
-        .map(getImageFileName)
+      // // 불필요한 이미지 정리
+      // const currentImageUrls = extractImageUrls(finalHtml)
+      //   .filter((url) => url.includes('supabase.co'))
+      //   .map(getImageFileName)
 
-      await cleanupUnusedImages(currentImageUrls)
+      // await cleanupUnusedImages(currentImageUrls)
       await onSave(finalHtml)
 
       // 저장 후 1초대기해서 onSave()의 콜백으로 편집에디터 닫힐때까지 기다리기

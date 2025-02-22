@@ -1,7 +1,7 @@
 'use client'
 
+import { Check, Settings } from 'lucide-react'
 import * as React from 'react'
-import { Check, ChevronsUpDown, Settings } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { Button } from '@/shared/components/ui/button'
@@ -9,16 +9,17 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from '@/shared/components/ui/command'
+import { Label } from '@/shared/components/ui/label'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/shared/components/ui/popover'
-import { Label } from '@/shared/components/ui/label'
+import { useFormContext } from 'react-hook-form'
+import { PostFormValues } from './schema'
 
 const packages = [
   {
@@ -33,7 +34,9 @@ const packages = [
 
 export function PackageCombobox() {
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState('')
+
+  const form = useFormContext<PostFormValues>()
+  const packageValue = form.watch('package')
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -42,12 +45,16 @@ export function PackageCombobox() {
           variant='outline'
           role='combobox'
           aria-expanded={open}
-          className='w-full justify-between border-none sm:w-52'
+          className={`w-full justify-between border-none sm:w-52 ${
+            form.formState.errors.package && 'text-red-500'
+          }`}
         >
-          {value
-            ? packages.find((pkg) => pkg.value === value)?.label
+          {packageValue
+            ? packages.find((pkg) => pkg.value === packageValue)?.label
             : 'package'}
-          <Settings className='opacity-50' />
+          <Settings
+            className={`${!form.formState.errors.package && 'opacity-50'}`}
+          />
         </Button>
       </PopoverTrigger>
 
@@ -65,7 +72,11 @@ export function PackageCombobox() {
                   key={pkg.value}
                   value={pkg.value}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? '' : currentValue)
+                    form.setValue(
+                      'package',
+                      currentValue as 'repository' | 'project',
+                    )
+                    form.trigger('package')
                     setOpen(false)
                   }}
                 >
@@ -73,7 +84,7 @@ export function PackageCombobox() {
                   <Check
                     className={cn(
                       'ml-auto',
-                      value === pkg.value ? 'opacity-100' : 'opacity-0',
+                      packageValue === pkg.value ? 'opacity-100' : 'opacity-0',
                     )}
                   />
                 </CommandItem>

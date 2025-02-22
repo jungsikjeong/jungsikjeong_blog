@@ -12,12 +12,21 @@ export type Database = {
       categories: {
         Row: {
           category: string
+          constructor: string
+          created_at: string
+          id: string
         }
         Insert: {
           category: string
+          constructor?: string
+          created_at?: string
+          id?: string
         }
         Update: {
           category?: string
+          constructor?: string
+          created_at?: string
+          id?: string
         }
         Relationships: []
       }
@@ -118,23 +127,26 @@ export type Database = {
       repositories: {
         Row: {
           category: string
+          constructor: string
           contents: string | null
           created_at: string
-          id: string
+          id: number
           title: string
         }
         Insert: {
           category: string
+          constructor?: string
           contents?: string | null
           created_at?: string
-          id?: string
+          id?: number
           title: string
         }
         Update: {
           category?: string
+          constructor?: string
           contents?: string | null
           created_at?: string
-          id?: string
+          id?: number
           title?: string
         }
         Relationships: [
@@ -143,7 +155,7 @@ export type Database = {
             columns: ["category"]
             isOneToOne: false
             referencedRelation: "categories"
-            referencedColumns: ["category"]
+            referencedColumns: ["id"]
           },
         ]
       }

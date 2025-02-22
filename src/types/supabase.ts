@@ -46,6 +46,7 @@ export type Database = {
           id: string
           is_admin: boolean | null
           nickname: string | null
+          status: string | null
           username: string
         }
         Insert: {
@@ -55,6 +56,7 @@ export type Database = {
           id?: string
           is_admin?: boolean | null
           nickname?: string | null
+          status?: string | null
           username: string
         }
         Update: {
@@ -64,6 +66,7 @@ export type Database = {
           id?: string
           is_admin?: boolean | null
           nickname?: string | null
+          status?: string | null
           username?: string
         }
         Relationships: []
@@ -76,7 +79,6 @@ export type Database = {
           id: string
           location: string | null
           social_accounts: string[] | null
-          status: string | null
         }
         Insert: {
           bio?: string | null
@@ -85,7 +87,6 @@ export type Database = {
           id?: string
           location?: string | null
           social_accounts?: string[] | null
-          status?: string | null
         }
         Update: {
           bio?: string | null
@@ -94,7 +95,6 @@ export type Database = {
           id?: string
           location?: string | null
           social_accounts?: string[] | null
-          status?: string | null
         }
         Relationships: [
           {

@@ -1,7 +1,7 @@
 'use client'
 
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import { useUpdateMasterProfileStatus } from './hooks/useUpdateMasterProfileStatus'
+import { useUpdateProfileStatus } from './hooks/useUpdateMasterProfileStatus'
 import { Button } from '../ui/button'
 import {
   Dialog,
@@ -21,15 +21,18 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '../ui/drawer'
+import { useAuth } from '@/providers/AuthProvider'
 
 export default function StatusModal({ onClose }: { onClose: () => void }) {
-  const { mutate: updateStatus } = useUpdateMasterProfileStatus()
+  const { user } = useAuth()
+  const { mutate: updateStatus } = useUpdateProfileStatus()
 
   const isDesktop = useMediaQuery('(min-width: 768px)')
   const emojis = ['😊', '😎', '🎉', '💻', '☕️', '🌟', '🎯', '💪', '✨', '🚀']
 
   const handleEmojiSelect = (emoji: string) => {
-    updateStatus(emoji)
+    if (!user) return
+    updateStatus({ status: emoji, memberId: user.id })
     onClose()
   }
 

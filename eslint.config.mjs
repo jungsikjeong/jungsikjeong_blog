@@ -1,57 +1,36 @@
-import { dirname } from 'path'
-import { fileURLToPath } from 'url'
-import { FlatCompat } from '@eslint/eslintrc'
+import { defineConfig } from 'eslint/config'
+import globals from 'globals'
+import js from '@eslint/js'
+import tseslint from 'typescript-eslint'
+import pluginReact from 'eslint-plugin-react'
+import fsdPlugin from 'eslint-plugin-fsd-lint'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-})
-
-const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
+export default defineConfig([
+  { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
   {
-    files: ['**/*.ts', '**/*.tsx'],
-    excludedFiles: ['src/app/**/*'],
+    files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
+    languageOptions: { globals: globals.browser },
+  },
+  {
+    files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
+    plugins: { js },
+    extends: ['js/recommended'],
+  },
+  tseslint.configs.recommended,
+  pluginReact.configs.flat.recommended,
+  {
+    files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
+    plugins: {
+      fsd: fsdPlugin,
+    },
     rules: {
-      'no-restricted-imports': [
-        'error',
-        {
-          patterns: [
-            {
-              group: [
-                'src/entities/*/**',
-                'src/features/*/**',
-                'src/widgets/*/**',
-                'src/shared/*/**',
-              ],
-              message:
-                '직접적인 import는 허용되지 않습니다. index.tsx를 통해 import 해주세요.',
-            },
-          ],
-          paths: [
-            {
-              name: 'src/entities/*',
-              message: 'entities는 index.tsx를 통해서만 import 할 수 있습니다.',
-            },
-            {
-              name: 'src/features/*',
-              message: 'features는 index.tsx를 통해서만 import 할 수 있습니다.',
-            },
-            {
-              name: 'src/widgets/*',
-              message: 'widgets는 index.tsx를 통해서만 import 할 수 있습니다.',
-            },
-            {
-              name: 'src/shared/*',
-              message: 'shared는 index.tsx를 통해서만 import 할 수 있습니다.',
-            },
-          ],
-        },
-      ],
+      'fsd/forbidden-imports': 'error',
+      'fsd/no-relative-imports': 'error',
+      'fsd/no-public-api-sidestep': 'error',
+      'fsd/no-cross-slice-dependency': 'error',
+      'fsd/no-ui-in-business-logic': 'error',
+      'fsd/no-global-store-imports': 'error',
+      'fsd/ordered-imports': 'warn',
     },
   },
-]
-
-export default eslintConfig
+])

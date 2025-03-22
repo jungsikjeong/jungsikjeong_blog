@@ -1,5 +1,5 @@
-import LoginButton from '@/features/auth/ui/LoginButton'
 import React from 'react'
+import { LoginButton } from '@/features/auth'
 
 export default function Header() {
   return (

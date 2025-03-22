@@ -1,36 +1,136 @@
-import { defineConfig } from 'eslint/config'
-import globals from 'globals'
 import js from '@eslint/js'
-import tseslint from 'typescript-eslint'
-import pluginReact from 'eslint-plugin-react'
-import fsdPlugin from 'eslint-plugin-fsd-lint'
+import { FlatCompat } from '@eslint/eslintrc'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-export default defineConfig([
-  { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+  recommendedConfig: js.configs.recommended,
+})
+
+const config = [
+  js.configs.recommended,
+  ...compat.extends(
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    'plugin:prettier/recommended',
+  ),
   {
-    files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
-    languageOptions: { globals: globals.browser },
-  },
-  {
-    files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
-    plugins: { js },
-    extends: ['js/recommended'],
-  },
-  tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
-  {
-    files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
-    plugins: {
-      fsd: fsdPlugin,
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+      globals: {
+        document: 'readonly',
+        navigator: 'readonly',
+        window: 'readonly',
+      },
+    },
+    settings: {
+      react: {
+        version: 'detect',
+      },
+      'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+        },
+        node: {
+          extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        },
+      },
     },
     rules: {
-      'fsd/forbidden-imports': 'error',
-      'fsd/no-relative-imports': 'error',
-      'fsd/no-public-api-sidestep': 'error',
-      'fsd/no-cross-slice-dependency': 'error',
-      'fsd/no-ui-in-business-logic': 'error',
-      'fsd/no-global-store-imports': 'error',
-      'fsd/ordered-imports': 'warn',
+      'react/react-in-jsx-scope': 'off',
+      'prettier/prettier': ['error', {}, { usePrettierrc: true }],
+      'import/no-unresolved': [
+        'error',
+        {
+          ignore: [
+            '^@/styles',
+            '^next/',
+            '^@/',
+            '^@/shared/',
+            '\\.css$',
+            '\\.scss$',
+          ],
+        },
+      ],
+      'import/no-internal-modules': [
+        'error',
+        {
+          allow: [
+            '**/index',
+            '**/index.tsx',
+            '**/index.ts',
+            '@/*',
+            '@/shared/*',
+            '@/shared/lib/*',
+            '@/styles/*',
+            'next/*',
+            'next/font/*',
+            'react-dom/client',
+          ],
+        },
+      ],
+      'import/no-restricted-paths': [
+        'error',
+        {
+          zones: [
+            {
+              target: './src/entities',
+              from: './src/features',
+            },
+            {
+              target: './src/entities',
+              from: './src/widgets',
+            },
+            {
+              target: './src/entities',
+              from: './src/pages',
+            },
+            {
+              target: './src/shared',
+              from: './src/entities',
+            },
+            {
+              target: './src/shared',
+              from: './src/features',
+            },
+            {
+              target: './src/shared',
+              from: './src/widgets',
+            },
+            {
+              target: './src/shared',
+              from: './src/pages',
+            },
+            {
+              target: './src/features',
+              from: './src/widgets',
+            },
+            {
+              target: './src/features',
+              from: './src/pages',
+            },
+            {
+              target: './src/widgets',
+              from: './src/pages',
+            },
+          ],
+        },
+      ],
     },
   },
-])
+]
+
+export default config

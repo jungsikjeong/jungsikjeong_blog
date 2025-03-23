@@ -1,7 +1,6 @@
 module.exports = {
   semi: false,
   singleQuote: true,
-  tabWidth: 2,
-  trailingComma: "es5",
-  plugins: ["prettier-plugin-tailwindcss"],
-};
+  jsxSingleQuote: true,
+  plugins: ['prettier-plugin-tailwindcss'],
+}

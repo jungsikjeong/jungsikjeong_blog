@@ -22,7 +22,7 @@ function LoginToLink() {
       variant="link"
       className="text-base font-bold text-indigo-600"
     >
-      <Link href="/auth/signin">Log in</Link>
+      <Link href="/signin">Log in</Link>
     </Button>
   )
 }

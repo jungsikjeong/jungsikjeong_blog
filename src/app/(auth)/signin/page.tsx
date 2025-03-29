@@ -1,9 +1,5 @@
-import React from 'react'
+import { SignInPage } from '@/pages/signin'
 
-export default function SignInPage() {
-  return (
-    <div>
-      <h1>Sign In</h1>
-    </div>
-  )
+export default function Page() {
+  return <SignInPage />
 }

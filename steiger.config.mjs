@@ -112,6 +112,7 @@ export default defineConfig([
       '**/storybook-static/**',
       '**/*.stories.*',
       '**/__mocks__/**',
+      '**/mocks/**',
     ],
   },
 ])

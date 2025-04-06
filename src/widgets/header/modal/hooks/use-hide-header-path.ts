@@ -3,7 +3,7 @@ import { usePathname } from 'next/navigation'
 export default function useHideHeaderPath() {
   const pathname = usePathname()
 
-  const hideHeaderPaths = ['/signin', '/signup']
+  const hideHeaderPaths = ['/auth/signin', '/auth/signup']
 
   return hideHeaderPaths.includes(pathname)
 }

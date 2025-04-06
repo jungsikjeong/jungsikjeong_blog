@@ -1,9 +1,9 @@
 'use client'
 
-import { Button } from '@/shared/ui/button'
 import Link from 'next/link'
 import { NAVIGATION_LINKS } from '../config/navigation-links'
 import useHideHeaderPath from '../modal/hooks/use-hide-header-path'
+import { AniLoginToLinkBtn } from '@/shared/ui/login-to-link-btn'
 
 export function MainHeader() {
   const hideLoginPaths = useHideHeaderPath()
@@ -26,19 +26,7 @@ export function MainHeader() {
         ))}
       </div>
 
-      <LoginToLink />
+      <AniLoginToLinkBtn />
     </div>
-  )
-}
-
-function LoginToLink() {
-  return (
-    <Button
-      asChild
-      variant='link'
-      className='text-base font-bold text-indigo-600'
-    >
-      <Link href='/signin'>Log in</Link>
-    </Button>
   )
 }
